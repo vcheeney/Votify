@@ -44,11 +44,18 @@
 
 ### Prerequisites
 
-Tell about the project prerequisites
+- Node v16 or above
+- NPM
+- Docker and docker-compose
 
 ### Installation
 
-Provide the installation steps
+#### Install the web dependencies
+
+Open a terminal at the root of the project and run the following commands
+
+- `cd web`
+- `npm install`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -56,7 +63,18 @@ Provide the installation steps
 
 ## Usage
 
-Explain how to start the project
+### Start the database
+
+Open a terminal at the root of the project and run the following command
+
+- `docker-compose up`
+
+### Start the web application
+
+In an other terminal, run the fllowing commands
+
+- `cd web`
+- `npm run start`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
