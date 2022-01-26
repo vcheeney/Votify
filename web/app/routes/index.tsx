@@ -5,7 +5,9 @@ export default function Index() {
   return (
     <Box>
       <Typography variant="h1">Welcome to Votify</Typography>
-      <Typography variant="h2">Landing Page</Typography>
+      <Typography variant="subtitle2">
+        This is our beautiful landing page.
+      </Typography>
       <Button
         variant="contained"
         component={Link}

@@ -22,13 +22,13 @@ const theme = createTheme({
   shadows,
   customShadows,
   typography: {
-    fontFamily: "Helvitica, sans-serif",
+    fontFamily: "Roboto, sans-serif",
     button: {
       textTransform: "none",
       fontWeight: "bold",
     },
     h1: {
-      fontSize: "3em",
+      fontSize: "3rem",
       fontWeight: "700",
     },
     h2: {
@@ -37,7 +37,7 @@ const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 4,
+    borderRadius: 0,
   },
   components: {
     // components overrides could be defined in app/theme/components.ts
@@ -58,8 +58,39 @@ const theme = createTheme({
         {
           props: { variant: "logo" },
           style: {
-            fontSize: 24,
-            fontWeight: "bolder",
+            fontSize: 36,
+            fontWeight: "400",
+            color: "white",
+          },
+        },
+        {
+          props: { variant: "h1" },
+          style: {
+            marginBottom: "24px",
+            "&:after": {
+              content: "''",
+              display: "block",
+              width: "3rem",
+              marginTop: 0,
+              paddingTop: "8px",
+              borderBottom: "4px solid #f09686",
+            },
+          },
+        },
+        {
+          props: { variant: "subtitle1" },
+          style: {
+            fontSize: "1rem",
+            fontWeight: "600",
+            fontFamily: "Open Sans, sans-serif",
+          },
+        },
+        {
+          props: { variant: "subtitle2" },
+          style: {
+            fontSize: "1.125rem",
+            lineHeight: "1.875rem",
+            fontWeight: "400",
           },
         },
       ],

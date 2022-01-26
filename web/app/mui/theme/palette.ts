@@ -39,15 +39,15 @@ function createGradient(color1: string, color2: string) {
 
 // SETUP COLORS
 const GREY = {
-  0: "#FFFFFF",
-  100: "#F9FAFB",
-  200: "#F4F6F8",
-  300: "#DFE3E8",
-  400: "#C4CDD5",
-  500: "#919EAB",
-  600: "#637381",
-  700: "#454F5B",
-  800: "#212B36",
+  0: "#e9ebee",
+  100: "#d3d7dd",
+  200: "#bdc3cc",
+  300: "#919baa",
+  400: "#7a8698",
+  500: "#647287",
+  600: "#4e5e76",
+  700: "#384a65",
+  800: "#223654",
   900: "#161C24",
   500_8: alpha("#919EAB", 0.08),
   500_12: alpha("#919EAB", 0.12),
@@ -60,11 +60,11 @@ const GREY = {
 };
 
 const PRIMARY = {
-  lighter: "#80c0b0",
-  light: "#4da690",
-  main: "#008060", // shopify brand color 🤫🤣
-  dark: "##00664d", // to generate lighter/darker variants => https://www.tutorialrepublic.com/html-reference/html-color-picker.php
-  darker: "#004d3a",
+  lighter: "#dae6f0",
+  light: "#5389b6",
+  main: "#095797",
+  dark: "#074679", // to generate lighter/darker variants => https://www.tutorialrepublic.com/html-reference/html-color-picker.php
+  darker: "#05345b",
   contrastText: "#fff",
 };
 const SECONDARY = {
@@ -129,7 +129,7 @@ const palette: PaletteOptions = {
   gradients: GRADIENTS,
   divider: GREY[500_24],
   text: { primary: GREY[800], secondary: GREY[600], disabled: GREY[500] },
-  background: { paper: "#fff", default: "#faf8ed" },
+  background: { paper: "#f7f7f7", default: "#ffffff" },
   alpha: {
     white: "rgba(255, 255, 255, 0.50)",
   },
