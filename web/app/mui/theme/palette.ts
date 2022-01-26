@@ -20,14 +20,14 @@ declare module "@mui/material/styles" {
     };
   }
   interface PaletteOptions {
-    neutral: PaletteColorOptions;
+    contrastPrimary: PaletteColorOptions;
   }
 }
 
 // Update the Button's color prop options
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
-    neutral: true;
+    contrastPrimary: true;
   }
 }
 
@@ -133,9 +133,9 @@ const palette: PaletteOptions = {
   alpha: {
     white: "rgba(255, 255, 255, 0.50)",
   },
-  neutral: {
-    contrastText: "#FFF",
-    main: GREY[900],
+  contrastPrimary: {
+    contrastText: GREY[900],
+    main: PRIMARY.contrastText,
   },
   action: {
     active: GREY[600],
