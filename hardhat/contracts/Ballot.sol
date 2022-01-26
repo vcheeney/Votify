@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity >=0.8.0 <0.9.0;
 
-/// @title Voting with delegation.
+/// @title Simple voting smart contract
 contract Ballot {
   // This declares a new complex type which will
   // be used for variables later.
   // It will represent a single voter.
   struct Voter {
-    uint256 weight; // weight is accumulated by delegation
+    bool allowed;
     bool voted; // if true, that person already voted
-    address delegate; // person delegated to
     uint256 vote; // index of the voted proposal
   }
 
@@ -31,7 +30,7 @@ contract Ballot {
   /// Create a new ballot to choose one of `proposalNames`.
   constructor(bytes32[] memory proposalNames) {
     chairperson = msg.sender;
-    voters[chairperson].weight = 1;
+    voters[chairperson].allowed = true;
 
     // For each of the provided proposal names,
     // create a new proposal object and add it
@@ -57,67 +56,25 @@ contract Ballot {
     // functions are called correctly.
     // As a second argument, you can also provide an
     // explanation about what went wrong.
-    require(
-      msg.sender == chairperson,
-      "Only chairperson can give right to vote."
-    );
-    require(!voters[voter].voted, "The voter already voted.");
-    require(voters[voter].weight == 0);
-    voters[voter].weight = 1;
+    require(msg.sender == chairperson, "Action is restricted to deployer");
+    require(!voters[voter].voted, "Already voted");
+    require(voters[voter].allowed == false, "Already allowed");
+    voters[voter].allowed = true;
   }
 
-  /// Delegate your vote to the voter `to`.
-  function delegate(address to) external {
-    // assigns reference
+  /// Give your vote
+  /// to proposal `proposals[proposalIndex].name`.
+  function vote(uint256 proposalIndex) external {
     Voter storage sender = voters[msg.sender];
-    require(!sender.voted, "You already voted.");
-
-    require(to != msg.sender, "Self-delegation is disallowed.");
-
-    // Forward the delegation as long as
-    // `to` also delegated.
-    // In general, such loops are very dangerous,
-    // because if they run too long, they might
-    // need more gas than is available in a block.
-    // In this case, the delegation will not be executed,
-    // but in other situations, such loops might
-    // cause a contract to get "stuck" completely.
-    while (voters[to].delegate != address(0)) {
-      to = voters[to].delegate;
-
-      // We found a loop in the delegation, not allowed.
-      require(to != msg.sender, "Found loop in delegation.");
-    }
-
-    // Since `sender` is a reference, this
-    // modifies `voters[msg.sender].voted`
+    require(sender.allowed, "Has no right to vote");
+    require(!sender.voted, "Already voted");
+    require(proposalIndex < proposals.length, "Proposal does not exist");
     sender.voted = true;
-    sender.delegate = to;
-    Voter storage delegate_ = voters[to];
-    if (delegate_.voted) {
-      // If the delegate already voted,
-      // directly add to the number of votes
-      proposals[delegate_.vote].voteCount += sender.weight;
-    } else {
-      // If the delegate did not vote yet,
-      // add to her weight.
-      delegate_.weight += sender.weight;
-    }
-  }
-
-  /// Give your vote (including votes delegated to you)
-  /// to proposal `proposals[proposal].name`.
-  function vote(uint256 proposal) external {
-    Voter storage sender = voters[msg.sender];
-    require(sender.weight != 0, "Has no right to vote");
-    require(!sender.voted, "Already voted.");
-    sender.voted = true;
-    sender.vote = proposal;
-
+    sender.vote = proposalIndex;
     // If `proposal` is out of the range of the array,
     // this will throw automatically and revert all
     // changes.
-    proposals[proposal].voteCount += sender.weight;
+    proposals[proposalIndex].voteCount += 1;
   }
 
   /// @dev Computes the winning proposal taking all
@@ -130,6 +87,7 @@ contract Ballot {
         winningProposal_ = p;
       }
     }
+    require(proposals[winningProposal_].voteCount > 0, "No votes received");
   }
 
   // Calls winningProposal() function to get the index
