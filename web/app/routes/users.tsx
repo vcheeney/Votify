@@ -64,7 +64,7 @@ export default function Users() {
       <List>
         {users &&
           users.map((user: { id: string }) => (
-            <ListItem>
+            <ListItem key={user.id}>
               <ListItemText primary={user.id} />;
             </ListItem>
           ))}
