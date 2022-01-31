@@ -6,13 +6,14 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
     - [Software](#software)
-    - [MetaMask configuration](#metamask-configuration)
   - [Installation](#installation)
     - [Local development blockchain](#local-development-blockchain)
     - [Database](#database)
     - [Web application](#web-application)
   - [Usage](#usage)
     - [Local development blockchain](#local-development-blockchain-1)
+      - [Launching local blockchain](#launching-local-blockchain)
+      - [Configuring MetaMask to access the local blockchain](#configuring-metamask-to-access-the-local-blockchain)
     - [Database](#database-1)
     - [Web application](#web-application-1)
 
@@ -34,20 +35,6 @@
 - NPM
 - Docker and docker-compose
 - A web browser (Chrome for example) with [MetaMask](https://metamask.io/) installed
-
-#### MetaMask configuration
-
-Create the hardhat network by following these steps:
-
-1. Open the extension by clicking on its icon in the browser toolbar
-2. Click on "Add Network"
-3. Fill the requested fields with the following information:
-   - **Network Name**: Hardhat
-   - **New RPC URL**: http://127.0.0.1:8545/
-   - **Chain ID**: 31337
-   - **Currency Symbol**: _leave empty_
-   - **Block Explorer URL**: _leave empty_
-4. Click on "Save"
 
 ### Installation
 
@@ -111,6 +98,8 @@ $ npm run build
 
 #### Local development blockchain
 
+##### Launching local blockchain
+
 Open a terminal at the root of the project and run the following commands:
 
 ```sh
@@ -147,9 +136,23 @@ BALLOT_CONTRACT_ADDRESS="0x5fbdb2315678afecb367f032d93f642f64180aa3"
 ...
 ```
 
+##### Configuring MetaMask to access the local blockchain
+
+In your web browser:
+
+1. Open the MetaMask extension by clicking on its icon in the browser toolbar
+2. Click on "Add Network"
+3. Fill the requested fields with the following information:
+   - **Network Name**: Hardhat
+   - **New RPC URL**: http://127.0.0.1:8545/
+   - **Chain ID**: 31337
+   - **Currency Symbol**: _leave empty_
+   - **Block Explorer URL**: _leave empty_
+4. Click on "Save"
+
 In the MetaMask extension:
 
-1. Select the Hardhat network previously configured in the [installation steps](#installation)
+1. Select the Hardhat network that you just configured
 2. Import the first account from the list that appeared when you previously ran `npx hardhat node` in your other terminal (which should still be open)
 3. **Optional:** Rename the account to _Chairperson_ or any other familiar name.
 
