@@ -18,6 +18,19 @@ export function useBallot() {
     const ballot = Ballot__factory.connect(ballotAddress, provider);
     setBallot(ballot);
 
+    // TODO
+    // 👆 this only allows us to read public data from the contract.
+    // Ex: Read the proposal names, vote counts, etc.
+    //
+    // In order to make transactions on behalf of the user, we'll need to
+    // get the "signer":
+    // const signer = provider.getSigner();
+    //
+    // There will be a bit of thinking to do here in order to define
+    // where we'll store the that kind of information (The user can have many accounts, etc.)
+    //
+    // We'll think about that when we get there...
+
     ballot.chairperson().then((chairperson) => {
       console.log("Accessing ballot contract from the web application.");
       console.log("Contract address:", ballot.address);
