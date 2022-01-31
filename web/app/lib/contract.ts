@@ -18,6 +18,12 @@ export function useBallot() {
     const ballot = Ballot__factory.connect(ballotAddress, provider);
     setBallot(ballot);
 
+    ballot.chairperson().then((chairperson) => {
+      console.log("Accessing ballot contract from the web application.");
+      console.log("Contract address:", ballot.address);
+      console.log("Chairperson: ", chairperson);
+    });
+
     ballot.proposalsAmount().then(async (amount) => {
       const proposals: Proposal[] = [];
       for (let i = 0; i < amount.toNumber(); i++) {
