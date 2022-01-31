@@ -82,30 +82,6 @@ const Navbar: FC = () => {
           </Box>
         </Container>
       </Box>
-      <Box
-        sx={{
-          height: "72px",
-          bgcolor: "primary.lighter",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <Container maxWidth="lg">
-          <Stack
-            direction="row"
-            spacing={2}
-            sx={{
-              alignItems: "center",
-            }}
-          >
-            <SentimentSatisfiedAlt color="primary" fontSize="large" />
-            <Typography variant="subtitle1">
-              C'est le début d'un beau petit projet... Pour les vaccins, c'est
-              pas ici, lol
-            </Typography>
-          </Stack>
-        </Container>
-      </Box>
     </>
   );
 };

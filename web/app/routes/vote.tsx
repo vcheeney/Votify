@@ -1,27 +1,56 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Stack } from "@mui/material";
 import { Link } from "remix";
 import { ArrowBack } from "@mui/icons-material";
 import { useBallot } from "~/lib/contract";
 
 export default function Index() {
   const { proposals } = useBallot();
+
   return (
     <Box>
       <Typography variant="h1">Vote</Typography>
-      <Typography>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque magni
-        excepturi animi culpa perspiciatis neque odit dicta nesciunt voluptates
-        sunt fugiat hic molestiae voluptate qui ipsa voluptatum quibusdam a cum,
-        placeat tempore corrupti tempora facilis laudantium vitae? Vitae debitis
-        eligendi accusantium nam commodi ullam quibusdam, cum optio voluptatum
-        illum excepturi suscipit cumque consequatur necessitatibus. Est quis
-        eaque quibusdam asperiores impedit! Ad voluptatem, totam tempora
-        voluptatibus, magnam dolore quasi, quaerat eaque vero distinctio sit
-        quos magni!
-      </Typography>
-      {proposals.map((proposal) => (
-        <span key={proposal.id}>{proposal.name}</span>
-      ))}
+      <Stack
+        direction="row"
+        spacing={4}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mb: 8,
+        }}
+      >
+        {proposals.map((proposal) => (
+          <Stack
+            spacing={2}
+            key={proposal.id}
+            sx={{
+              px: 4,
+              py: 2,
+              backgroundColor: "primary.lighter",
+              alignItems: "center",
+              display: "flex",
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                fontSize: "1.5rem",
+              }}
+            >
+              {proposal.name}
+            </Typography>
+            <Box
+              sx={{
+                w: "125px",
+                h: "125px",
+              }}
+              component="img"
+              src="./politician.png"
+              alt={proposal.name}
+            />
+            <Button variant="contained">Vote</Button>
+          </Stack>
+        ))}
+      </Stack>
       <Button
         component={Link}
         to="/"
