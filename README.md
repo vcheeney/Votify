@@ -38,6 +38,14 @@
 
 ### Installation
 
+First, clone the repository with the following command:
+
+```sh
+git clone git@github.com:vcheeney/voting-platform.git
+```
+
+Then, continue on with the following instructions to setup and configure each part of the project.
+
 #### Local development blockchain
 
 Open a terminal at the root of the project and run the following commands:
