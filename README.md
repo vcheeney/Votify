@@ -47,6 +47,7 @@ git clone git@github.com:vcheeney/voting-platform.git
 Then, continue on with the following instructions to setup and configure each part of the project.
 
 > **TIP: Quick Setup**
+>
 > Setup everything automagically with our setup script 👌
 >
 > ```
