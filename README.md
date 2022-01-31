@@ -4,39 +4,33 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="misc/vote.png" alt="Logo" width="80" height="80">
+    <img src="web/public/logo.png" alt="Logo" width="80" height="80" style="background: #095797; padding: 10px; border-radius: 10px;">
   </a>
 
-  <h3 align="center">APP NAME</h3>
+  <h3 align="center">Votify</h3>
 
   <p align="center">
     Decentralized Voting Platform
-    
   </p>
 </div>
 
 <!-- TABLE OF CONTENTS -->
-<ol>
-  <li>
-    <a href="#about-the-project">About The Project</a>
-  </li>
-  <li>
-    <a href="#getting-started">Getting Started</a>
-    <ul>
-      <li><a href="#prerequisites">Prerequisites</a></li>
-      <li><a href="#installation">Installation</a></li>
-    </ul>
-  </li>
-  <li><a href="#usage">Usage</a></li>
-</ol>
+
+- [About The Project](#about-the-project)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+    - [Database](#database)
+    - [Web App](#web-app)
+- [Usage](#usage)
+  - [Start the database](#start-the-database)
+  - [Start the web application](#start-the-web-application)
 
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 
@@ -50,14 +44,38 @@
 
 ### Installation
 
-#### Install the web dependencies
+#### Database
 
-Open a terminal at the root of the project and run the following commands
+Open a terminal at the root of the project and run the following commands:
 
-- `cd web`
-- `npm install`
+```sh
+# Move into the database subdirectory
+cd database
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+# Create the .env file from the template
+cp database.env.template database.env
+```
+
+#### Web App
+
+Open a terminal at the root of the project and run the following commands:
+
+```sh
+# Move into the web project subdirectory
+cd web
+
+# Install the project dependencies
+npm install
+
+# Create the .env file from the template
+cp .env.template .env
+
+# Run the prisma migrations
+npx prisma migrate reset
+
+# Build the project
+npm run build
+```
 
 <!-- USAGE EXAMPLES -->
 
@@ -65,18 +83,26 @@ Open a terminal at the root of the project and run the following commands
 
 ### Start the database
 
-Open a terminal at the root of the project and run the following command
+Open a terminal at the root of the project and run the following command:
 
-- `docker-compose up`
+```sh
+docker-compose up
+```
 
 ### Start the web application
 
-In an other terminal, run the fllowing commands
+In an other terminal, run the following commands:
 
-- `cd web`
-- `npm run start`
+```sh
+# Move into the web project subdirectory
+cd web
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+# Start the production application
+npm run start
+
+# If you would rather run the development server, run:
+npm run dev
+```
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
