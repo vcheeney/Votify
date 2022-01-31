@@ -1,3 +1,5 @@
+set -e # stop the script if any command returns an error
+
 # Give proper warning
 echo "⚠️  FRIENDLY WARNING 😊"
 echo "Make sure you have already compiled the contract in the hardhat project"
