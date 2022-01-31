@@ -7,7 +7,8 @@
     "build": "remix build",
     "dev": "remix dev",
     "postinstall": "remix setup node",
-    "start": "remix-serve build"
+    "start": "remix-serve build",
+    "syncContract": "sh ./scripts/sync-contract.sh"
   },
   "dependencies": {
     "@emotion/cache": "^11.7.1",
@@ -26,9 +27,11 @@
   },
   "devDependencies": {
     "@remix-run/dev": "^1.1.1",
+    "@typechain/ethers-v5": "^9.0.0",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "prisma": "^3.8.1",
+    "typechain": "^7.0.0",
     "typescript": "^4.1.2"
   },
   "engines": {
