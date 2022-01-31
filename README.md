@@ -175,6 +175,9 @@ docker-compose up
 # Keep this terminal open for as long as you want to keep the database alive
 ```
 
+Before executing the next command, wait for the following message in your terminal:
+`"LOG: database system is ready to accept connections"`
+
 In another terminal:
 
 ```sh
@@ -183,6 +186,8 @@ cd web
 
 # Run the prisma migrations
 $ npx prisma migrate reset
+# ? Are you sure you want to reset your database? All data will be lost. » (y/N)
+$ y
 
 # You can now close this terminal
 ```
