@@ -77,6 +77,11 @@ contract Ballot {
     proposals[proposalIndex].voteCount += 1;
   }
 
+  /// Get the amount of proposals for the ballot
+  function proposalsAmount() public view returns (uint256 count) {
+    return proposals.length;
+  }
+
   /// @dev Computes the winning proposal taking all
   /// previous votes into account.
   function winningProposal() public view returns (uint256 winningProposal_) {

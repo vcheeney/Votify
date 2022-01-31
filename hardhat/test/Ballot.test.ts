@@ -41,6 +41,10 @@ describe("Ballot", function () {
           });
         });
       });
+
+      it("should return the right proposals amount", async () => {
+        expect(await ballot.proposalsAmount()).to.equal(formattedNames.length);
+      });
     });
   });
 
