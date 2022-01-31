@@ -46,6 +46,15 @@ git clone git@github.com:vcheeney/voting-platform.git
 
 Then, continue on with the following instructions to setup and configure each part of the project.
 
+> **TIP: Quick Setup**
+> Setup everything automagically with our setup script 👌
+>
+> ```
+> sh scripts/setup.sh
+> ```
+>
+> You can then skip to the [Usage](#usage) section.
+
 #### Local development blockchain
 
 Open a terminal at the root of the project and run the following commands:
