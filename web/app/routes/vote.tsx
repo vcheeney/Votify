@@ -1,8 +1,10 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "remix";
 import { ArrowBack } from "@mui/icons-material";
+import { useBallot } from "~/lib/contract";
 
 export default function Index() {
+  const { proposals } = useBallot();
   return (
     <Box>
       <Typography variant="h1">Vote</Typography>
@@ -17,6 +19,9 @@ export default function Index() {
         voluptatibus, magnam dolore quasi, quaerat eaque vero distinctio sit
         quos magni!
       </Typography>
+      {proposals.map((proposal) => (
+        <span key={proposal.id}>{proposal.name}</span>
+      ))}
       <Button
         component={Link}
         to="/"
