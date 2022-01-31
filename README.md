@@ -162,6 +162,7 @@ In the MetaMask extension:
 
 1. Select the Hardhat network that you just configured
 2. Import the first account from the list that appeared when you previously ran `npx hardhat node` in your other terminal (which should still be open)
+   > **Warning** ⚠ Some terminals close when you try to copy selected text with "ctrl+c". If you find yourself in a situation where your local blockchain gets terminated, you have to go back to the [Launching local blockchain](#launching-local-blockchain) step and redo the next steps as the new deployment will generate a new contract address.
 3. **Optional:** Rename the account to _Chairperson_ or any other familiar name.
 
 #### Database
