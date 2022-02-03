@@ -2,20 +2,22 @@
 
 ## Table of contents <!-- omit in toc -->
 
-- [About The Project](#about-the-project)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-    - [Software](#software)
-  - [Installation](#installation)
-    - [Local development blockchain](#local-development-blockchain)
-    - [Database](#database)
-    - [Web application](#web-application)
-  - [Usage](#usage)
-    - [Local development blockchain](#local-development-blockchain-1)
-      - [Launching local blockchain](#launching-local-blockchain)
-      - [Configuring MetaMask to access the local blockchain](#configuring-metamask-to-access-the-local-blockchain)
-    - [Database](#database-1)
-    - [Web application](#web-application-1)
+- [Votify](#votify)
+  - [About The Project](#about-the-project)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+      - [Software](#software)
+    - [Installation](#installation)
+      - [Local development blockchain](#local-development-blockchain)
+      - [Database](#database)
+      - [Web application](#web-application)
+    - [Usage](#usage)
+      - [Local development blockchain](#local-development-blockchain-1)
+        - [Launching local blockchain](#launching-local-blockchain)
+        - [Configuring MetaMask to access the local blockchain](#configuring-metamask-to-access-the-local-blockchain)
+      - [Database](#database-1)
+      - [Web application](#web-application-1)
+    - [Seeding](#seeding)
 
 <!-- ABOUT THE PROJECT -->
 
@@ -197,12 +199,11 @@ In another terminal:
 # Move into the web project subdirectory
 cd web
 
-# Run the prisma migrations
+# Clean your database and run the migrations
 $ npx prisma migrate reset
 # ? Are you sure you want to reset your database? All data will be lost. » (y/N)
 $ y
 
-# You can now close this terminal
 ```
 
 #### Web application
@@ -221,3 +222,17 @@ npm run dev
 
 # Keep this terminal open for as long as you want the app alive
 ```
+
+### Seeding
+
+You can insert randomly generated users for testing using the seeding script.
+
+```bash
+# Move into the web project subdirectory
+cd web
+
+# Run the seed script
+npm run seed
+```
+
+and follow the instructions from the script.
