@@ -19,7 +19,7 @@ function printBanner() {
   console.log(chalk.bgRed("!!! WARNING !!!"));
   console.log(
     chalk.red(
-      "This programs insert randomly generated users into the database. If you are in production, abort now."
+      "This program inserts randomly generated users into the database. If you are in production, abort now."
     )
   );
 }
