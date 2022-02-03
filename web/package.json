@@ -8,8 +8,10 @@
     "dev": "remix dev",
     "postinstall": "remix setup node",
     "start": "remix-serve build",
-    "syncContract": "sh ./scripts/sync-contract.sh"
+    "syncContract": "sh ./scripts/sync-contract.sh",
+    "seed": "ts-node prisma/seed-dev.ts"
   },
+  "prisma": {},
   "dependencies": {
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.7.1",
@@ -20,19 +22,28 @@
     "@prisma/client": "^3.8.1",
     "@remix-run/react": "^1.1.1",
     "@remix-run/serve": "^1.1.1",
+    "chalk": "^2.4.2",
     "ethers": "^5.5.3",
+    "inquirer": "^8.2.0",
+    "nanospinner": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "remix": "^1.1.1"
+    "remix": "^1.1.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.5",
     "@remix-run/dev": "^1.1.1",
     "@typechain/ethers-v5": "^9.0.0",
+    "@types/inquirer": "^8.2.0",
+    "@types/node": "^17.0.14",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
+    "@types/uuid": "^8.3.4",
     "prisma": "^3.8.1",
+    "ts-node": "^10.4.0",
     "typechain": "^7.0.0",
-    "typescript": "^4.1.2"
+    "typescript": "^4.5.5"
   },
   "engines": {
     "node": ">=14"
