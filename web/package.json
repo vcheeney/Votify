@@ -8,7 +8,7 @@
     "dev": "remix dev",
     "postinstall": "remix setup node",
     "start": "remix-serve build",
-    "syncContract": "sh ./scripts/sync-contract.sh",
+    "syncContract": "sh ./contracts/sync-contract.sh",
     "seed": "ts-node prisma/seed-dev.ts"
   },
   "prisma": {},
