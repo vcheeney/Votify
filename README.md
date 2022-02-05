@@ -2,22 +2,21 @@
 
 ## Table of contents <!-- omit in toc -->
 
-- [Votify](#votify)
-  - [About The Project](#about-the-project)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-      - [Software](#software)
-    - [Installation](#installation)
-      - [Local development blockchain](#local-development-blockchain)
-      - [Database](#database)
-      - [Web application](#web-application)
-    - [Usage](#usage)
-      - [Local development blockchain](#local-development-blockchain-1)
-        - [Launching local blockchain](#launching-local-blockchain)
-        - [Configuring MetaMask to access the local blockchain](#configuring-metamask-to-access-the-local-blockchain)
-      - [Database](#database-1)
-      - [Web application](#web-application-1)
-    - [Seeding](#seeding)
+- [About The Project](#about-the-project)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+    - [Software](#software)
+  - [Installation](#installation)
+    - [Local development blockchain](#local-development-blockchain)
+    - [Database](#database)
+    - [Web application](#web-application)
+  - [Usage](#usage)
+    - [Local development blockchain](#local-development-blockchain-1)
+      - [Launching local blockchain](#launching-local-blockchain)
+      - [Configuring MetaMask to access the local blockchain](#configuring-metamask-to-access-the-local-blockchain)
+    - [Database](#database-1)
+    - [Web application](#web-application-1)
+  - [Seeding](#seeding)
 
 <!-- ABOUT THE PROJECT -->
 
@@ -64,13 +63,13 @@ Open a terminal at the root of the project and run the following commands:
 
 ```sh
 # Move into the hardhat subdirectory
-$ cd hardhat
+cd hardhat
 
 # Install the dependencies
-$ npm install
+npm install
 
 # Compile the smart contract
-$ npx hardhat compile
+npx hardhat compile
 
 # You can now close this terminal
 ```
@@ -81,10 +80,10 @@ Open a terminal at the root of the project and run the following commands:
 
 ```sh
 # Move into the database subdirectory
-$ cd database
+cd database
 
 # Create the .env file from the template
-$ cp database.env.template database.env
+cp database.env.template database.env
 
 # You can now close this terminal
 ```
@@ -95,19 +94,19 @@ Open a terminal at the root of the project and run the following commands:
 
 ```sh
 # Move into the web project subdirectory
-$ cd web
+cd web
 
 # Install the project dependencies
-$ npm install
+npm install
 
 # Create the .env file from the template
-$ cp .env.example .env
+cp .env.example .env
 
 # Get the compiled contract from the hardhat project
-$ npm run syncContract
+npm run syncContract
 
 # Build the project
-$ npm run build
+npm run build
 
 # You can now close this terminal
 ```
@@ -124,10 +123,10 @@ Open a terminal at the root of the project and run the following commands:
 
 ```sh
 # Move into the Hardhat subdirectory
-$ cd hardhat
+cd hardhat
 
 # Start the Hardhat local development blockchain
-$ npx hardhat node
+npx hardhat node
 
 # Keep this terminal open for as long as you want the local blockchain alive
 # Note: You'll see a list of 20 test accounts that will be useful in later steps...
@@ -137,10 +136,10 @@ In another terminal:
 
 ```sh
 # Move into the Hardhat subdirectory
-$ cd hardhat
+cd hardhat
 
 # Deploy the smart contract
-$ npm run deploy
+npm run deploy
 # output: [...]
 # output: Ballot deployed to: 0x5fbdb2315678afecb367f032d93f642f64180aa3
 
@@ -200,9 +199,9 @@ In another terminal:
 cd web
 
 # Clean your database and run the migrations
-$ npx prisma migrate reset
+npx prisma migrate reset
 # ? Are you sure you want to reset your database? All data will be lost. » (y/N)
-$ y
+y
 
 ```
 
