@@ -27,6 +27,9 @@ contract Ballot {
   // A dynamically-sized array of `Proposal` structs.
   Proposal[] public proposals;
 
+  // Events
+  event Vote(uint256 vote);
+
   /// Create a new ballot to choose one of `proposalNames`.
   constructor(bytes32[] memory proposalNames) {
     chairperson = msg.sender;
@@ -74,6 +77,7 @@ contract Ballot {
     // If `proposal` is out of the range of the array,
     // this will throw automatically and revert all
     // changes.
+    emit Vote(proposalIndex);
     proposals[proposalIndex].voteCount += 1;
   }
 

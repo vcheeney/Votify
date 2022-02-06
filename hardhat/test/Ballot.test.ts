@@ -97,6 +97,14 @@ describe("Ballot", function () {
         await ballotFromVoter1.vote(selectedProposalIndex);
       });
 
+      it("should emit a vote event", async () => {
+        await ballot.giveRightToVote(voter3.address);
+        const ballotFromVoter3 = ballot.connect(voter3);
+        await expect(ballotFromVoter3.vote(selectedProposalIndex))
+          .to.emit(ballot, "Vote")
+          .withArgs(selectedProposalIndex);
+      });
+
       it("should mark the voter as 'voted' after the vote", async () => {
         const voter = await ballot.voters(voter1.address);
         expect(voter.voted).to.eq(true);
