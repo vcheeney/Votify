@@ -102,7 +102,7 @@ describe("Ballot", function () {
         const ballotFromVoter3 = ballot.connect(voter3);
         await expect(ballotFromVoter3.vote(selectedProposalIndex))
           .to.emit(ballot, "Vote")
-          .withArgs(selectedProposalIndex);
+          .withArgs(voter3.address, selectedProposalIndex);
       });
 
       it("should mark the voter as 'voted' after the vote", async () => {

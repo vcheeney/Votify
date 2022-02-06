@@ -28,7 +28,7 @@ contract Ballot {
   Proposal[] public proposals;
 
   // Events
-  event Vote(uint256 vote);
+  event Vote(address voter, uint256 vote);
 
   /// Create a new ballot to choose one of `proposalNames`.
   constructor(bytes32[] memory proposalNames) {
@@ -77,7 +77,7 @@ contract Ballot {
     // If `proposal` is out of the range of the array,
     // this will throw automatically and revert all
     // changes.
-    emit Vote(proposalIndex);
+    emit Vote(msg.sender, proposalIndex);
     proposals[proposalIndex].voteCount += 1;
   }
 
