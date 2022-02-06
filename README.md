@@ -143,6 +143,9 @@ npm run deploy
 # output: [...]
 # output: Ballot deployed to: 0x5fbdb2315678afecb367f032d93f642f64180aa3
 
+# UNTIL VOTER REGISTRATION FEATURE IS COMPLETE, give right to vote to the first 5 listed ethereum accounts in the hardhat network (adresses listed in the previous terminal)
+npm run giveRightToVote
+
 # You can close this terminal after completing the following step
 ```
 
