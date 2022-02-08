@@ -1,8 +1,6 @@
-import { SentimentSatisfiedAlt } from "@mui/icons-material";
-import { Button, Stack, Typography, Box, Container } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { Link } from "remix/client";
-import { ethers } from "ethers";
 
 const Navbar: FC = () => {
   const [account, setAccount] = useState(null);

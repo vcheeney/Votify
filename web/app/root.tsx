@@ -1,15 +1,16 @@
 import { withEmotionCache } from "@emotion/react";
 import { unstable_useEnhancedEffect as useEnhancedEffect } from "@mui/material";
 import * as React from "react";
-import { MetaFunction, useLoaderData } from "remix";
 import {
   Links,
   LiveReload,
   Meta,
+  MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
   useCatch,
+  useLoaderData,
 } from "remix";
 import Layout from "./components/Layout";
 import ClientStyleContext from "./mui/ClientStyleContext";
@@ -22,7 +23,6 @@ interface DocumentProps {
 
 const Document = withEmotionCache(
   ({ children, title }: DocumentProps, emotionCache) => {
-    const data = useLoaderData();
     const clientStyleData = React.useContext(ClientStyleContext);
 
     // Only executed on client
@@ -62,11 +62,6 @@ const Document = withEmotionCache(
         <body>
           {children}
           <ScrollRestoration />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-            }}
-          />
           <Scripts />
           {process.env.NODE_ENV === "development" && <LiveReload />}
         </body>
@@ -90,9 +85,15 @@ export async function loader() {
 // https://remix.run/api/conventions#default-export
 // https://remix.run/api/conventions#route-filenames
 export default function App() {
+  const data = useLoaderData();
   return (
     <Document>
       <Layout>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+          }}
+        />
         <Outlet />
       </Layout>
     </Document>
