@@ -1,5 +1,5 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { ActionFunction, Form, redirect, useActionData } from "remix";
+import { ActionFunction, Form, redirect } from "remix";
 import invariant from "tiny-invariant";
 import FullPageSpinner from "~/components/FullPageSpinner";
 import { useEthereum } from "~/ctx/ethereum";

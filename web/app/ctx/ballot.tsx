@@ -13,7 +13,7 @@ import { VoteEvent } from "types/ethers-contracts/Ballot";
 import { TypedListener } from "types/ethers-contracts/common";
 import FullPageSpinner from "~/components/FullPageSpinner";
 import { Ballot, Ballot__factory } from "../../types/ethers-contracts";
-import { BallotNotFoundError, CustomError } from "../lib/error";
+import { BallotNotFoundError } from "../lib/error";
 import { useEthereum } from "./ethereum";
 
 export type Proposal = {
