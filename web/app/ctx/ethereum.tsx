@@ -7,10 +7,10 @@ import {
   useRef,
   useState,
 } from "react";
-import { useLocation, useNavigate } from "remix";
+import { useNavigate } from "remix";
 import invariant from "tiny-invariant";
 import FullPageSpinner from "~/components/FullPageSpinner";
-import { CustomError, MetaMaskRequiredError } from "./error";
+import { MetaMaskRequiredError } from "../lib/error";
 
 type Network = ethers.providers.Network & {
   connected: boolean;

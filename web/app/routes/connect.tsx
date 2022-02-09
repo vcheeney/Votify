@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useEthereum } from "~/lib/ethereum";
+import { useEthereum } from "~/ctx/ethereum";
 
 export default function Connect() {
   const { connectWithMetamask, account } = useEthereum();

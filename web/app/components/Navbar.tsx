@@ -1,7 +1,7 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { Link } from "remix/client";
-import { useEthereum } from "~/lib/ethereum";
+import { useEthereum } from "~/ctx/ethereum";
 
 const Navbar: FC = () => {
   const { account, network } = useEthereum();

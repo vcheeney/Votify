@@ -1,13 +1,11 @@
 import { withEmotionCache } from "@emotion/react";
 import {
   Box,
-  Button,
   Typography,
   unstable_useEnhancedEffect as useEnhancedEffect,
 } from "@mui/material";
 import * as React from "react";
 import {
-  Link,
   Links,
   LiveReload,
   Meta,
@@ -19,9 +17,9 @@ import {
   useLoaderData,
 } from "remix";
 import Layout from "./components/Layout";
-import { BallotProvider } from "./lib/ballot";
+import { BallotProvider } from "./ctx/ballot";
+import { EthereumProvider } from "./ctx/ethereum";
 import { CustomError } from "./lib/error";
-import { EthereumProvider } from "./lib/ethereum";
 import ClientStyleContext from "./mui/ClientStyleContext";
 import theme from "./mui/theme/theme";
 

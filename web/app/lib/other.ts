@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import invariant from "tiny-invariant";
-import { useBallot } from "./ballot";
-import { useEthereum } from "./ethereum";
+import { useBallot } from "../ctx/ballot";
+import { useEthereum } from "../ctx/ethereum";
 
 type VoterStatus = "loading" | "unregistered" | "registered" | "voted";
 

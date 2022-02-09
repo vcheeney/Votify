@@ -4,7 +4,7 @@ import { Link } from "remix";
 import FullPageSpinner from "~/components/FullPageSpinner";
 import { NotRegisteredError } from "~/lib/error";
 import { useVoterStatus } from "~/lib/other";
-import { useBallot } from "../lib/ballot";
+import { useBallot } from "../ctx/ballot";
 
 export default function Vote() {
   const { proposals, submitVote } = useBallot();
