@@ -2,6 +2,7 @@
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test test/Ballot.test.ts",
+    "node": "hardhat node",
     "deploy": "hardhat run scripts/deploy.ts --network localhost",
     "giveRightToVote": "hardhat run scripts/giveRightToVote.ts --network localhost"
   },
