@@ -2,6 +2,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "remix";
 import FullPageSpinner from "~/components/FullPageSpinner";
+import { NotRegisteredError } from "~/lib/error";
 import { useVoterStatus } from "~/lib/other";
 import { useBallot } from "../lib/ballot";
 
@@ -14,7 +15,7 @@ export default function Vote() {
   }
 
   if (status === "unregistered") {
-    throw new Error("You are not registered to vote");
+    throw new NotRegisteredError();
   }
 
   if (status === "voted") {

@@ -13,6 +13,7 @@ import { VoteEvent } from "types/ethers-contracts/Ballot";
 import { TypedListener } from "types/ethers-contracts/common";
 import FullPageSpinner from "~/components/FullPageSpinner";
 import { Ballot, Ballot__factory } from "../../types/ethers-contracts";
+import { BallotNotFoundError, CustomError } from "./error";
 import { useEthereum } from "./ethereum";
 
 export type Proposal = {
@@ -47,7 +48,7 @@ export const BallotProvider: FC = ({ children }) => {
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const ballotRef = useRef<Ballot | null>(null);
   const providerRef = useRef<ethers.providers.Web3Provider | null>(null);
-  const { ethereumExists, loading: ethereumLoading } = useEthereum();
+  const { ethereumExists, loading: ethereumLoading, network } = useEthereum();
   const navigate = useNavigate();
 
   const listener: TypedListener<VoteEvent> = (voter, vote) => {
@@ -161,10 +162,8 @@ export const BallotProvider: FC = ({ children }) => {
   }
 
   if (!ballotExists && PROTECTED_ROUTES.includes(window.location.pathname)) {
-    window.location.replace("/errors/ballot-not-found");
-    // For some reason, using the navigate function from react router displays the vote page for a few MS before redirecting, even if we return <FullPageSpinner /> right here.
-    // navigate("/errors/ballot-not-found", { replace: true });
-    return <FullPageSpinner />;
+    invariant(network, "Network should be defined");
+    throw new BallotNotFoundError(network.name);
   }
 
   return (

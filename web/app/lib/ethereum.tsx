@@ -10,6 +10,7 @@ import {
 import { useLocation, useNavigate } from "remix";
 import invariant from "tiny-invariant";
 import FullPageSpinner from "~/components/FullPageSpinner";
+import { CustomError, MetaMaskRequiredError } from "./error";
 
 type Network = ethers.providers.Network & {
   connected: boolean;
@@ -118,8 +119,7 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
   }
 
   if (!ethereumExists && PROTECTED_ROUTES.includes(window.location.pathname)) {
-    navigate("/errors/no-ethereum-provider", { replace: true });
-    return <FullPageSpinner />;
+    throw new MetaMaskRequiredError();
   }
 
   return (

@@ -1,7 +1,13 @@
 import { withEmotionCache } from "@emotion/react";
-import { unstable_useEnhancedEffect as useEnhancedEffect } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  unstable_useEnhancedEffect as useEnhancedEffect,
+} from "@mui/material";
 import * as React from "react";
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
@@ -14,6 +20,7 @@ import {
 } from "remix";
 import Layout from "./components/Layout";
 import { BallotProvider } from "./lib/ballot";
+import { CustomError } from "./lib/error";
 import { EthereumProvider } from "./lib/ethereum";
 import ClientStyleContext from "./mui/ClientStyleContext";
 import theme from "./mui/theme/theme";
@@ -110,21 +117,30 @@ export default function App() {
 export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error);
 
-  return (
-    <Document title="Error!">
-      <Layout>
-        <div>
-          <h1>There was an error</h1>
-          <p>{error.message}</p>
-          <hr />
-          <p>
-            Hey, developer, you should replace this with what you want your
-            users to see.
-          </p>
-        </div>
-      </Layout>
-    </Document>
-  );
+  if (error instanceof CustomError) {
+    return (
+      <Document title="Error!">
+        <Layout>
+          <Box>
+            <Typography variant="h1">{error.message}</Typography>
+            {error.renderBody()}
+            {error.renderActionButton()}
+          </Box>
+        </Layout>
+      </Document>
+    );
+  } else {
+    return (
+      <Document title="Error!">
+        <Layout>
+          <Box>
+            <Typography variant="h1">An error occurred</Typography>
+            <Typography variant="body1">{error.message}</Typography>
+          </Box>
+        </Layout>
+      </Document>
+    );
+  }
 }
 
 // https://remix.run/docs/en/v1/api/conventions#catchboundary
