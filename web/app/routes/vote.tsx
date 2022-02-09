@@ -1,10 +1,25 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "remix";
+import FullPageSpinner from "~/components/FullPageSpinner";
+import { useVoterStatus } from "~/lib/other";
 import { useBallot } from "../lib/ballot";
 
 export default function Vote() {
   const { proposals, submitVote } = useBallot();
+  const status = useVoterStatus();
+
+  if (status === "loading") {
+    return <FullPageSpinner />;
+  }
+
+  if (status === "unregistered") {
+    throw new Error("You are not registered to vote");
+  }
+
+  if (status === "voted") {
+    window.location.replace("/results");
+  }
 
   return (
     <Box>

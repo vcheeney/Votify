@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useLocation, useNavigate } from "remix";
+import { useNavigate } from "remix";
 import invariant from "tiny-invariant";
 import { VoteEvent } from "types/ethers-contracts/Ballot";
 import { TypedListener } from "types/ethers-contracts/common";
@@ -26,6 +26,9 @@ interface BallotContextInterface {
   ballotExists: boolean;
   proposals: Proposal[];
   submitVote: (id: number) => Promise<void>;
+  getVoterInformation: (
+    account: string
+  ) => Promise<null | { allowed: boolean; voted: boolean }>;
 }
 
 const PROTECTED_ROUTES = ["/vote", "/results"];
@@ -35,6 +38,7 @@ const BallotContext = createContext<BallotContextInterface>({
   ballotExists: false,
   proposals: [],
   submitVote: async () => {},
+  getVoterInformation: async () => null,
 });
 
 export const BallotProvider: FC = ({ children }) => {
@@ -134,11 +138,22 @@ export const BallotProvider: FC = ({ children }) => {
       });
   }
 
+  async function getVoterInformation(account: string) {
+    const ballot = ballotRef.current;
+    invariant(ballot, "Ballot should be defined");
+    const voter = await ballot.voters(account);
+    return {
+      allowed: voter.allowed,
+      voted: voter.voted,
+    };
+  }
+
   const value = {
     loading,
     ballotExists,
     proposals,
     submitVote,
+    getVoterInformation,
   };
 
   if (loading) {
