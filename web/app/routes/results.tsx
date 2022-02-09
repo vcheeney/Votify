@@ -1,14 +1,14 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "remix";
-import { useBallot } from "../lib/ballot";
+import { useBallot } from "~/lib/ballot";
 
-export default function Vote() {
-  const { proposals, submitVote } = useBallot();
+export default function Results() {
+  const { proposals } = useBallot();
 
   return (
     <Box>
-      <Typography variant="h1">Vote</Typography>
+      <Typography variant="h1">Results</Typography>
       <Stack
         direction="row"
         spacing={4}
@@ -44,12 +44,12 @@ export default function Vote() {
                 h: "125px",
               }}
               component="img"
-              src="./politician.png"
+              src="../politician.png"
               alt={proposal.name}
             />
-            <Button variant="contained" onClick={() => submitVote(proposal.id)}>
-              Vote
-            </Button>
+            <Typography variant="subtitle2">
+              {proposal.voteCount} votes
+            </Typography>
           </Stack>
         ))}
       </Stack>

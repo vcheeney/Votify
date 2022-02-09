@@ -1,8 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
-import { withRequiredEthereumProvider } from "~/components/withEthereum";
 import { useEthereum } from "~/lib/ethereum";
 
-function Connect() {
+export default function Connect() {
   const { connectWithMetamask, account } = useEthereum();
 
   if (account) {
@@ -24,5 +23,3 @@ function Connect() {
     </Box>
   );
 }
-
-export default withRequiredEthereumProvider(Connect);

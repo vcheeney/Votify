@@ -7,9 +7,9 @@ import {
   useRef,
   useState,
 } from "react";
+import { useLocation, useNavigate } from "remix";
 import invariant from "tiny-invariant";
-
-const HARDHAT_CHAIN_ID = 31337;
+import FullPageSpinner from "~/components/FullPageSpinner";
 
 type Network = ethers.providers.Network & {
   connected: boolean;
@@ -23,6 +23,9 @@ interface EthereumContextInterface {
   connectWithMetamask: () => void;
 }
 
+const HARDHAT_CHAIN_ID = 31337;
+const PROTECTED_ROUTES = ["/connect", "/vote", "/results"];
+
 const EthereumContext = createContext<EthereumContextInterface>({
   loading: true,
   ethereumExists: false,
@@ -31,12 +34,13 @@ const EthereumContext = createContext<EthereumContextInterface>({
   connectWithMetamask: () => {},
 });
 
-function useEthereumInternal() {
+export const EthereumProvider: FC<{}> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [ethereumExists, setEthereumExists] = useState(false);
   const [network, setNetwork] = useState<Network | null>(null);
   const [account, setAccount] = useState<string | null>(null);
   const providerRef = useRef<ethers.providers.Web3Provider | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const ethereum = window.ethereum;
@@ -101,17 +105,23 @@ function useEthereumInternal() {
     }
   }
 
-  return {
+  const value = {
     loading,
     ethereumExists,
     network,
     account,
     connectWithMetamask,
   };
-}
 
-export const EthereumProvider: FC<{}> = ({ children }) => {
-  const value = useEthereumInternal();
+  if (loading) {
+    return <FullPageSpinner />;
+  }
+
+  if (!ethereumExists && PROTECTED_ROUTES.includes(window.location.pathname)) {
+    navigate("/errors/no-ethereum-provider", { replace: true });
+    return <FullPageSpinner />;
+  }
+
   return (
     <EthereumContext.Provider value={value}>
       {children}

@@ -93,15 +93,15 @@ export default function App() {
       <EthereumProvider>
         <BallotProvider>
           <Layout>
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-              }}
-            />
             <Outlet />
           </Layout>
         </BallotProvider>
       </EthereumProvider>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+        }}
+      />
     </Document>
   );
 }
