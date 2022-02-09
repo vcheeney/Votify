@@ -38,6 +38,10 @@ export default function Register() {
     window.location.replace("/vote");
   }
 
+  if (status === "voted") {
+    window.location.replace("/results");
+  }
+
   return (
     <Box>
       <Typography variant="h1">Register</Typography>

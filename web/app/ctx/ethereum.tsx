@@ -47,7 +47,6 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
     const ethereum = window.ethereum;
 
     setEthereumExists(!!ethereum);
-    setLoading(false);
 
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(
@@ -55,7 +54,10 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
         "any" // https://github.com/ethers-io/ethers.js/issues/866
       );
       providerRef.current = provider;
-      getAccountAddress();
+
+      getAccountAddress().then(() => {
+        setLoading(false);
+      });
 
       provider.on("network", handleNetworkChange);
 
@@ -64,6 +66,8 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
       return () => {
         provider.off("network", handleNetworkChange);
       };
+    } else {
+      setLoading(false);
     }
   }, []);
 

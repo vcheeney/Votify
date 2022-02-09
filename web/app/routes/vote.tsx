@@ -2,13 +2,19 @@ import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "remix";
 import FullPageSpinner from "~/components/FullPageSpinner";
+import { useEthereum } from "~/ctx/ethereum";
 import { NotRegisteredError } from "~/lib/error";
 import { useVoterStatus } from "~/lib/other";
 import { useBallot } from "../ctx/ballot";
 
 export default function Vote() {
+  const { account, loading } = useEthereum();
   const { proposals, submitVote } = useBallot();
   const status = useVoterStatus();
+
+  if (!loading && !account) {
+    window.location.replace("/connect");
+  }
 
   if (status === "loading") {
     return <FullPageSpinner />;

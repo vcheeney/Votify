@@ -135,7 +135,8 @@ export const BallotProvider: FC = ({ children }) => {
         window.location.replace("/results");
       })
       .catch((err) => {
-        alert(err.data.message);
+        console.error(err);
+        alert(err.message);
       });
   }
 
