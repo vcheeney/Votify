@@ -1,23 +1,25 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "remix";
 
-export default function Index() {
+function NoEthereumProvider() {
   return (
     <Box>
-      <Typography variant="h1">Welcome to Votify</Typography>
-      <Typography variant="subtitle2">
-        This is our beautiful landing page.
+      <Typography variant="h1">
+        An ethereum provider is required to run this app (ex: MetaMask)
       </Typography>
       <Button
         variant="contained"
         component={Link}
-        to="/connect"
+        to="/"
+        replace={true}
         sx={{
           mt: 4,
         }}
       >
-        Get started
+        Back to home
       </Button>
     </Box>
   );
 }
+
+export default NoEthereumProvider;

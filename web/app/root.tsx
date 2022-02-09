@@ -13,6 +13,8 @@ import {
   useLoaderData,
 } from "remix";
 import Layout from "./components/Layout";
+import { BallotProvider } from "./lib/ballot";
+import { EthereumProvider } from "./lib/ethereum";
 import ClientStyleContext from "./mui/ClientStyleContext";
 import theme from "./mui/theme/theme";
 
@@ -88,14 +90,18 @@ export default function App() {
   const data = useLoaderData();
   return (
     <Document>
-      <Layout>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-          }}
-        />
-        <Outlet />
-      </Layout>
+      <EthereumProvider>
+        <BallotProvider>
+          <Layout>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+              }}
+            />
+            <Outlet />
+          </Layout>
+        </BallotProvider>
+      </EthereumProvider>
     </Document>
   );
 }

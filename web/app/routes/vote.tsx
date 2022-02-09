@@ -1,10 +1,11 @@
 import { Box, Button, Typography, Stack } from "@mui/material";
 import { Link } from "remix";
 import { ArrowBack } from "@mui/icons-material";
-import { useBallot } from "~/lib/contract";
+import { useBallot } from "../lib/ballot";
+import { withRequiredBallotProvider } from "~/components/withBallot";
 
-export default function Index() {
-  const { proposals } = useBallot();
+const Vote = () => {
+  const { proposals, submitVote } = useBallot();
 
   return (
     <Box>
@@ -63,4 +64,6 @@ export default function Index() {
       </Button>
     </Box>
   );
-}
+};
+
+export default withRequiredBallotProvider(Vote);
