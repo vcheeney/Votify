@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "remix";
 
 const RefreshThePageButton = () => (
@@ -100,22 +100,28 @@ export class NotRegisteredError extends CustomError {
         <Typography variant="body1">
           You must be a registered voter to vote.
         </Typography>
+        <Typography variant="body1">
+          Have just registered? Try refreshing the page a couple of times.
+        </Typography>
       </Box>
     );
   }
   renderActionButton() {
     return (
-      <Button
-        variant="contained"
-        component={Link}
-        to="/register"
-        replace={true}
-        sx={{
-          mt: 4,
-        }}
-      >
-        Register
-      </Button>
+      <Stack spacing={4}>
+        <Button
+          variant="contained"
+          component={Link}
+          to="/register"
+          replace={true}
+          sx={{
+            mt: 4,
+          }}
+        >
+          Register
+        </Button>
+        <RefreshThePageButton />
+      </Stack>
     );
   }
 }
