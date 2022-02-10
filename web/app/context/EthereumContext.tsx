@@ -25,7 +25,9 @@ interface EthereumContextInterface {
 }
 
 const HARDHAT_CHAIN_ID = 31337;
-const PROTECTED_ROUTES = ["/connect", "/vote", "/results"];
+
+const UNPROTECTED_ROUTES = ["/"];
+const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
 
 const EthereumContext = createContext<EthereumContextInterface>({
   loading: true,
@@ -122,7 +124,7 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
     return <FullPageSpinner />;
   }
 
-  if (!ethereumExists && PROTECTED_ROUTES.includes(window.location.pathname)) {
+  if (!ethereumExists && isProtected(window.location.pathname)) {
     throw new MetaMaskRequiredError();
   }
 
