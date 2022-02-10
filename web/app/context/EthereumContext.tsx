@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useNavigate } from "remix";
 import invariant from "tiny-invariant";
-import FullPageSpinner from "~/components/FullPageSpinner";
+import { FullPageSpinner } from "~/components/FullPageSpinner";
 import { MetaMaskRequiredError } from "../lib/error";
 
 type Network = ethers.providers.Network & {

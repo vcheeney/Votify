@@ -11,10 +11,10 @@ import { useNavigate } from "remix";
 import invariant from "tiny-invariant";
 import { VoteEvent } from "types/ethers-contracts/Ballot";
 import { TypedListener } from "types/ethers-contracts/common";
-import FullPageSpinner from "~/components/FullPageSpinner";
+import { FullPageSpinner } from "~/components/FullPageSpinner";
 import { Ballot, Ballot__factory } from "../../types/ethers-contracts";
 import { BallotNotFoundError } from "../lib/error";
-import { useEthereum } from "./ethereum";
+import { useEthereum } from "./EthereumContext";
 
 export type Proposal = {
   id: number;
