@@ -1,7 +1,7 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "remix";
-import { useBallot } from "~/ctx/ballot";
+import { useBallot } from "~/context/BallotContext";
 
 export default function Results() {
   const { proposals } = useBallot();

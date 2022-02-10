@@ -1,11 +1,11 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "remix";
-import FullPageSpinner from "~/components/FullPageSpinner";
-import { useEthereum } from "~/ctx/ethereum";
+import { FullPageSpinner } from "~/components/FullPageSpinner";
+import { useEthereum } from "~/context/EthereumContext";
 import { NotRegisteredError } from "~/lib/error";
 import { useVoterStatus } from "~/lib/other";
-import { useBallot } from "../ctx/ballot";
+import { useBallot } from "../context/BallotContext";
 
 export default function Vote() {
   const { account, loading } = useEthereum();

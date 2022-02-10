@@ -16,9 +16,9 @@ import {
   useCatch,
   useLoaderData,
 } from "remix";
-import Layout from "./components/Layout";
-import { BallotProvider } from "./ctx/ballot";
-import { EthereumProvider } from "./ctx/ethereum";
+import { Layout } from "./components/Layout";
+import { BallotProvider } from "./context/BallotContext";
+import { EthereumProvider } from "./context/EthereumContext";
 import { CustomError } from "./lib/error";
 import ClientStyleContext from "./mui/ClientStyleContext";
 import theme from "./mui/theme/theme";

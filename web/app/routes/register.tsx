@@ -1,8 +1,8 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { ActionFunction, Form, redirect } from "remix";
 import invariant from "tiny-invariant";
-import FullPageSpinner from "~/components/FullPageSpinner";
-import { useEthereum } from "~/ctx/ethereum";
+import { FullPageSpinner } from "~/components/FullPageSpinner";
+import { useEthereum } from "~/context/EthereumContext";
 import { giveRightToVote } from "~/lib/ballot";
 import { CustomError } from "~/lib/error";
 import { useVoterStatus } from "~/lib/other";
