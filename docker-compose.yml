@@ -17,3 +17,9 @@ services:
     volumes:
       - ./database/data:/var/lib/postgresql/data/
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  local-blockchain:
+    container_name: local-blockchain
+    build: ./hardhat
+    ports:
+      - "8545:8545"
