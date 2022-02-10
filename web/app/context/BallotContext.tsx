@@ -77,7 +77,7 @@ export const BallotProvider: FC = ({ children }) => {
 
     async function setupBallot() {
       try {
-        const res = await ballot.chairperson();
+        await ballot.chairperson();
         console.log("contract is accessible 👍");
         setBallotExists(true);
         fetchProposals();
@@ -126,16 +126,14 @@ export const BallotProvider: FC = ({ children }) => {
     const signer = provider.getSigner();
     const authenticatedBallot = ballot.connect(signer);
 
-    authenticatedBallot
-      .vote(proposalId)
-      .then(() => {
-        console.log("Voted for: ", proposalId);
-        window.location.replace("/results");
-      })
-      .catch((err) => {
-        console.error(err);
-        alert(err.message);
-      });
+    try {
+      await authenticatedBallot.vote(proposalId);
+      console.log("Voted for: ", proposalId);
+      window.location.replace("/results");
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message);
+    }
   }
 
   async function getVoterInformation(account: string) {
