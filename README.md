@@ -124,6 +124,8 @@ docker-compose up
 # Keep this terminal open for the duration of your working session
 ```
 
+> 🚨 If changes are made to the smart contract's code, shutdown the docker environment with **docker-compose down** before rebuilding the containers with **docker-compose build** and relaunching with **docker-compose up**.
+
 ##### Configuring MetaMask to access the local blockchain
 
 In your web browser:
