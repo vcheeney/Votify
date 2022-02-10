@@ -1,22 +1,22 @@
 version: "3.4"
 
 services:
-  # database:
-  #   image: postgres
-  #   restart: always
-  #   container_name: database
-  #   env_file:
-  #     - ./database/database.env
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 6
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - ./database/data:/var/lib/postgresql/data/
-  #     - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+  database:
+    image: postgres
+    restart: always
+    container_name: database
+    env_file:
+      - ./database/database.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/data:/var/lib/postgresql/data/
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   local-blockchain:
     container_name: local-blockchain
