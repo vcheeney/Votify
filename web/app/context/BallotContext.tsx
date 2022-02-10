@@ -75,24 +75,22 @@ export const BallotProvider: FC = ({ children }) => {
     const ballot = Ballot__factory.connect(ballotAddress, provider);
     ballotRef.current = ballot;
 
-    ballot
-      .chairperson()
-      .then(() => {
+    async function setupBallot() {
+      try {
+        const res = await ballot.chairperson();
         console.log("contract is accessible 👍");
         setBallotExists(true);
-      })
-      .catch((error) => {
+        fetchProposals();
+      } catch (error) {
         console.error(error);
         setBallotExists(false);
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
+      }
+    }
+    setupBallot();
 
     ballot.on("Vote", listener);
-
-    fetchProposals();
-
     return () => {
       ballot.off("Vote", listener);
     };
