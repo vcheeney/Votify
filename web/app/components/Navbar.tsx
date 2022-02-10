@@ -1,9 +1,9 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { Link } from "remix/client";
-import { useEthereum } from "~/ctx/ethereum";
+import { useEthereum } from "~/context/EthereumContext";
 
-const Navbar: FC = () => {
+export const Navbar: FC = () => {
   const { account, network } = useEthereum();
 
   return (
@@ -68,5 +68,3 @@ const Navbar: FC = () => {
     </>
   );
 };
-
-export default Navbar;

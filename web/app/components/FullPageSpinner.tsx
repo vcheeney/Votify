@@ -1,9 +1,7 @@
 import { Box, CircularProgress } from "@mui/material";
 import React, { FC } from "react";
 
-type Props = {};
-
-const FullPageSpinner: FC<Props> = ({ children }) => {
+export const FullPageSpinner: FC = () => {
   return (
     <Box
       sx={{
@@ -16,5 +14,3 @@ const FullPageSpinner: FC<Props> = ({ children }) => {
     </Box>
   );
 };
-
-export default FullPageSpinner;

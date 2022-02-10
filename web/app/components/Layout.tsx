@@ -1,8 +1,8 @@
 import { Box, Container } from "@mui/material";
-import * as React from "react";
-import Navbar from "./Navbar";
+import { FC } from "react";
+import { Navbar } from "./Navbar";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export const Layout: FC = ({ children }) => {
   return (
     <Box
       sx={{
@@ -17,4 +17,4 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </Container>
     </Box>
   );
-}
+};
