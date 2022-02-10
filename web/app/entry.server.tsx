@@ -10,6 +10,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { CacheProvider } from "@emotion/react";
 import createEmotionServer from "@emotion/server/create-instance";
 import theme from "./mui/theme/theme";
+require("dotenv").config();
 
 export default function handleRequest(
   request: Request,

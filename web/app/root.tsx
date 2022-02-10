@@ -1,17 +1,25 @@
 import { withEmotionCache } from "@emotion/react";
-import { unstable_useEnhancedEffect as useEnhancedEffect } from "@mui/material";
+import {
+  Box,
+  Typography,
+  unstable_useEnhancedEffect as useEnhancedEffect,
+} from "@mui/material";
 import * as React from "react";
-import { MetaFunction, useLoaderData } from "remix";
 import {
   Links,
   LiveReload,
   Meta,
+  MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
   useCatch,
+  useLoaderData,
 } from "remix";
-import Layout from "./components/Layout";
+import { Layout } from "./components/Layout";
+import { BallotProvider } from "./context/BallotContext";
+import { EthereumProvider } from "./context/EthereumContext";
+import { CustomError } from "./lib/error";
 import ClientStyleContext from "./mui/ClientStyleContext";
 import theme from "./mui/theme/theme";
 
@@ -22,7 +30,6 @@ interface DocumentProps {
 
 const Document = withEmotionCache(
   ({ children, title }: DocumentProps, emotionCache) => {
-    const data = useLoaderData();
     const clientStyleData = React.useContext(ClientStyleContext);
 
     // Only executed on client
@@ -62,11 +69,6 @@ const Document = withEmotionCache(
         <body>
           {children}
           <ScrollRestoration />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-            }}
-          />
           <Scripts />
           {process.env.NODE_ENV === "development" && <LiveReload />}
         </body>
@@ -90,11 +92,21 @@ export async function loader() {
 // https://remix.run/api/conventions#default-export
 // https://remix.run/api/conventions#route-filenames
 export default function App() {
+  const data = useLoaderData();
   return (
     <Document>
-      <Layout>
-        <Outlet />
-      </Layout>
+      <EthereumProvider>
+        <BallotProvider>
+          <Layout>
+            <Outlet />
+          </Layout>
+        </BallotProvider>
+      </EthereumProvider>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+        }}
+      />
     </Document>
   );
 }
@@ -103,21 +115,30 @@ export default function App() {
 export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error);
 
-  return (
-    <Document title="Error!">
-      <Layout>
-        <div>
-          <h1>There was an error</h1>
-          <p>{error.message}</p>
-          <hr />
-          <p>
-            Hey, developer, you should replace this with what you want your
-            users to see.
-          </p>
-        </div>
-      </Layout>
-    </Document>
-  );
+  if (error instanceof CustomError) {
+    return (
+      <Document title="Error!">
+        <Layout>
+          <Box>
+            <Typography variant="h1">{error.message}</Typography>
+            {error.renderBody()}
+            {error.renderActionButton()}
+          </Box>
+        </Layout>
+      </Document>
+    );
+  } else {
+    return (
+      <Document title="Error!">
+        <Layout>
+          <Box>
+            <Typography variant="h1">An error occurred</Typography>
+            <Typography variant="body1">{error.message}</Typography>
+          </Box>
+        </Layout>
+      </Document>
+    );
+  }
 }
 
 // https://remix.run/docs/en/v1/api/conventions#catchboundary

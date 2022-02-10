@@ -13,7 +13,7 @@ async function main() {
   // manually to make sure everything is compiled
   // await hre.run('compile');
 
-  const names = ["Alice", "Bob", "Charlie", "Dave", "Eve"];
+  const names = ["Alice", "Bob", "Charlie"];
   const formattedNames = names.map(ethers.utils.formatBytes32String);
 
   // We get the contract to deploy

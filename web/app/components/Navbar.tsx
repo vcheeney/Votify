@@ -1,11 +1,10 @@
-import { SentimentSatisfiedAlt } from "@mui/icons-material";
-import { Button, Stack, Typography, Box, Container } from "@mui/material";
-import { FC, useState } from "react";
+import { Box, Container, Stack, Typography } from "@mui/material";
+import { FC } from "react";
 import { Link } from "remix/client";
-import { ethers } from "ethers";
+import { useEthereum } from "~/context/EthereumContext";
 
-const Navbar: FC = () => {
-  const [account, setAccount] = useState(null);
+export const Navbar: FC = () => {
+  const { account, network } = useEthereum();
 
   return (
     <>
@@ -53,31 +52,15 @@ const Navbar: FC = () => {
               />
             </Stack>
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            {account ? (
-              <Typography color="white">{account}</Typography>
-            ) : (
-              <Button
-                variant="contained"
-                color="contrastPrimary"
-                onClick={async () => {
-                  if (window.ethereum) {
-                    const accounts = await window.ethereum.request({
-                      method: "eth_requestAccounts",
-                    });
-                    setAccount(accounts[0]);
-                  } else {
-                    alert("Please install MetaMask to use this app.");
-                  }
-                }}
-              >
-                Connect with wallet
-              </Button>
+          <Box>
+            <Typography color="white">
+              Account: {account || "(not connected)"}
+            </Typography>
+            {network && (
+              <Typography color="white">
+                Chain: {network.name} {network.chainId}{" "}
+                {network.connected ? "🟢" : "🔴"}
+              </Typography>
             )}
           </Box>
         </Container>
@@ -85,5 +68,3 @@ const Navbar: FC = () => {
     </>
   );
 };
-
-export default Navbar;

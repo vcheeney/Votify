@@ -11,12 +11,12 @@ export default function Index() {
       <Button
         variant="contained"
         component={Link}
-        to="/vote"
+        to="/connect"
         sx={{
           mt: 4,
         }}
       >
-        Vote now
+        Get started
       </Button>
     </Box>
   );

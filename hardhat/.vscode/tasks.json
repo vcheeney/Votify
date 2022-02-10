@@ -23,6 +23,20 @@
       "problemMatcher": [],
       "label": "npm: deploy",
       "detail": "hardhat run scripts/deploy.ts"
+    },
+    {
+      "type": "npm",
+      "script": "node",
+      "problemMatcher": [],
+      "label": "npm: node",
+      "detail": "hardhat node"
+    },
+    {
+      "type": "npm",
+      "script": "giveRightToVote",
+      "problemMatcher": [],
+      "label": "npm: giveRightToVote",
+      "detail": "hardhat run scripts/giveRightToVote.ts --network localhost"
     }
   ]
 }
