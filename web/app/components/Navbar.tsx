@@ -2,9 +2,11 @@ import { Box, Container, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { Link } from "remix/client";
 import { useEthereum } from "~/context/EthereumContext";
+import { useVoter } from "../context/VoterContext";
 
 export const Navbar: FC = () => {
   const { account, network } = useEthereum();
+  const { voter } = useVoter();
 
   return (
     <>
@@ -62,6 +64,10 @@ export const Navbar: FC = () => {
                 {network.connected ? "🟢" : "🔴"}
               </Typography>
             )}
+            <Typography color="white">
+              Voter:{" "}
+              {voter ? `${voter.firstName} ${voter.lastName}` : "not registred"}
+            </Typography>
           </Box>
         </Container>
       </Box>
