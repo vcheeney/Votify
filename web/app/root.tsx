@@ -101,11 +101,11 @@ export default function App() {
       <LocalizationProvider>
         <EthereumProvider>
           <BallotProvider>
-            {/* <VoterProvider> */}
-            <Layout>
-              <Outlet />
-            </Layout>
-            {/* </VoterProvider> */}
+            <VoterProvider>
+              <Layout>
+                <Outlet />
+              </Layout>
+            </VoterProvider>
           </BallotProvider>
         </EthereumProvider>
       </LocalizationProvider>

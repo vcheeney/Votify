@@ -17,7 +17,7 @@ import { useEthereum } from "~/context/EthereumContext";
 import { giveRightToVote } from "~/lib/ballot";
 import { CustomError } from "~/lib/error";
 import { useVoterStatus } from "~/lib/other";
-import { registerUser } from "../lib/users";
+import { registerUser } from "../lib/users.server";
 
 // TODO: add fancy error messages
 // https://remix.run/docs/en/v1/guides/data-writes#animating-in-the-validation-errors
@@ -41,15 +41,15 @@ export const action: ActionFunction = async ({ request }) => {
 
   const user = await registerUser(secretCode, new Date(dateOfBirth), account);
 
-  // const success = await giveRightToVote(account);
+  const success = await giveRightToVote(account);
 
-  // if (success) {
-  //   return redirect("/vote");
-  // } else {
-  //   throw new CustomError(
-  //     "Could not give right to vote (See error in the server console)"
-  //   );
-  // }
+  if (success) {
+    return redirect("/vote");
+  } else {
+    throw new CustomError(
+      "Could not give right to vote (See error in the server console)"
+    );
+  }
 
   return null;
 };

@@ -66,7 +66,7 @@ export const Navbar: FC = () => {
             )}
             <Typography color="white">
               Voter:{" "}
-              {voter ? `${voter.firstName} ${voter.lastName}` : "not registred"}
+              {voter ? `${voter.firstName} ${voter.lastName}` : "unverified"}
             </Typography>
           </Box>
         </Container>
