@@ -77,7 +77,7 @@ export default function Register() {
         ready={false}
         title="Your registration has been accepted"
         route="/vote"
-        open={registered}
+        open={!!registered}
         message="We are currently waiting for the operation to be saved on the public ledger. You will be redirected to the voting page once the process is complete. It should only take a few seconds."
       />
       <Typography variant="h1">Register</Typography>
