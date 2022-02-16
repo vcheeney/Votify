@@ -1,7 +1,7 @@
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import { VerifyWalletPage } from "../components/VerifyWalletPage";
 import { createSignatureMessage } from "../lib/auth";
-import { useVoterStatus } from "../lib/other";
+import { useVoterStatus } from "../hooks/useVoterStatus";
 import { useEthereum } from "./EthereumContext";
 
 interface Voter {

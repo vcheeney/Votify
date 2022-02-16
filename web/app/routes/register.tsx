@@ -17,7 +17,7 @@ import { WaitingDialog } from "~/components/WaitingDialog";
 import { useEthereum } from "~/context/EthereumContext";
 import { giveRightToVote } from "~/lib/ballot";
 import { CustomError } from "~/lib/error";
-import { useVoterStatus } from "~/lib/other";
+import { useVoterStatus } from "~/hooks/useVoterStatus";
 import { registerUser } from "../lib/users.server";
 
 // TODO: add fancy error messages
@@ -51,8 +51,6 @@ export const action: ActionFunction = async ({ request }) => {
       "Could not give right to vote (See error in the server console)"
     );
   }
-
-  return null;
 };
 
 export default function Register() {

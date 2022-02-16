@@ -7,7 +7,8 @@ type VoterStatus = "loading" | "unregistered" | "registered" | "voted";
 
 export function useVoterStatus() {
   const { account } = useEthereum();
-  const { getVoterInformation } = useBallot();
+  const { getVoterInformation, voteRightReceived, currentVoterVoteStatus } =
+    useBallot();
   const [status, setStatus] = useState<VoterStatus>("loading");
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export function useVoterStatus() {
         }
       });
     }
-  }, [account]);
+  }, [account, voteRightReceived, currentVoterVoteStatus]);
 
   return status;
 }
