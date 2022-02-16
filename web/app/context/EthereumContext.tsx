@@ -1,3 +1,4 @@
+import { JsonRpcSigner } from "@ethersproject/providers";
 import { ethers } from "ethers";
 import {
   createContext,
@@ -21,6 +22,7 @@ interface EthereumContextInterface {
   ethereumExists: boolean;
   network: Network | null;
   account: string | null;
+  signer?: JsonRpcSigner;
   connectWithMetamask: () => void;
 }
 
@@ -42,6 +44,7 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
   const [ethereumExists, setEthereumExists] = useState(false);
   const [network, setNetwork] = useState<Network | null>(null);
   const [account, setAccount] = useState<string | null>(null);
+  const [signer, setSigner] = useState<JsonRpcSigner>();
   const providerRef = useRef<ethers.providers.Web3Provider | null>(null);
   const navigate = useNavigate();
 
@@ -106,9 +109,11 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
     try {
       const signer = provider.getSigner();
       const address = await signer.getAddress();
+
+      setSigner(signer);
       setAccount(address);
     } catch (error) {
-      console.log("user is not logged in");
+      console.log("[EthereumContext] User is not logged in");
     }
   }
 
@@ -117,6 +122,7 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
     ethereumExists,
     network,
     account,
+    signer,
     connectWithMetamask,
   };
 

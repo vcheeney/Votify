@@ -4,6 +4,7 @@ import {
   Typography,
   unstable_useEnhancedEffect as useEnhancedEffect,
 } from "@mui/material";
+import DateAdapter from "@mui/lab/AdapterMoment";
 import * as React from "react";
 import {
   Links,
@@ -22,6 +23,8 @@ import { EthereumProvider } from "./context/EthereumContext";
 import { CustomError } from "./lib/error";
 import ClientStyleContext from "./mui/ClientStyleContext";
 import theme from "./mui/theme/theme";
+import { LocalizationProvider } from "./mui/LocalizationProvider";
+import { VoterProvider } from "./context/VoterContext";
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -95,13 +98,17 @@ export default function App() {
   const data = useLoaderData();
   return (
     <Document>
-      <EthereumProvider>
-        <BallotProvider>
-          <Layout>
-            <Outlet />
-          </Layout>
-        </BallotProvider>
-      </EthereumProvider>
+      <LocalizationProvider>
+        <EthereumProvider>
+          <BallotProvider>
+            <VoterProvider>
+              <Layout>
+                <Outlet />
+              </Layout>
+            </VoterProvider>
+          </BallotProvider>
+        </EthereumProvider>
+      </LocalizationProvider>
       <script
         dangerouslySetInnerHTML={{
           __html: `window.ENV = ${JSON.stringify(data.ENV)}`,

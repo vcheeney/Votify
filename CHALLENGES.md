@@ -5,3 +5,7 @@
 ![](https://1.bp.blogspot.com/-JAFxNZVdwus/X6B7YPYVibI/AAAAAAAAF_o/CiZAvHUnFQIGFuviYL9QYvQiVQamOUoVwCLcBGAsYHQ/s644/EtherMiners.png)
 
 Source: https://blog.dshr.org/2022/02/ee380-talk.html?m=1
+
+# Match le behavior des gens avec quel compte ont votés
+
+et dériver l'identité attaché à l'address
