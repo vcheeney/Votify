@@ -5,11 +5,10 @@ const { getSession, commitSession, destroySession } =
     cookie: {
       name: "__session",
       // all of these are optional
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
       httpOnly: true,
-      maxAge: 60,
       path: "/",
       sameSite: "strict",
-      secrets: ["s3cret1"],
       secure: true,
     },
   });

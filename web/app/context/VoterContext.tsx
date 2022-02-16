@@ -38,7 +38,8 @@ export const VoterProvider: FC<{}> = ({ children }) => {
   const [voter, setVoter] = useState<Voter>();
   const { account, signer, loading: ethereumLoading } = useEthereum();
   const voterStatus = useVoterStatus();
-  const needsVerify = voterStatus === "registered" && voter == null;
+  const needsVerify =
+    (voterStatus === "registered" || voterStatus === "voted") && voter == null;
 
   async function fetchMe() {
     const currentUserRes = await fetch(`api/user/me`);
@@ -78,11 +79,6 @@ export const VoterProvider: FC<{}> = ({ children }) => {
 
   async function fetchRegistredVoter() {
     setLoading(true);
-    if (account == null || signer == null || voterStatus !== "registered") {
-      setLoading(false);
-      return;
-    }
-
     console.log(
       "[VoterContext] Fetching voter information for wallet",
       account
@@ -102,10 +98,6 @@ export const VoterProvider: FC<{}> = ({ children }) => {
   useEffect(() => {
     fetchRegistredVoter();
   }, [account, voterStatus]);
-
-  if (loading) {
-    return <FullPageSpinner />;
-  }
 
   return (
     <VoterContext.Provider
