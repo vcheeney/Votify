@@ -29,6 +29,7 @@ contract Ballot {
 
   // Events
   event Vote(address voter, uint256 vote);
+  event VoterAllowed(address voter);
 
   /// Create a new ballot to choose one of `proposalNames`.
   constructor(bytes32[] memory proposalNames) {
@@ -63,6 +64,7 @@ contract Ballot {
     require(!voters[voter].voted, "Already voted");
     require(voters[voter].allowed == false, "Already allowed");
     voters[voter].allowed = true;
+    emit VoterAllowed(voter);
   }
 
   /// Give your vote
