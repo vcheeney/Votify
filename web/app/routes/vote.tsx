@@ -2,14 +2,14 @@ import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "remix";
 import { FullPageSpinner } from "~/components/FullPageSpinner";
+import { WaitingDialog } from "~/components/WaitingDialog";
 import { useEthereum } from "~/context/EthereumContext";
-import { NotRegisteredError } from "~/lib/error";
-import { useVoterStatus } from "~/lib/other";
+import { useVoterStatus } from "~/hooks/useVoterStatus";
 import { useBallot } from "../context/BallotContext";
 
 export default function Vote() {
   const { account, loading } = useEthereum();
-  const { proposals, submitVote } = useBallot();
+  const { proposals, submitVote, currentVoterVoteStatus } = useBallot();
   const status = useVoterStatus();
 
   if (!loading && !account) {
@@ -21,15 +21,24 @@ export default function Vote() {
   }
 
   if (status === "unregistered") {
-    throw new NotRegisteredError();
+    window.location.replace("/register");
+    return <FullPageSpinner />;
   }
 
   if (status === "voted") {
     window.location.replace("/results");
+    return <FullPageSpinner />;
   }
 
   return (
     <Box>
+      <WaitingDialog
+        ready={false}
+        title="Your vote has been sent"
+        route="/vote"
+        open={currentVoterVoteStatus === "sent"}
+        message="We are currently waiting for the operation to be saved on the public ledger. You will be redirected to the results page once the process is complete. It should only take a few seconds."
+      />
       <Typography variant="h1">Vote</Typography>
       <Stack
         direction="row"

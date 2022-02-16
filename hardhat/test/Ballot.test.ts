@@ -73,7 +73,20 @@ describe("Ballot", function () {
         expect(voter.allowed).to.eq(true);
       });
 
-      it("should not allow to give right to vote to someone who has already voted", async () => {});
+      it("should emit a voter allowed event", async () => {
+        await expect(ballot.giveRightToVote(voter1.address))
+          .to.emit(ballot, "VoterAllowed")
+          .withArgs(voter1.address);
+      });
+
+      it("should not allow to give right to vote to someone who has already voted", async () => {
+        await ballot.giveRightToVote(voter1.address);
+        const ballotFromVoter1 = ballot.connect(voter1);
+        await ballotFromVoter1.vote(0);
+        await expect(ballot.giveRightToVote(voter1.address)).to.be.revertedWith(
+          "Already voted"
+        );
+      });
     });
   });
 

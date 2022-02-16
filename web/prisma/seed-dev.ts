@@ -132,8 +132,8 @@ async function createDefaultUsers() {
       {
         firstName: "Victor",
         lastName: "Cheeney",
-        dateOfBirth: new Date("1999-06-06"),
-        secretCodeHash: createAndStoreCodeHash("Victor", "1999-06-06"),
+        dateOfBirth: new Date("1999-07-01"),
+        secretCodeHash: createAndStoreCodeHash("Victor", "1999-07-01"),
       },
     ],
   });

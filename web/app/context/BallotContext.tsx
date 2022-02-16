@@ -9,11 +9,10 @@ import {
 } from "react";
 import { useNavigate } from "remix";
 import invariant from "tiny-invariant";
-import { VoteEvent } from "types/ethers-contracts/Ballot";
+import { VoteEvent, VoterAllowedEvent } from "types/ethers-contracts/Ballot";
 import { TypedListener } from "types/ethers-contracts/common";
 import { FullPageSpinner } from "~/components/FullPageSpinner";
 import { Ballot, Ballot__factory } from "../../types/ethers-contracts";
-import { BallotNotFoundError } from "../lib/error";
 import { useEthereum } from "./EthereumContext";
 
 export type Proposal = {
@@ -22,23 +21,34 @@ export type Proposal = {
   voteCount: number;
 };
 
+type VoterVoteStatus = "unknown" | "sent" | "confirmed";
+
 interface BallotContextInterface {
   loading: boolean;
   ballotExists: boolean;
   proposals: Proposal[];
+  voteRightReceived: boolean;
+  currentVoterVoteStatus: VoterVoteStatus;
   submitVote: (id: number) => Promise<void>;
   getVoterInformation: (
     account: string
   ) => Promise<null | { allowed: boolean; voted: boolean }>;
 }
 
-const UNPROTECTED_ROUTES = ["/", "/connect"];
+const UNPROTECTED_ROUTES = [
+  "/",
+  "/connect",
+  "/errors/ballot-not-found",
+  "/errors/no-ethereum-provider",
+];
 const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
 
 const BallotContext = createContext<BallotContextInterface>({
   loading: true,
   ballotExists: false,
   proposals: [],
+  voteRightReceived: false,
+  currentVoterVoteStatus: "unknown",
   submitVote: async () => {},
   getVoterInformation: async () => null,
 });
@@ -47,13 +57,27 @@ export const BallotProvider: FC = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [ballotExists, setBallotExists] = useState<boolean>(false);
   const [proposals, setProposals] = useState<Proposal[]>([]);
+  const [voteRightReceived, setVoteRightReceived] = useState(false);
+  const [currentVoterVoteStatus, setCurrentVoterVoteStatus] =
+    useState<VoterVoteStatus>("unknown");
   const ballotRef = useRef<Ballot | null>(null);
   const providerRef = useRef<ethers.providers.Web3Provider | null>(null);
-  const { ethereumExists, loading: ethereumLoading, network } = useEthereum();
+  const { ethereumExists, loading: ethereumLoading, account } = useEthereum();
   const navigate = useNavigate();
 
-  const listener: TypedListener<VoteEvent> = (voter, vote) => {
+  const voteEventsListener: TypedListener<VoteEvent> = (voterAccount) => {
     fetchProposals();
+    if (voterAccount === account) {
+      setCurrentVoterVoteStatus("confirmed");
+    }
+  };
+
+  const voterAllowedEventsListener: TypedListener<VoterAllowedEvent> = (
+    allowedVoterAccount
+  ) => {
+    if (allowedVoterAccount === account) {
+      setVoteRightReceived(true);
+    }
   };
 
   useEffect(() => {
@@ -91,9 +115,11 @@ export const BallotProvider: FC = ({ children }) => {
     }
     setupBallot();
 
-    ballot.on("Vote", listener);
+    ballot.on("Vote", voteEventsListener);
+    ballot.on("VoterAllowed", voterAllowedEventsListener);
     return () => {
-      ballot.off("Vote", listener);
+      ballot.off("Vote", voteEventsListener);
+      ballot.off("VoterAllowed", voterAllowedEventsListener);
     };
   }, [ethereumLoading, ethereumExists]);
 
@@ -129,8 +155,7 @@ export const BallotProvider: FC = ({ children }) => {
 
     try {
       await authenticatedBallot.vote(proposalId);
-      console.log("Voted for: ", proposalId);
-      window.location.replace("/results");
+      setCurrentVoterVoteStatus("sent");
     } catch (err: any) {
       console.error(err);
       alert(err.message);
@@ -151,6 +176,8 @@ export const BallotProvider: FC = ({ children }) => {
     loading,
     ballotExists,
     proposals,
+    voteRightReceived,
+    currentVoterVoteStatus,
     submitVote,
     getVoterInformation,
   };
@@ -160,8 +187,7 @@ export const BallotProvider: FC = ({ children }) => {
   }
 
   if (!ballotExists && isProtected(window.location.pathname)) {
-    invariant(network, "Network should be defined");
-    throw new BallotNotFoundError(network.name);
+    window.location.replace("/errors/ballot-not-found");
   }
 
   return (
