@@ -65,17 +65,17 @@ export const BallotProvider: FC = ({ children }) => {
   const { ethereumExists, loading: ethereumLoading, account } = useEthereum();
   const navigate = useNavigate();
 
-  const voteEventsListener: TypedListener<VoteEvent> = (voter, vote) => {
+  const voteEventsListener: TypedListener<VoteEvent> = (voterAccount) => {
     fetchProposals();
-    if (voter === account) {
+    if (voterAccount === account) {
       setCurrentVoterVoteStatus("confirmed");
     }
   };
 
   const voterAllowedEventsListener: TypedListener<VoterAllowedEvent> = (
-    voter
+    allowedVoterAccount
   ) => {
-    if (voter === account) {
+    if (allowedVoterAccount === account) {
       setVoteRightReceived(true);
     }
   };
