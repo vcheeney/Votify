@@ -7,6 +7,20 @@
       "problemMatcher": [],
       "label": "npm: dev",
       "detail": "remix dev"
+    },
+    {
+      "type": "npm",
+      "script": "seed",
+      "problemMatcher": [],
+      "label": "npm: seed",
+      "detail": "ts-node prisma/seed-dev.ts"
+    },
+    {
+      "type": "npm",
+      "script": "syncContract",
+      "problemMatcher": [],
+      "label": "npm: syncContract",
+      "detail": "sh ./contracts/sync-contract.sh"
     }
   ]
 }
