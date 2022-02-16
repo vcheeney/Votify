@@ -32,7 +32,12 @@ interface BallotContextInterface {
   ) => Promise<null | { allowed: boolean; voted: boolean }>;
 }
 
-const UNPROTECTED_ROUTES = ["/", "/connect"];
+const UNPROTECTED_ROUTES = [
+  "/",
+  "/connect",
+  "/errors/ballot-not-found",
+  "/errors/no-ethereum-provider",
+];
 const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
 
 const BallotContext = createContext<BallotContextInterface>({
@@ -160,8 +165,7 @@ export const BallotProvider: FC = ({ children }) => {
   }
 
   if (!ballotExists && isProtected(window.location.pathname)) {
-    invariant(network, "Network should be defined");
-    throw new BallotNotFoundError(network.name);
+    window.location.replace("/errors/ballot-not-found");
   }
 
   return (

@@ -11,7 +11,6 @@ import {
 import { useNavigate } from "remix";
 import invariant from "tiny-invariant";
 import { FullPageSpinner } from "~/components/FullPageSpinner";
-import { MetaMaskRequiredError } from "../lib/error";
 
 type Network = ethers.providers.Network & {
   connected: boolean;
@@ -28,7 +27,11 @@ interface EthereumContextInterface {
 
 const HARDHAT_CHAIN_ID = 31337;
 
-const UNPROTECTED_ROUTES = ["/"];
+const UNPROTECTED_ROUTES = [
+  "/",
+  "/errors/ballot-not-found",
+  "/errors/no-ethereum-provider",
+];
 const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
 
 const EthereumContext = createContext<EthereumContextInterface>({
@@ -131,7 +134,7 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
   }
 
   if (!ethereumExists && isProtected(window.location.pathname)) {
-    throw new MetaMaskRequiredError();
+    window.location.replace("/errors/no-ethereum-provider");
   }
 
   return (

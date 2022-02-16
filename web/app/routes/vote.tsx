@@ -3,7 +3,6 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "remix";
 import { FullPageSpinner } from "~/components/FullPageSpinner";
 import { useEthereum } from "~/context/EthereumContext";
-import { NotRegisteredError } from "~/lib/error";
 import { useVoterStatus } from "~/lib/other";
 import { useBallot } from "../context/BallotContext";
 
@@ -21,11 +20,13 @@ export default function Vote() {
   }
 
   if (status === "unregistered") {
-    throw new NotRegisteredError();
+    window.location.replace("/register");
+    return <FullPageSpinner />;
   }
 
   if (status === "voted") {
     window.location.replace("/results");
+    return <FullPageSpinner />;
   }
 
   return (

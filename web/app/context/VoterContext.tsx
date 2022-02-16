@@ -1,20 +1,8 @@
-import {
-  createContext,
-  FC,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { useNavigate } from "remix";
-import invariant from "tiny-invariant";
-import { FullPageSpinner } from "~/components/FullPageSpinner";
-import { NotRegisteredError } from "../lib/error";
-import { useEthereum } from "./EthereumContext";
-import { ethers, utils } from "ethers";
-import { useVoterStatus } from "../lib/other";
+import { createContext, FC, useContext, useEffect, useState } from "react";
 import { VerifyWalletPage } from "../components/VerifyWalletPage";
 import { createSignatureMessage } from "../lib/auth";
+import { useVoterStatus } from "../lib/other";
+import { useEthereum } from "./EthereumContext";
 
 interface Voter {
   firstName: string;
