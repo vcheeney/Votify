@@ -10,7 +10,15 @@ import {
   FormHelperText,
   Alert,
 } from "@mui/material";
-import { ActionFunction, Form, useTransition, useActionData } from "remix";
+import {
+  ActionFunction,
+  Form,
+  useTransition,
+  useActionData,
+  useSubmit,
+  SubmitFunction,
+  useNavigate,
+} from "remix";
 import invariant from "tiny-invariant";
 import { FullPageSpinner } from "~/components/FullPageSpinner";
 import { WaitingDialog } from "~/components/WaitingDialog";
@@ -19,6 +27,9 @@ import { giveRightToVote } from "~/lib/ballot";
 import { CustomError } from "~/lib/error";
 import { useVoterStatus } from "~/hooks/useVoterStatus";
 import { registerUser } from "../lib/users.server";
+import { useVoter } from "../context/VoterContext";
+import { useEffect, useState } from "react";
+import { json } from "stream/consumers";
 
 // TODO: add fancy error messages
 // https://remix.run/docs/en/v1/guides/data-writes#animating-in-the-validation-errors
@@ -38,8 +49,6 @@ export const action: ActionFunction = async ({ request }) => {
   invariant(dateOfBirth, "Date of birth is required");
   invariant(typeof dateOfBirth === "string", "Date of birth must be a string");
 
-  console.log(account, secretCode, dateOfBirth);
-
   const user = await registerUser(secretCode, new Date(dateOfBirth), account);
 
   const success = await giveRightToVote(account);
@@ -58,17 +67,48 @@ export default function Register() {
   const { account } = useEthereum();
   const transition = useTransition();
   const registered = useActionData();
+  const submit = useSubmit();
+  const { verifyWallet } = useVoter();
+  const [submitDisabled, setSubmitDisabled] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (status === "registered") {
+      navigate("/vote");
+    }
+
+    if (status === "voted") {
+      navigate("/results");
+    }
+  }, [status]);
+
+  async function handleSubmit(target: Parameters<SubmitFunction>[0]) {
+    const verified = await verifyWallet();
+
+    if (!verified) {
+      // TODO: show error message
+      return;
+    }
+
+    submit(target);
+  }
+
+  function handleChange(e: React.FormEvent<HTMLFormElement>) {
+    const formData = new FormData(e.currentTarget);
+    const code = formData.get("secretCode");
+    const dateOfBirth = formData.get("dateOfBirth");
+
+    setSubmitDisabled(
+      transition.state === "submitting" ||
+        code == null ||
+        code === "" ||
+        dateOfBirth == null ||
+        dateOfBirth === ""
+    );
+  }
 
   if (status === "loading") {
     return <FullPageSpinner />;
-  }
-
-  if (status === "registered") {
-    window.location.replace("/vote");
-  }
-
-  if (status === "voted") {
-    window.location.replace("/results");
   }
 
   return (
@@ -87,7 +127,14 @@ export default function Register() {
         alignItems="center"
         justifyContent="center"
       >
-        <Form method="post">
+        <Form
+          method="post"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit(e.currentTarget);
+          }}
+          onChange={handleChange}
+        >
           <Stack sx={{ mt: 4 }} spacing={3}>
             <Typography variant="h2">Register your account</Typography>
             <Alert severity="warning">
@@ -111,7 +158,6 @@ export default function Register() {
                 name="dateOfBirth"
                 label="Date of Birth"
                 type="date"
-                defaultValue="1980-01-01"
                 sx={{ width: 220 }}
                 InputLabelProps={{
                   shrink: true,
@@ -120,7 +166,7 @@ export default function Register() {
               <FormHelperText>To verify your identity</FormHelperText>
             </FormControl>
             <input name="account" type="hidden" value={account as string} />
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" disabled={submitDisabled}>
               {transition.state === "submitting"
                 ? "Registering..."
                 : "Register"}

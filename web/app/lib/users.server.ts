@@ -30,8 +30,6 @@ export async function registerUser(
 
   invariant(user, "Invalid code");
 
-  console.log("Dates");
-  console.log(user.dateOfBirth, dateOfBirth);
   const userBirthDate = moment(user.dateOfBirth);
   const claimedBirthDate = moment(dateOfBirth);
 

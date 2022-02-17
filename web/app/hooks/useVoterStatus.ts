@@ -3,7 +3,7 @@ import invariant from "tiny-invariant";
 import { useBallot } from "../context/BallotContext";
 import { useEthereum } from "../context/EthereumContext";
 
-type VoterStatus = "loading" | "unregistered" | "registered" | "voted";
+export type VoterStatus = "loading" | "unregistered" | "registered" | "voted";
 
 export function useVoterStatus() {
   const { account } = useEthereum();

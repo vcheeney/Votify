@@ -1,7 +1,49 @@
 import { Box, Button, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Link } from "remix";
+import { useEthereum } from "../context/EthereumContext";
+import { useVoter, Voter } from "../context/VoterContext";
+import { useVoterStatus, VoterStatus } from "../hooks/useVoterStatus";
+
+const getButtonLink = (
+  account: string | null,
+  status: VoterStatus,
+  voter: Voter | undefined
+) => {
+  if (account != null) {
+    if (status === "unregistered") {
+      return "/register";
+    }
+
+    if (voter != null && (status === "registered" || status === "voted")) {
+      return "/vote";
+    }
+
+    if (voter == null) {
+      return "/verify";
+    }
+  }
+
+  return "/connect";
+};
+
+const LINK_LABEL: { [key: string]: string } = {
+  "/register": "Register now",
+  "/vote": "Vote now",
+  "/verify": "Verify your identity",
+  "/connect": "Connect your MetaMask account",
+};
 
 export default function Index() {
+  const { account } = useEthereum();
+  const { voter } = useVoter();
+  const status = useVoterStatus();
+  const [buttonLink, setButtonLink] = useState("/");
+
+  useEffect(() => {
+    setButtonLink(getButtonLink(account, status, voter));
+  }, [account, status, voter]);
+
   return (
     <Box>
       <Typography variant="h1">Welcome to Votify</Typography>
@@ -11,12 +53,12 @@ export default function Index() {
       <Button
         variant="contained"
         component={Link}
-        to="/connect"
+        to={buttonLink}
         sx={{
           mt: 4,
         }}
       >
-        Get started
+        {LINK_LABEL[buttonLink]}
       </Button>
     </Box>
   );

@@ -103,7 +103,7 @@ export const BallotProvider: FC = ({ children }) => {
     async function setupBallot() {
       try {
         await ballot.chairperson();
-        console.log("contract is accessible 👍");
+        console.log("[BallotContext] Contract is accessible 👍");
         setBallotExists(true);
         fetchProposals();
       } catch (error) {
@@ -122,6 +122,16 @@ export const BallotProvider: FC = ({ children }) => {
       ballot.off("VoterAllowed", voterAllowedEventsListener);
     };
   }, [ethereumLoading, ethereumExists]);
+
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+
+    if (!ballotExists && isProtected(window.location.pathname)) {
+      navigate("/errors/ballot-not-found");
+    }
+  }, [ballotExists]);
 
   function fetchProposals() {
     const ballot = ballotRef.current;
@@ -184,10 +194,6 @@ export const BallotProvider: FC = ({ children }) => {
 
   if (loading) {
     return <FullPageSpinner />;
-  }
-
-  if (!ballotExists && isProtected(window.location.pathname)) {
-    window.location.replace("/errors/ballot-not-found");
   }
 
   return (
