@@ -16,7 +16,7 @@ export default function Verify() {
     if (status === "unregistered") {
       navigate("/register");
     }
-  }, []);
+  }, [status]);
 
   return (
     <Box>
