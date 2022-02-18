@@ -35,11 +35,14 @@ interface BallotContextInterface {
   ) => Promise<null | { allowed: boolean; voted: boolean }>;
 }
 
+const NONCE_TOO_HIGH_CORE = -32603;
+
 const UNPROTECTED_ROUTES = [
   "/",
   "/connect",
   "/errors/ballot-not-found",
   "/errors/no-ethereum-provider",
+  "/errors/nonce-too-high",
 ];
 const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
 
@@ -157,8 +160,12 @@ export const BallotProvider: FC = ({ children }) => {
       await authenticatedBallot.vote(proposalId);
       setCurrentVoterVoteStatus("sent");
     } catch (err: any) {
-      console.error(err);
-      alert(err.message);
+      if (err.code === NONCE_TOO_HIGH_CORE) {
+        console.log(err);
+        navigate("/errors/nonce-too-high");
+      } else {
+        throw err;
+      }
     }
   }
 

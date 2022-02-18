@@ -21,6 +21,17 @@ const VoterContext = createContext<VoterContextInterface>({
   verifyWallet: async () => {},
 });
 
+const UNPROTECTED_ROUTES = [
+  "/",
+  "/verify",
+  "/register",
+  "/connect",
+  "/errors/ballot-not-found",
+  "/errors/no-ethereum-provider",
+  "/errors/nonce-too-high",
+];
+const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
+
 export const VoterProvider: FC<{}> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [voter, setVoter] = useState<Voter>();
