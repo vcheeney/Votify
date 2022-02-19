@@ -25,7 +25,6 @@ type VoterVoteStatus = "unknown" | "sent" | "confirmed";
 
 interface BallotContextInterface {
   loading: boolean;
-  ballotExists: boolean;
   proposals: Proposal[];
   voteRightReceived: boolean;
   currentVoterVoteStatus: VoterVoteStatus;
@@ -48,7 +47,6 @@ const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
 
 const BallotContext = createContext<BallotContextInterface>({
   loading: true,
-  ballotExists: false,
   proposals: [],
   voteRightReceived: false,
   currentVoterVoteStatus: "unknown",
@@ -58,7 +56,6 @@ const BallotContext = createContext<BallotContextInterface>({
 
 export const BallotProvider: FC = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [ballotExists, setBallotExists] = useState<boolean>(false);
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [voteRightReceived, setVoteRightReceived] = useState(false);
   const [currentVoterVoteStatus, setCurrentVoterVoteStatus] =
@@ -86,13 +83,11 @@ export const BallotProvider: FC = ({ children }) => {
   useEffect(() => {
     if (ethereumLoading) {
       setLoading(true);
-      setBallotExists(false);
       return;
     }
 
     if (!ethereumExists) {
       setLoading(false);
-      setBallotExists(false);
       return;
     }
 
@@ -106,12 +101,13 @@ export const BallotProvider: FC = ({ children }) => {
     async function setupBallot() {
       try {
         await ballot.chairperson();
-        console.log("contract is accessible 👍");
-        setBallotExists(true);
+        console.log("[BallotContext] Contract is accessible 👍");
         fetchProposals();
       } catch (error) {
         console.error(error);
-        setBallotExists(false);
+        if (isProtected(window.location.pathname)) {
+          navigate("/errors/ballot-not-found");
+        }
       } finally {
         setLoading(false);
       }
@@ -180,7 +176,6 @@ export const BallotProvider: FC = ({ children }) => {
 
   const value = {
     loading,
-    ballotExists,
     proposals,
     voteRightReceived,
     currentVoterVoteStatus,
@@ -190,10 +185,6 @@ export const BallotProvider: FC = ({ children }) => {
 
   if (loading) {
     return <FullPageSpinner />;
-  }
-
-  if (!ballotExists && isProtected(window.location.pathname)) {
-    window.location.replace("/errors/ballot-not-found");
   }
 
   return (

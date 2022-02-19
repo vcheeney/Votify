@@ -10,6 +10,7 @@ const { getSession, commitSession, destroySession } =
       path: "/",
       sameSite: "strict",
       secure: true,
+      secrets: [process.env.COOKIE_SECRET!],
     },
   });
 

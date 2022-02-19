@@ -1,6 +1,7 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { Link } from "remix";
+import { useEffect } from "react";
+import { Link, useNavigate } from "remix";
 import { FullPageSpinner } from "~/components/FullPageSpinner";
 import { WaitingDialog } from "~/components/WaitingDialog";
 import { useEthereum } from "~/context/EthereumContext";
@@ -11,22 +12,26 @@ export default function Vote() {
   const { account, loading } = useEthereum();
   const { proposals, submitVote, currentVoterVoteStatus } = useBallot();
   const status = useVoterStatus();
+  const navigate = useNavigate();
 
-  if (!loading && !account) {
-    window.location.replace("/connect");
-  }
+  useEffect(() => {
+    if (!loading && !account) {
+      navigate("/connect");
+      return;
+    }
+
+    if (status === "unregistered") {
+      navigate("/register");
+      return;
+    }
+
+    if (status === "voted") {
+      navigate("/results");
+      return;
+    }
+  }, [loading, account, status]);
 
   if (status === "loading") {
-    return <FullPageSpinner />;
-  }
-
-  if (status === "unregistered") {
-    window.location.replace("/register");
-    return <FullPageSpinner />;
-  }
-
-  if (status === "voted") {
-    window.location.replace("/results");
     return <FullPageSpinner />;
   }
 
