@@ -26,6 +26,7 @@ const UNPROTECTED_ROUTES = [
   "/connect",
   "/errors/ballot-not-found",
   "/errors/no-ethereum-provider",
+  "/errors/nonce-too-high",
 ];
 const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
 
