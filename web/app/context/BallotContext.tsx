@@ -161,7 +161,6 @@ export const BallotProvider: FC = ({ children }) => {
       setCurrentVoterVoteStatus("sent");
     } catch (err: any) {
       if (err.code === NONCE_TOO_HIGH_CORE) {
-        console.log(err);
         navigate("/errors/nonce-too-high");
       } else {
         throw err;
