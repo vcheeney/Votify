@@ -5,7 +5,8 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
+import { useNavigate } from "remix";
 
 type Props = {
   open: boolean;
@@ -22,9 +23,13 @@ export const WaitingDialog: FC<Props> = ({
   route,
   ready,
 }) => {
-  if (ready) {
-    window.location.replace(route);
-  }
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (ready) {
+      navigate(route);
+    }
+  }, [ready]);
 
   return (
     <Dialog open={open}>

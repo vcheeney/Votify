@@ -1,36 +1,47 @@
 import { createContext, FC, useContext, useEffect, useState } from "react";
-import { VerifyWalletPage } from "../components/VerifyWalletPage";
 import { createSignatureMessage } from "../lib/auth";
 import { useVoterStatus } from "../hooks/useVoterStatus";
 import { useEthereum } from "./EthereumContext";
+import { useLocation, useNavigate } from "remix";
 
-interface Voter {
+export interface Voter {
   firstName: string;
   lastName: string;
 }
 
 interface VoterContextInterface {
-  loading: boolean;
   voter?: Voter;
-  verifyWallet: () => Promise<void>;
+  verifyWallet: () => Promise<boolean>;
 }
 
 const VoterContext = createContext<VoterContextInterface>({
-  loading: true,
   voter: undefined,
-  verifyWallet: async () => {},
+  verifyWallet: async () => false,
 });
 
+const UNPROTECTED_ROUTES = [
+  "/",
+  "/verify",
+  "/register",
+  "/connect",
+  "/errors/ballot-not-found",
+  "/errors/no-ethereum-provider",
+  "/errors/nonce-too-high",
+];
+const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
+
 export const VoterProvider: FC<{}> = ({ children }) => {
-  const [loading, setLoading] = useState(true);
   const [voter, setVoter] = useState<Voter>();
   const { account, signer, loading: ethereumLoading } = useEthereum();
   const voterStatus = useVoterStatus();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const needsVerify =
     (voterStatus === "registered" || voterStatus === "voted") && voter == null;
 
   async function fetchMe() {
-    const currentUserRes = await fetch(`api/user/me`);
+    const currentUserRes = await fetch(`/api/user/me`);
     const currentUserJson = await currentUserRes.json();
 
     if (currentUserJson.success) {
@@ -42,18 +53,18 @@ export const VoterProvider: FC<{}> = ({ children }) => {
 
   async function verifyWallet() {
     if (account == null || signer == null) {
-      return;
+      return false;
     }
 
     let signature: string;
     try {
       signature = await signer.signMessage(createSignatureMessage(account));
     } catch (e) {
-      console.log("Failed to sign");
-      return;
+      console.log("[VoterContext] Failed to sign");
+      return false;
     }
 
-    await fetch("/api/auth", {
+    const res = await fetch("/api/auth", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,39 +74,57 @@ export const VoterProvider: FC<{}> = ({ children }) => {
         sig: signature,
       }),
     });
+
+    const json = await res.json();
+
+    return !!json.success;
   }
 
-  async function fetchRegistredVoter() {
-    setLoading(true);
-    console.log(
-      "[VoterContext] Fetching voter information for wallet",
-      account
-    );
-
-    const me = await fetchMe();
-
-    if (me == null) {
-      setLoading(false);
-      return;
-    }
-
-    setVoter({ firstName: me.firstName, lastName: me.lastName });
-    setLoading(false);
-  }
+  const isCurrentRouteProtected = isProtected(window.location.pathname);
 
   useEffect(() => {
-    fetchRegistredVoter();
+    async function refreshContext() {
+      if (account == null) {
+        return;
+      }
+
+      if (isCurrentRouteProtected && voterStatus === "unregistered") {
+        navigate("/register");
+        return;
+      }
+
+      if (voter != null) {
+        return;
+      }
+
+      console.log(
+        "[VoterContext] Fetching voter information for wallet",
+        account
+      );
+
+      const me = await fetchMe();
+
+      if (isCurrentRouteProtected && me == null) {
+        navigate(`/verify?redirect=${location.pathname}`);
+        return;
+      }
+
+      if (me != null) {
+        setVoter({ firstName: me.firstName, lastName: me.lastName });
+      }
+    }
+
+    refreshContext();
   }, [account, voterStatus]);
 
   return (
     <VoterContext.Provider
       value={{
-        loading,
         voter,
         verifyWallet,
       }}
     >
-      {needsVerify ? <VerifyWalletPage /> : children}
+      {children}
     </VoterContext.Provider>
   );
 };

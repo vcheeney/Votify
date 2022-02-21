@@ -1,12 +1,21 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useEthereum } from "~/context/EthereumContext";
+import { useNavigate } from "remix";
+import { useEffect } from "react";
 
 export default function Connect() {
-  const { connectWithMetamask, account } = useEthereum();
+  const { connectWithMetamask, account, loading } = useEthereum();
+  const navigate = useNavigate();
 
-  if (account) {
-    window.location.replace("/vote");
-  }
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+
+    if (account != null) {
+      navigate("/vote");
+    }
+  }, [account, loading]);
 
   return (
     <Box>

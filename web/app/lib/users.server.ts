@@ -29,9 +29,8 @@ export async function registerUser(
   const user = await getUserFromCode(secretCode);
 
   invariant(user, "Invalid code");
+  invariant(!user.address, "User already registered");
 
-  console.log("Dates");
-  console.log(user.dateOfBirth, dateOfBirth);
   const userBirthDate = moment(user.dateOfBirth);
   const claimedBirthDate = moment(dateOfBirth);
 

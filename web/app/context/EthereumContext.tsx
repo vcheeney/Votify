@@ -29,8 +29,10 @@ const HARDHAT_CHAIN_ID = 31337;
 
 const UNPROTECTED_ROUTES = [
   "/",
+  "/connect",
   "/errors/ballot-not-found",
   "/errors/no-ethereum-provider",
+  "/errors/nonce-too-high",
 ];
 const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
 
@@ -78,6 +80,16 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+
+    if (!ethereumExists && isProtected(window.location.pathname)) {
+      navigate("/errors/no-ethereum-provider");
+    }
+  }, [ethereumExists]);
 
   function handleNetworkChange(network: ethers.providers.Network) {
     const provider = providerRef.current;
@@ -131,10 +143,6 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
 
   if (loading) {
     return <FullPageSpinner />;
-  }
-
-  if (!ethereumExists && isProtected(window.location.pathname)) {
-    window.location.replace("/errors/no-ethereum-provider");
   }
 
   return (
