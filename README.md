@@ -1,9 +1,12 @@
-# Votify
+![Homepage](misc/preview.png)
+
+# Votify <a href="#-project-status"><img src="https://img.shields.io/badge/Status-Status-lightgrey?style=for-the-badge" align="right"></a>
 
 ## Table of contents <!-- omit in toc -->
 
-- [About The Project](#about-the-project)
-- [Getting Started](#getting-started)
+- [☀ Introduction](#-introduction)
+- [💿 Setup](#-setup)
+- [📷 Preview](#-preview)
   - [Prerequisites](#prerequisites)
     - [Software](#software)
   - [Installation](#installation)
@@ -19,13 +22,15 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## About The Project
-
-![Product Name Screen Shot](misc/screenshot.png)
+## ☀ Introduction
 
 <!-- GETTING STARTED -->
 
-## Getting Started
+## 💿 Setup
+
+## 📷 Preview
+
+https://user-images.githubusercontent.com/23345182/154748711-9b833dc0-183e-4ad2-90c8-1ecb09eb2422.mp4
 
 ### Prerequisites
 
