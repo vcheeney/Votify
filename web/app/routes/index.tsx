@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "remix";
 import { useEthereum } from "../context/EthereumContext";
 import { useVoter, Voter } from "../context/VoterContext";
@@ -38,11 +38,11 @@ export default function Index() {
   const { account } = useEthereum();
   const { voter } = useVoter();
   const status = useVoterStatus();
-  const [buttonLink, setButtonLink] = useState("/");
 
-  useEffect(() => {
-    setButtonLink(getButtonLink(account, status, voter));
-  }, [account, status, voter]);
+  const buttonLink = useMemo(
+    () => getButtonLink(account, status, voter),
+    [account, status, voter]
+  );
 
   return (
     <Box>
