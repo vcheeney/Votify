@@ -1,12 +1,14 @@
 ![Homepage](misc/preview.png)
 
-# Votify <a href="#-project-status"><img src="https://img.shields.io/badge/Status-Status-lightgrey?style=for-the-badge" align="right"></a>
+# Votify <a href="#-project-status"><img src="https://img.shields.io/badge/Status-Active-blue?style=for-the-badge" align="right"></a>
+
+A POC of a decentralized voting platform with an emphasis on a canadian provincial elections use case.
 
 ## Table of contents <!-- omit in toc -->
 
 - [☀ Introduction](#-introduction)
-- [💿 Setup](#-setup)
 - [📷 Preview](#-preview)
+- [💿 Setup](#-setup)
   - [Prerequisites](#prerequisites)
     - [Software](#software)
   - [Installation](#installation)
@@ -18,19 +20,36 @@
       - [Configuring MetaMask to access the local blockchain](#configuring-metamask-to-access-the-local-blockchain)
       - [Running the initial Prisma migration](#running-the-initial-prisma-migration)
     - [Web application](#web-application-1)
-  - [Seeding](#seeding)
-
-<!-- ABOUT THE PROJECT -->
+    - [Seeding](#seeding)
+- [🛠 Technologies Used](#-technologies-used)
+- [🧪 Tests](#-tests)
+- [🚦 Project Status](#-project-status)
+- [✉ Contact](#-contact)
+  - [Victor's socials](#victors-socials)
+  - [Antoine's socials](#antoines-socials)
 
 ## ☀ Introduction
 
-<!-- GETTING STARTED -->
+For my last university semester, I had to dedicate 18h/week to a project, just like my previous semester where I worked on [RunApp](https://github.com/vcheeney/RunApp).
 
-## 💿 Setup
+This semester, I wanted to explore the world of crypto, but more on that later.
+
+As I started planning out this idea, I quickly met [Antoine Gagnon](https://antoineg.dev/), a very smart peer that I somehow never crossed path with during my whole university studies.
+
+I could not have asked for a better partner.
+
+This repository is the product of our labour.
+
+In the end, we built the POC of a decentralized voting platform that runs on the Ethereum blockchain. This includes:
+
+1. The development, testing and deployment of a ballot smart
+2. The design and implementation of web3 DAPP that interacts with a smart contract (the web application used for voting and seeing the results)
 
 ## 📷 Preview
 
 https://user-images.githubusercontent.com/23345182/154748711-9b833dc0-183e-4ad2-90c8-1ecb09eb2422.mp4
+
+## 💿 Setup
 
 ### Prerequisites
 
@@ -186,7 +205,7 @@ npm run dev
 # Keep this terminal open for as long as you want the app alive
 ```
 
-### Seeding
+#### Seeding
 
 You can insert randomly generated users for testing using the seeding script.
 
@@ -199,3 +218,44 @@ npm run seed
 ```
 
 and follow the instructions from the script.
+
+## 🛠 Technologies Used
+
+- [dependency](docs_url) - dependency_description
+- [dependency](docs_url) - dependency_description
+- [dependency](docs_url) - dependency_description
+- [dependency](docs_url) - dependency_description
+- [dependency](docs_url) - dependency_description
+
+## 🧪 Tests
+
+When developing smart contracts, it is very important to do proper testing so that no funds are lost in production. To run the tests, do the following:
+
+```bash
+# Move into the hardhat subdirectory
+cd hardhat
+
+# Run the tests
+npx hardhat test
+```
+
+## 🚦 Project Status
+
+<img src="https://img.shields.io/badge/-Active-blue?style=for-the-badge"/>
+
+This project is currently under development.
+
+## ✉ Contact
+
+### Victor's socials
+
+[hello@victorc.dev](mailto:hello@victorc.dev)
+[@vcheeney](https://github.com/vcheeney)
+https://victorc.dev/
+
+### Antoine's socials
+
+[hello@antoineg.dev](mailto:hello@antoineg.dev)
+[@antoinegag](https://github.com/antoinegag)
+[@antoine_dev](https://twitter.com/antoineg_dev)
+https://antoineg.dev/
