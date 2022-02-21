@@ -7,6 +7,10 @@ A POC of a decentralized voting platform with an emphasis on canadian provincial
 ## Table of contents <!-- omit in toc -->
 
 - [☀ Introduction](#-introduction)
+- [🎯 Motivation](#-motivation)
+  - [⛓ Create a complete blockchain (Web3) application](#-create-a-complete-blockchain-web3-application)
+  - [🌐 Test out the new REMIX.RUN react web framework](#-test-out-the-new-remixrun-react-web-framework)
+  - [🎨 Give another shot to MUI](#-give-another-shot-to-mui)
 - [📷 Preview](#-preview)
 - [💿 Setup](#-setup)
   - [Prerequisites](#prerequisites)
@@ -44,6 +48,22 @@ In the end, we built the POC of a decentralized voting platform that runs on the
 
 1. The development, testing and deployment of a ballot smart
 2. The design and implementation of web3 DAPP that interacts with a smart contract (the web application used for voting and seeing the results)
+
+## 🎯 Motivation
+
+My goals for this project were to...
+
+### ⛓ Create a complete blockchain (Web3) application
+
+Blockchain and Web3 are rapidly growing in popularity thanks to cryptocurrencies, NFTs and other financial applications. Nonetheless, the properties of blockchain do have the potential to serve other purposes like verifiable voting, supply chain monitoring, identity verification, etc.
+
+### 🌐 Test out the new REMIX.RUN react web framework
+
+I'm a big fan of NextJS, but as responsible developers, it is always a good idea to stay aware of what other frameworks have to offer.
+
+### 🎨 Give another shot to MUI
+
+I used MUI in some old projects that never saw the light of day, but I was not a fan of the default Material Design styles. Therefore, when I discovered TailwindCSS, I quickly moved over. Recently, MUI received a [major update](https://mui.com/blog/material-ui-is-now-mui/) that highly improved the theme customization ability. I was desperate to try out!
 
 ## 📷 Preview
 
