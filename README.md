@@ -2,7 +2,7 @@
 
 # Votify <a href="#-project-status"><img src="https://img.shields.io/badge/Status-Active-blue?style=for-the-badge" align="right"></a>
 
-A POC of a decentralized voting platform with an emphasis on a canadian provincial elections use case.
+A POC of a decentralized voting platform with an emphasis on canadian provincial elections.
 
 ## Table of contents <!-- omit in toc -->
 
@@ -34,7 +34,7 @@ For my last university semester, I had to dedicate 18h/week to a project, just l
 
 This semester, I wanted to explore the world of crypto, but more on that later.
 
-As I started planning out this idea, I quickly met [Antoine Gagnon](https://antoineg.dev/), a very smart peer that I somehow never crossed path with during my whole university studies.
+As I started planning out this idea, I quickly met [Antoine Gagnon](https://antoineg.dev/), a very smart peer that I somehow never crossed paths with during my whole university studies.
 
 I could not have asked for a better partner.
 
@@ -68,7 +68,7 @@ First, clone the repository with the following command:
 git clone git@github.com:vcheeney/voting-platform.git
 ```
 
-Then, continue on with the following instructions to setup and configure each part of the project.
+Then, continue with the following instructions to set up and configure each part of the project.
 
 > **TIP: Quick Setup**
 >
@@ -190,7 +190,7 @@ y
 
 #### Web application
 
-In an other terminal, run the following commands:
+In another terminal, run the following commands:
 
 ```sh
 # Move into the web project subdirectory
@@ -250,12 +250,17 @@ This project is currently under development.
 ### Victor's socials
 
 [hello@victorc.dev](mailto:hello@victorc.dev)
+
 [@vcheeney](https://github.com/vcheeney)
+
 https://victorc.dev/
 
 ### Antoine's socials
 
 [hello@antoineg.dev](mailto:hello@antoineg.dev)
+
 [@antoinegag](https://github.com/antoinegag)
+
 [@antoine_dev](https://twitter.com/antoineg_dev)
+
 https://antoineg.dev/
