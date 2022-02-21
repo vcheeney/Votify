@@ -241,11 +241,16 @@ and follow the instructions from the script.
 
 ## 🛠 Technologies Used
 
-- [dependency](docs_url) - dependency_description
-- [dependency](docs_url) - dependency_description
-- [dependency](docs_url) - dependency_description
-- [dependency](docs_url) - dependency_description
-- [dependency](docs_url) - dependency_description
+- [Remix 1.1.1](https://remix.run/) - Full stack web framework
+- [Ethers 5.5.3](https://docs.ethers.io/v5/) - JavaScript library to interact with smart contracts
+- [MUI 5.3.0](https://mui.com/) - React components library
+- [Prisma 3.8.1](docs_url) - TypeScript ORM
+- [Hardhat 2.8.3](https://hardhat.org/) - Ethereum development environment
+- [Solidity 0.8.12](https://docs.soliditylang.org/en/v0.8.12/) - EVM compatible smart contract development language
+- [Typechain 5.2.0](https://github.com/dethcrypto/TypeChain) - Package to generate TS types for smart contracts
+- [Mocha 9.1.0](https://mochajs.org/) - JavaScript test framework
+- [Chai 4.3.6](https://www.chaijs.com/) - TDD assertion library
+- [Waffle 3.4.0](https://getwaffle.io/) - Chai matchers for smart contracts
 
 ## 🧪 Tests
 
