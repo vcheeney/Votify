@@ -11,7 +11,6 @@ import { useNavigate } from "remix";
 import invariant from "tiny-invariant";
 import { VoteEvent, VoterAllowedEvent } from "types/ethers-contracts/Ballot";
 import { TypedListener } from "types/ethers-contracts/common";
-import { FullPageSpinner } from "~/components/FullPageSpinner";
 import { Ballot, Ballot__factory } from "../../types/ethers-contracts";
 import { useEthereum } from "./EthereumContext";
 
@@ -185,10 +184,6 @@ export const BallotProvider: FC = ({ children }) => {
     submitVote,
     getVoterInformation,
   };
-
-  if (loading) {
-    return <FullPageSpinner />;
-  }
 
   return (
     <BallotContext.Provider value={value}>{children}</BallotContext.Provider>

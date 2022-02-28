@@ -10,7 +10,6 @@ import {
 } from "react";
 import { useNavigate } from "remix";
 import invariant from "tiny-invariant";
-import { FullPageSpinner } from "~/components/FullPageSpinner";
 
 type Network = ethers.providers.Network & {
   connected: boolean;
@@ -140,10 +139,6 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
     signer,
     connectWithMetamask,
   };
-
-  if (loading) {
-    return <FullPageSpinner />;
-  }
 
   return (
     <EthereumContext.Provider value={value}>
