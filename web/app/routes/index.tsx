@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Link } from "remix";
 import { useEthereum } from "../context/EthereumContext";
 import { useVoter, Voter } from "../context/VoterContext";

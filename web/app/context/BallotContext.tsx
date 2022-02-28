@@ -25,6 +25,7 @@ type VoterVoteStatus = "unknown" | "sent" | "confirmed";
 
 interface BallotContextInterface {
   loading: boolean;
+  ballotExists: boolean;
   proposals: Proposal[];
   voteRightReceived: boolean;
   currentVoterVoteStatus: VoterVoteStatus;
@@ -47,6 +48,7 @@ const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
 
 const BallotContext = createContext<BallotContextInterface>({
   loading: true,
+  ballotExists: false,
   proposals: [],
   voteRightReceived: false,
   currentVoterVoteStatus: "unknown",
@@ -176,6 +178,7 @@ export const BallotProvider: FC = ({ children }) => {
 
   const value = {
     loading,
+    ballotExists: ballotRef.current !== null,
     proposals,
     voteRightReceived,
     currentVoterVoteStatus,
