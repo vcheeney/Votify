@@ -80,9 +80,9 @@ export const VoterProvider: FC<{}> = ({ children }) => {
     return !!json.success;
   }
 
-  const isCurrentRouteProtected = isProtected(window.location.pathname);
-
   useEffect(() => {
+    const isCurrentRouteProtected = isProtected(window.location.pathname);
+
     async function refreshContext() {
       if (account == null) {
         return;
