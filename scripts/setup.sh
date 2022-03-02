@@ -1,6 +1,6 @@
 set -e # stop the script if any command returns an error
 
-echo "🚦 Starting automatted installation of the project..."
+echo "🚦 Starting automated installation of the project..."
 
 echo "⌨  $ cd hardhat"
 cd hardhat
