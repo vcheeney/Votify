@@ -1,5 +1,9 @@
 version: "3.4"
 
+networks:
+  default:
+    name: "votify-network"
+
 services:
   database:
     image: postgres
@@ -19,7 +23,8 @@ services:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   local-blockchain:
-    container_name: local-blockchain
+    container_name: votify-blockchain
+    image: vcheeney/votify-blockchain
     build: ./hardhat
     ports:
       - "8545:8545"

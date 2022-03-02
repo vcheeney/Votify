@@ -32,5 +32,4 @@ npm run syncContract
 echo "⌨  $ npm run build"
 npm run build
 
-
 echo "🏁 Finished installation of the project!"
