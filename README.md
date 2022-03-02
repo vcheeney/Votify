@@ -16,7 +16,9 @@ A POC of a decentralized voting platform with an emphasis on canadian provincial
   - [Prerequisites](#prerequisites)
     - [Software](#software)
   - [Installation & Usage](#installation--usage)
+      - [Accessing the app](#accessing-the-app)
       - [Configuring MetaMask to access the local blockchain](#configuring-metamask-to-access-the-local-blockchain)
+      - [Using seed profiles to register as a voter](#using-seed-profiles-to-register-as-a-voter)
 - [🛠 Technologies Used](#-technologies-used)
 - [🧪 Tests](#-tests)
 - [🚦 Project Status](#-project-status)
@@ -88,6 +90,10 @@ docker-compose -f docker-compose.yml -f docker-compose.web.yml up
 
 For development purposes, follow the more thorough [manual setup steps](SETUP.md).
 
+##### Accessing the app
+
+Once everything is loaded properly, the web app will be accessible at http://localhost:3000/.
+
 ##### Configuring MetaMask to access the local blockchain
 
 In your web browser:
@@ -107,6 +113,10 @@ In the MetaMask extension:
 1. Select the Hardhat network that you just configured
 2. Import the first account from the list that appeared when you previously ran `npx hardhat node` in your other terminal (which should still be open)
 3. **Optional:** Rename the account to _Chairperson_ or any other familiar name.
+
+##### Using seed profiles to register as a voter
+
+As you may notice in the docker-compose output window, the web app generates seed users for you to register as. When asked to register your account, you can use a secret code and date of birth combination in the `web/prisma/seed-users.json` file.
 
 ## 🛠 Technologies Used
 
