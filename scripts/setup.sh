@@ -11,12 +11,6 @@ npm install
 echo "⌨  $ npx hardhat compile"
 npx hardhat compile
 
-echo "⌨  $ cd ../database"
-cd ../database
-
-echo "⌨  $ cp database.env.template database.env"
-cp database.env.template database.env
-
 echo "⌨  $ cd ../web"
 cd ../web
 
