@@ -4,7 +4,6 @@ import {
   Typography,
   unstable_useEnhancedEffect as useEnhancedEffect,
 } from "@mui/material";
-import DateAdapter from "@mui/lab/AdapterMoment";
 import * as React from "react";
 import {
   Links,

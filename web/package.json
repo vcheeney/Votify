@@ -9,7 +9,9 @@
     "postinstall": "remix setup node",
     "start": "remix-serve build",
     "syncContract": "sh ./contracts/sync-contract.sh",
-    "seed": "ts-node prisma/seed-dev.ts"
+    "seed": "ts-node prisma/seed-dev.ts",
+    "lint": "npx eslint . --ext .ts,.tsx,.js,.jsx",
+    "lintFix": "npx eslint . --ext .ts,.tsx,.js,.jsx --fix"
   },
   "prisma": {},
   "dependencies": {
@@ -52,6 +54,8 @@
     "dotenv-cli": "^5.0.0",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.29.3",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "prisma": "^3.10.0",
     "ts-node": "^10.4.0",
     "typechain": "^7.0.0",

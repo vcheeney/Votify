@@ -43,7 +43,7 @@ const EthereumContext = createContext<EthereumContextInterface>({
   connectWithMetamask: () => {},
 });
 
-export const EthereumProvider: FC<{}> = ({ children }) => {
+export const EthereumProvider: FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [ethereumExists, setEthereumExists] = useState(false);
   const [network, setNetwork] = useState<Network | null>(null);
@@ -99,7 +99,7 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
       connected: false,
     };
     setNetwork(newNetwork);
-    provider.getBlockNumber().then((blockNumber: number) => {
+    provider.getBlockNumber().then(() => {
       setNetwork((prev) => {
         invariant(prev, "Network should be defined");
         return {

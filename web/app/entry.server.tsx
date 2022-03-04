@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import * as React from "react";
 import { renderToString } from "react-dom/server";
 import { RemixServer } from "remix";

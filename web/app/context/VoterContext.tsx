@@ -30,7 +30,7 @@ const UNPROTECTED_ROUTES = [
 ];
 const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
 
-export const VoterProvider: FC<{}> = ({ children }) => {
+export const VoterProvider: FC = ({ children }) => {
   const [voter, setVoter] = useState<Voter>();
   const { account, signer, loading: ethereumLoading } = useEthereum();
   const voterStatus = useVoterStatus();

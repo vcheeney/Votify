@@ -8,7 +8,7 @@ function NoEthereumProvider() {
       <Box>
         <Typography variant="body1">
           You can download the extension{" "}
-          <a href="https://metamask.io/" target="_blank">
+          <a href="https://metamask.io/" target="_blank" rel="noreferrer">
             here
           </a>
           .

@@ -1,5 +1,5 @@
 import { Alert, Box, Button, Typography } from "@mui/material";
-import { useNavigate, useParams } from "remix";
+import { useNavigate } from "remix";
 import { useEthereum } from "../context/EthereumContext";
 import { useVoter } from "../context/VoterContext";
 import { useVoterStatus } from "../hooks/useVoterStatus";

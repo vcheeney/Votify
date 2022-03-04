@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import { Link } from "remix";
 
 const RefreshThePageButton = () => (

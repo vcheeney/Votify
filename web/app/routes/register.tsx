@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   FormControl,
-  InputLabel,
   Grid,
   Stack,
   TextField,
@@ -29,7 +28,6 @@ import { useVoterStatus } from "~/hooks/useVoterStatus";
 import { registerUser } from "../lib/users.server";
 import { useVoter } from "../context/VoterContext";
 import { useEffect, useState } from "react";
-import { json } from "stream/consumers";
 
 // TODO: add fancy error messages
 // https://remix.run/docs/en/v1/guides/data-writes#animating-in-the-validation-errors

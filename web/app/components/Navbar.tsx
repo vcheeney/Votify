@@ -11,12 +11,12 @@ export const Navbar: FC = () => {
   return (
     <>
       <Box
-        sx={(theme) => ({
+        sx={{
           height: "72px",
           bgcolor: "#095797",
           display: "flex",
           alignItems: "center",
-        })}
+        }}
       >
         <Container
           maxWidth="lg"
