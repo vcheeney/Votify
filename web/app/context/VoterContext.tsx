@@ -83,8 +83,8 @@ export const VoterProvider: FC = ({ children }) => {
     const isCurrentRouteProtected = isProtected(window.location.pathname);
 
     async function refreshContext() {
-      if (account == null) {
-        return;
+      if (isCurrentRouteProtected && !account) {
+        navigate("/getstarted");
       }
 
       if (isCurrentRouteProtected && voterStatus === "unregistered") {
