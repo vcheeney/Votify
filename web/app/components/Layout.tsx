@@ -12,8 +12,13 @@ export const Layout: FC = ({ children }) => {
       }}
     >
       <Navbar />
-      <Container maxWidth="lg">
-        <Box sx={{ py: 8 }}>{children}</Box>
+      <Container
+        maxWidth="lg"
+        sx={{
+          flexGrow: 1,
+        }}
+      >
+        <Box>{children}</Box>
       </Container>
     </Box>
   );

@@ -13,7 +13,7 @@ export const Navbar: FC = () => {
       <Box
         sx={{
           height: "72px",
-          bgcolor: "#095797",
+          bgcolor: "#2B1E55",
           display: "flex",
           alignItems: "center",
         }}
@@ -55,16 +55,31 @@ export const Navbar: FC = () => {
             </Stack>
           </Box>
           <Box>
-            <Typography color="white">
+            <Typography
+              color="white"
+              sx={{
+                fontSize: "0.5rem",
+              }}
+            >
               Account: {account || "(not connected)"}
             </Typography>
             {network && (
-              <Typography color="white">
+              <Typography
+                color="white"
+                sx={{
+                  fontSize: "0.5rem",
+                }}
+              >
                 Chain: {network.name} {network.chainId}{" "}
                 {network.connected ? "🟢" : "🔴"}
               </Typography>
             )}
-            <Typography color="white">
+            <Typography
+              color="white"
+              sx={{
+                fontSize: "0.5rem",
+              }}
+            >
               Voter:{" "}
               {voter ? `${voter.firstName} ${voter.lastName}` : "unverified"}
             </Typography>
