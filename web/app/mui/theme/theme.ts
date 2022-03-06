@@ -28,8 +28,8 @@ const theme = createTheme({
       fontWeight: "bold",
     },
     h1: {
-      fontSize: "3rem",
-      fontWeight: "700",
+      fontSize: "2rem",
+      fontWeight: "500",
     },
     h2: {
       fontSize: "2.5em",
@@ -37,7 +37,7 @@ const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 0,
+    borderRadius: 8,
   },
   components: {
     // components overrides could be defined in app/theme/components.ts
@@ -58,39 +58,16 @@ const theme = createTheme({
         {
           props: { variant: "logo" },
           style: {
-            fontSize: 36,
-            fontWeight: "400",
+            fontSize: 28,
+            fontWeight: "bolder",
             color: "white",
-          },
-        },
-        {
-          props: { variant: "h1" },
-          style: {
-            marginBottom: "24px",
-            "&:after": {
-              content: "''",
-              display: "block",
-              width: "3rem",
-              marginTop: 0,
-              paddingTop: "8px",
-              borderBottom: "4px solid #f09686",
-            },
           },
         },
         {
           props: { variant: "subtitle1" },
           style: {
             fontSize: "1rem",
-            fontWeight: "600",
-            fontFamily: "Open Sans, sans-serif",
-          },
-        },
-        {
-          props: { variant: "subtitle2" },
-          style: {
-            fontSize: "1.125rem",
-            lineHeight: "1.875rem",
-            fontWeight: "400",
+            fontWeight: "bold",
           },
         },
       ],

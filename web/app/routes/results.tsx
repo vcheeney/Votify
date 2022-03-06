@@ -1,6 +1,4 @@
-import { ArrowBack } from "@mui/icons-material";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { Link } from "remix";
+import { Box, Stack, Typography } from "@mui/material";
 import { useBallot } from "~/context/BallotContext";
 
 export default function Results() {
@@ -9,6 +7,7 @@ export default function Results() {
   return (
     <Box>
       <Typography variant="h1">Results</Typography>
+      <Typography>These are the live results of the election.</Typography>
       <Stack
         direction="row"
         spacing={4}
@@ -16,6 +15,7 @@ export default function Results() {
           display: "flex",
           justifyContent: "center",
           mb: 8,
+          mt: 4,
         }}
       >
         {proposals.map((proposal) => (
@@ -25,9 +25,10 @@ export default function Results() {
             sx={{
               px: 4,
               py: 2,
-              backgroundColor: "primary.lighter",
+              backgroundColor: "grey.800",
               alignItems: "center",
               display: "flex",
+              borderRadius: 1,
             }}
           >
             <Typography
@@ -43,26 +44,17 @@ export default function Results() {
                 w: "125px",
                 h: "125px",
               }}
+              borderRadius={4}
               component="img"
-              src="../politician.png"
+              src="../man.png"
               alt={proposal.name}
             />
-            <Typography variant="subtitle2">
+            <Typography variant="subtitle1">
               {proposal.voteCount} votes
             </Typography>
           </Stack>
         ))}
       </Stack>
-      <Button
-        component={Link}
-        to="/"
-        startIcon={<ArrowBack />}
-        sx={{
-          mt: 4,
-        }}
-      >
-        Go Back
-      </Button>
     </Box>
   );
 }

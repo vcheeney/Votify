@@ -39,16 +39,16 @@ function createGradient(color1: string, color2: string) {
 
 // SETUP COLORS
 const GREY = {
-  0: "#e9ebee",
-  100: "#d3d7dd",
-  200: "#bdc3cc",
-  300: "#919baa",
-  400: "#7a8698",
-  500: "#647287",
-  600: "#4e5e76",
-  700: "#384a65",
-  800: "#223654",
-  900: "#161C24",
+  0: "#FBFAFF",
+  100: "#E1DFEA",
+  200: "#C7C3D5",
+  300: "#ADA8BF",
+  400: "#938CAA",
+  500: "#797195",
+  600: "#5F5580",
+  700: "#453A6A",
+  800: "#2B1E55",
+  900: "#110340",
   500_8: alpha("#919EAB", 0.08),
   500_12: alpha("#919EAB", 0.12),
   500_16: alpha("#919EAB", 0.16),
@@ -60,11 +60,11 @@ const GREY = {
 };
 
 const PRIMARY = {
-  lighter: "#dae6f0",
-  light: "#5389b6",
-  main: "#095797",
-  dark: "#074679", // to generate lighter/darker variants => https://www.tutorialrepublic.com/html-reference/html-color-picker.php
-  darker: "#05345b",
+  lighter: "#FF6D92",
+  light: "#FF507C",
+  main: "#FF3366",
+  dark: "#DB0037",
+  darker: "#990026",
   contrastText: "#fff",
 };
 const SECONDARY = {
@@ -117,8 +117,8 @@ const GRADIENTS = {
 };
 
 const palette: PaletteOptions = {
-  mode: "light",
-  common: { black: "#000", white: "#fff" },
+  mode: "dark",
+  common: { black: "#110340", white: "#FBFAFF" },
   primary: { ...PRIMARY },
   secondary: { ...SECONDARY },
   info: { ...INFO },
@@ -128,8 +128,8 @@ const palette: PaletteOptions = {
   grey: GREY,
   gradients: GRADIENTS,
   divider: GREY[500_24],
-  text: { primary: GREY[800], secondary: GREY[600], disabled: GREY[500] },
-  background: { paper: "#f7f7f7", default: "#ffffff" },
+  text: { primary: GREY[0], secondary: GREY[600], disabled: GREY[500] },
+  background: { paper: GREY[900], default: GREY[900] },
   alpha: {
     white: "rgba(255, 255, 255, 0.50)",
   },
