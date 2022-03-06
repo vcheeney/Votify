@@ -21,9 +21,8 @@ const VoterContext = createContext<VoterContextInterface>({
 
 const UNPROTECTED_ROUTES = [
   "/",
-  "/verify",
-  "/register",
-  "/connect",
+  "/getstarted/register",
+  "/getstarted/verify",
   "/errors/ballot-not-found",
   "/errors/no-ethereum-provider",
   "/errors/nonce-too-high",
@@ -89,7 +88,7 @@ export const VoterProvider: FC = ({ children }) => {
       }
 
       if (isCurrentRouteProtected && voterStatus === "unregistered") {
-        navigate("/register");
+        navigate("/getstarted/register");
         return;
       }
 
@@ -105,7 +104,7 @@ export const VoterProvider: FC = ({ children }) => {
       const me = await fetchMe();
 
       if (isCurrentRouteProtected && me == null) {
-        navigate(`/verify?redirect=${location.pathname}`);
+        navigate(`/getstarted/verify?redirect=${location.pathname}`);
         return;
       }
 

@@ -16,12 +16,12 @@ export default function Vote() {
 
   useEffect(() => {
     if (!loading && !account) {
-      navigate("/connect");
+      navigate("/getstarted");
       return;
     }
 
     if (status === "unregistered") {
-      navigate("/register");
+      navigate("/getstarted/register");
       return;
     }
 
@@ -38,9 +38,7 @@ export default function Vote() {
   return (
     <Box>
       <WaitingDialog
-        ready={false}
         title="Your vote has been sent"
-        route="/vote"
         open={currentVoterVoteStatus === "sent"}
         message="We are currently waiting for the operation to be saved on the public ledger. You will be redirected to the results page once the process is complete. It should only take a few seconds."
       />

@@ -38,7 +38,7 @@ const NONCE_TOO_HIGH_CORE = -32603;
 
 const UNPROTECTED_ROUTES = [
   "/",
-  "/connect",
+  "/getstarted",
   "/errors/ballot-not-found",
   "/errors/no-ethereum-provider",
   "/errors/nonce-too-high",

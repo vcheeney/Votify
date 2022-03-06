@@ -1,33 +1,33 @@
 import {
   Box,
-  Button,
-  FormControl,
+  Typography,
   Grid,
   Stack,
-  TextField,
-  Typography,
-  FormHelperText,
   Alert,
+  FormControl,
+  TextField,
+  FormHelperText,
+  Button,
 } from "@mui/material";
+import { useState, useEffect } from "react";
 import {
   ActionFunction,
-  Form,
   useTransition,
   useActionData,
   useSubmit,
-  SubmitFunction,
   useNavigate,
+  SubmitFunction,
+  Form,
 } from "remix";
 import invariant from "tiny-invariant";
 import { FullPageSpinner } from "~/components/FullPageSpinner";
 import { WaitingDialog } from "~/components/WaitingDialog";
 import { useEthereum } from "~/context/EthereumContext";
+import { useVoter } from "~/context/VoterContext";
+import { useVoterStatus } from "~/hooks/useVoterStatus";
 import { giveRightToVote } from "~/lib/ballot";
 import { CustomError } from "~/lib/error";
-import { useVoterStatus } from "~/hooks/useVoterStatus";
-import { registerUser } from "../lib/users.server";
-import { useVoter } from "../context/VoterContext";
-import { useEffect, useState } from "react";
+import { registerUser } from "~/lib/users.server";
 
 // TODO: add fancy error messages
 // https://remix.run/docs/en/v1/guides/data-writes#animating-in-the-validation-errors
@@ -60,9 +60,9 @@ export const action: ActionFunction = async ({ request }) => {
   }
 };
 
-export default function Register() {
+export default function GetStartedRegister() {
   const status = useVoterStatus();
-  const { account } = useEthereum();
+  const { loading, account } = useEthereum();
   const transition = useTransition();
   const registered = useActionData();
   const submit = useSubmit();
@@ -71,14 +71,22 @@ export default function Register() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (loading) {
+      return;
+    }
+
+    if (!account) {
+      navigate("/getstarted");
+    }
+
     if (status === "registered") {
-      navigate("/vote");
+      navigate("/getstarted/vote");
     }
 
     if (status === "voted") {
       navigate("/results");
     }
-  }, [status]);
+  }, [loading, status]);
 
   async function handleSubmit(target: Parameters<SubmitFunction>[0]) {
     const verified = await verifyWallet();
@@ -112,13 +120,10 @@ export default function Register() {
   return (
     <Box>
       <WaitingDialog
-        ready={false}
         title="Your registration has been accepted"
-        route="/vote"
         open={!!registered}
         message="We are currently waiting for the operation to be saved on the public ledger. You will be redirected to the voting page once the process is complete. It should only take a few seconds."
       />
-      <Typography variant="h1">Register</Typography>
       <Grid
         container
         direction="column"

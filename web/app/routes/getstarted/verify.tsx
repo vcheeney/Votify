@@ -1,11 +1,11 @@
 import { Alert, Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "remix";
-import { useEthereum } from "../context/EthereumContext";
-import { useVoter } from "../context/VoterContext";
-import { useVoterStatus } from "../hooks/useVoterStatus";
+import { useEthereum } from "../../context/EthereumContext";
+import { useVoter } from "../../context/VoterContext";
+import { useVoterStatus } from "../../hooks/useVoterStatus";
 import { useEffect, useState } from "react";
 
-export default function Verify() {
+export default function GetStartedVerify() {
   const navigate = useNavigate();
   const { account } = useEthereum();
   const { verifyWallet } = useVoter();
@@ -14,7 +14,7 @@ export default function Verify() {
 
   useEffect(() => {
     if (status === "unregistered") {
-      navigate("/register");
+      navigate("/getstarted/register");
     }
   }, [status]);
 

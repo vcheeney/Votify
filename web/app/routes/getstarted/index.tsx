@@ -1,9 +1,9 @@
-import { Box, Button, Typography } from "@mui/material";
-import { useEthereum } from "~/context/EthereumContext";
-import { useNavigate } from "remix";
+import { Box, Typography, Button } from "@mui/material";
 import { useEffect } from "react";
+import { useNavigate } from "remix";
+import { useEthereum } from "~/context/EthereumContext";
 
-export default function Connect() {
+export default function GetStartedConnect() {
   const { connectWithMetamask, account, loading } = useEthereum();
   const navigate = useNavigate();
 
@@ -12,8 +12,8 @@ export default function Connect() {
       return;
     }
 
-    if (account != null) {
-      navigate("/vote");
+    if (account) {
+      navigate("/getstarted/register");
     }
   }, [account, loading]);
 
