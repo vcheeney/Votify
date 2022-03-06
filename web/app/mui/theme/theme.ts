@@ -12,6 +12,7 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     logo: true;
+    pageTitle: true;
     h3: false;
   }
 }
@@ -61,6 +62,16 @@ const theme = createTheme({
             fontSize: 28,
             fontWeight: "bolder",
             color: "white",
+          },
+        },
+        {
+          props: { variant: "pageTitle" },
+          style: {
+            display: "inline-block",
+            fontSize: "2rem",
+            fontWeight: "500",
+            color: "white",
+            marginBottom: 12,
           },
         },
         {
