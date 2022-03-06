@@ -15,7 +15,7 @@ export const CandidateCard: FC<Props> = ({ proposal, display }) => {
       sx={{
         px: 4,
         py: 2,
-        backgroundColor: "grey.800",
+        backgroundColor: "grey.100",
         alignItems: "center",
         display: "flex",
         borderRadius: 1,

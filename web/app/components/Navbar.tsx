@@ -13,7 +13,7 @@ export const Navbar: FC = () => {
       <Box
         sx={{
           height: "72px",
-          bgcolor: "#2B1E55",
+          bgcolor: "primary.main",
           display: "flex",
           alignItems: "center",
         }}

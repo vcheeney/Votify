@@ -70,7 +70,6 @@ const theme = createTheme({
             display: "inline-block",
             fontSize: "2rem",
             fontWeight: "500",
-            color: "white",
             marginBottom: 12,
           },
         },
