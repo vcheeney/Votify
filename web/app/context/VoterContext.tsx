@@ -83,6 +83,10 @@ export const VoterProvider: FC = ({ children }) => {
     const isCurrentRouteProtected = isProtected(window.location.pathname);
 
     async function refreshContext() {
+      if (ethereumLoading) {
+        return;
+      }
+
       if (isCurrentRouteProtected && !account) {
         navigate("/getstarted");
       }
@@ -114,7 +118,7 @@ export const VoterProvider: FC = ({ children }) => {
     }
 
     refreshContext();
-  }, [account, voterStatus]);
+  }, [ethereumLoading, account, voterStatus]);
 
   return (
     <VoterContext.Provider

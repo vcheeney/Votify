@@ -1,11 +1,10 @@
-import { Box, Button, Typography } from "@mui/material";
-import { Link } from "remix";
+import { Box, Typography } from "@mui/material";
 import { YoutubeEmbed } from "~/components/YoutubeEmbed";
-import { ErrorPageLayout } from "~/components/ErrorPageLayout";
+import { GenericPageLayout } from "~/components/GenericPageLayout";
 
 function NoEthereumProvider() {
   return (
-    <ErrorPageLayout>
+    <GenericPageLayout>
       <Typography variant="pageTitle">
         MetaMask "Nonce too high" error
       </Typography>
@@ -26,18 +25,7 @@ function NoEthereumProvider() {
         </ol>
       </Box>
       <YoutubeEmbed embedId="Y6ExSniRloA" />
-      <Button
-        variant="contained"
-        component={Link}
-        to="/"
-        replace={true}
-        sx={{
-          mt: 4,
-        }}
-      >
-        Back to home
-      </Button>
-    </ErrorPageLayout>
+    </GenericPageLayout>
   );
 }
 

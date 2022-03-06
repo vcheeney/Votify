@@ -20,7 +20,7 @@ export default function GetStartedVerify() {
 
   return (
     <Box>
-      <Typography variant="h1">Verify your account</Typography>
+      <Typography variant="pageTitle">Verify your account</Typography>
       <Typography variant="body1">
         Sign the message prompted by MetaMask. This will verify your identity
         and confirm your ownership of the account <b>{account}</b>
@@ -38,7 +38,7 @@ export default function GetStartedVerify() {
           if (!verified) {
             setError("Failed to verify signature, please try again.");
           } else {
-            navigate("/");
+            navigate("/getstarted/vote");
           }
         }}
       >

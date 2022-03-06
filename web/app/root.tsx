@@ -24,6 +24,7 @@ import ClientStyleContext from "./mui/ClientStyleContext";
 import theme from "./mui/theme/theme";
 import { LocalizationProvider } from "./mui/LocalizationProvider";
 import { VoterProvider } from "./context/VoterContext";
+import { GenericPageLayout } from "./components/GenericPageLayout";
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -136,10 +137,10 @@ export function ErrorBoundary({ error }: { error: Error }) {
     return (
       <Document title="Error!">
         <Layout>
-          <Box>
-            <Typography variant="h1">An error occurred</Typography>
+          <GenericPageLayout>
+            <Typography variant="pageTitle">An error occurred</Typography>
             <Typography variant="body1">{error.message}</Typography>
-          </Box>
+          </GenericPageLayout>
         </Layout>
       </Document>
     );

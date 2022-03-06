@@ -1,10 +1,9 @@
-import { Box, Button, Typography } from "@mui/material";
-import { Link } from "remix";
-import { ErrorPageLayout } from "~/components/ErrorPageLayout";
+import { Box, Typography } from "@mui/material";
+import { GenericPageLayout } from "~/components/GenericPageLayout";
 
 function NoEthereumProvider() {
   return (
-    <ErrorPageLayout>
+    <GenericPageLayout>
       <Typography variant="pageTitle">
         MetaMask is required to run this app
       </Typography>
@@ -18,18 +17,7 @@ function NoEthereumProvider() {
         </Typography>
         <Typography variant="body1">Then, try refreshing the page.</Typography>
       </Box>
-      <Button
-        variant="contained"
-        component={Link}
-        to="/"
-        replace={true}
-        sx={{
-          mt: 4,
-        }}
-      >
-        Back to home
-      </Button>
-    </ErrorPageLayout>
+    </GenericPageLayout>
   );
 }
 

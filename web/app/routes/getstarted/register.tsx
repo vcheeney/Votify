@@ -122,13 +122,17 @@ export default function GetStartedRegister() {
       <WaitingDialog
         title="Your registration has been accepted"
         open={!!registered}
-        message="We are currently waiting for the operation to be saved on the public ledger. You will be redirected to the voting page once the process is complete. It should only take a few seconds."
+        message="We are currently waiting for the operation to be saved on the public ledger. You will have access to the voting page as soon as the process is complete. It should only take a few seconds."
       />
+      <Typography variant="pageTitle">Register your account</Typography>
       <Grid
         container
         direction="column"
         alignItems="center"
         justifyContent="center"
+        sx={{
+          mt: 4,
+        }}
       >
         <Form
           method="post"
@@ -138,8 +142,7 @@ export default function GetStartedRegister() {
           }}
           onChange={handleChange}
         >
-          <Stack sx={{ mt: 4 }} spacing={3}>
-            <Typography variant="h2">Register your account</Typography>
+          <Stack spacing={3}>
             <Alert severity="warning">
               Make sure you are linking the right account. Your secret codes can
               only be used once

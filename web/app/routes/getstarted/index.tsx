@@ -19,7 +19,13 @@ export default function GetStartedConnect() {
 
   return (
     <Box>
-      <Typography variant="h1">Connect to your Ethereum account</Typography>
+      <Typography variant="pageTitle">
+        Connect to your Ethereum account
+      </Typography>
+      <Typography>
+        You need to connect to your Ethereum account in order to use the voting
+        system.
+      </Typography>
       <Button
         variant="contained"
         sx={{

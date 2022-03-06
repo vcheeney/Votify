@@ -1,12 +1,13 @@
-import { ArrowBack } from "@mui/icons-material";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { useEffect } from "react";
-import { Link, useNavigate } from "remix";
+import { useNavigate } from "remix";
+import { CandidateCard } from "~/components/CandidateCard";
 import { FullPageSpinner } from "~/components/FullPageSpinner";
 import { WaitingDialog } from "~/components/WaitingDialog";
 import { useEthereum } from "~/context/EthereumContext";
 import { useVoterStatus } from "~/hooks/useVoterStatus";
 import { useBallot } from "../context/BallotContext";
+import { GenericPageLayout } from "~/components/GenericPageLayout";
 
 export default function Vote() {
   const { account, loading } = useEthereum();
@@ -36,13 +37,17 @@ export default function Vote() {
   }
 
   return (
-    <Box>
+    <GenericPageLayout>
       <WaitingDialog
         title="Your vote has been sent"
         open={currentVoterVoteStatus === "sent"}
         message="We are currently waiting for the operation to be saved on the public ledger. You will be redirected to the results page once the process is complete. It should only take a few seconds."
       />
-      <Typography variant="h1">Vote</Typography>
+      <Typography variant="pageTitle">Vote</Typography>
+      <Typography variant="body1">
+        Now is your big moment! Click on the Vote button under the candidate for
+        which you would like to vote.
+      </Typography>
       <Stack
         direction="row"
         spacing={4}
@@ -50,53 +55,24 @@ export default function Vote() {
           display: "flex",
           justifyContent: "center",
           mb: 8,
-        }}
-      >
-        {proposals.map((proposal) => (
-          <Stack
-            spacing={2}
-            key={proposal.id}
-            sx={{
-              px: 4,
-              py: 2,
-              backgroundColor: "primary.lighter",
-              alignItems: "center",
-              display: "flex",
-            }}
-          >
-            <Typography
-              sx={{
-                fontWeight: "bold",
-                fontSize: "1.5rem",
-              }}
-            >
-              {proposal.name}
-            </Typography>
-            <Box
-              sx={{
-                w: "125px",
-                h: "125px",
-              }}
-              component="img"
-              src="./politician.png"
-              alt={proposal.name}
-            />
-            <Button variant="contained" onClick={() => submitVote(proposal.id)}>
-              Vote
-            </Button>
-          </Stack>
-        ))}
-      </Stack>
-      <Button
-        component={Link}
-        to="/"
-        startIcon={<ArrowBack />}
-        sx={{
           mt: 4,
         }}
       >
-        Go Back
-      </Button>
-    </Box>
+        {proposals.map((proposal) => (
+          <CandidateCard
+            key={proposal.id}
+            proposal={proposal}
+            display={
+              <Button
+                variant="contained"
+                onClick={() => submitVote(proposal.id)}
+              >
+                Vote
+              </Button>
+            }
+          />
+        ))}
+      </Stack>
+    </GenericPageLayout>
   );
 }
