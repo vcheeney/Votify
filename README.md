@@ -2,7 +2,7 @@
 
 # Votify <a href="#-project-status"><img src="https://img.shields.io/badge/Status-Active-blue?style=for-the-badge" align="right"></a>
 
-A POC of a decentralized voting platform with an emphasis on canadian provincial elections.
+A decentralized voting platform prototype.
 
 ## Table of contents <!-- omit in toc -->
 
