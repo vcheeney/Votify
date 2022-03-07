@@ -1,12 +1,5 @@
+import { blue, grey } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
-import palette from "./palette";
-import shadows, { customShadows } from "./shadows";
-
-declare module "@mui/material/styles" {
-  export interface ThemeOptions {
-    customShadows: Record<string, string>;
-  }
-}
 
 // Update the Typography's variant prop options
 declare module "@mui/material/Typography" {
@@ -19,9 +12,23 @@ declare module "@mui/material/Typography" {
 
 // Create a theme instance.
 const theme = createTheme({
-  palette,
-  shadows,
-  customShadows,
+  palette: {
+    grey: grey,
+    primary: {
+      main: blue[800],
+    },
+    secondary: {
+      main: grey[800],
+    },
+    text: {
+      primary: grey[800],
+      secondary: grey[600],
+    },
+    background: {
+      default: grey[50],
+      paper: "#fff",
+    },
+  },
   typography: {
     fontFamily: "Roboto, sans-serif",
     button: {
@@ -41,12 +48,22 @@ const theme = createTheme({
     borderRadius: 8,
   },
   components: {
-    // components overrides could be defined in app/theme/components.ts
-    // Name of the component ⚛️
     MuiButtonBase: {
       defaultProps: {
-        // The props to apply
-        disableRipple: true, // No more ripple, on the whole application 💣!
+        disableRipple: true,
+      },
+    },
+    MuiButton: {
+      defaultProps: {
+        disableRipple: true,
+      },
+      styleOverrides: {
+        root: {
+          boxShadow: "none",
+          "&:hover": {
+            boxShadow: "none",
+          },
+        },
       },
     },
     MuiContainer: {
@@ -59,9 +76,9 @@ const theme = createTheme({
         {
           props: { variant: "logo" },
           style: {
+            color: grey[800],
             fontSize: 28,
-            fontWeight: "bolder",
-            color: "white",
+            fontWeight: "900",
           },
         },
         {
@@ -76,8 +93,9 @@ const theme = createTheme({
         {
           props: { variant: "subtitle1" },
           style: {
-            fontSize: "1rem",
-            fontWeight: "bold",
+            fontSize: "1.8rem",
+            fontWeight: "500",
+            color: grey[500],
           },
         },
       ],

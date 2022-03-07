@@ -7,7 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import ClientStyleContext from "./mui/ClientStyleContext";
 import createEmotionCache from "./mui/createEmotionCache";
-import theme from "./mui/theme/theme";
+import theme from "./mui/theme";
 
 interface ClientCacheProviderProps {
   children: React.ReactNode;

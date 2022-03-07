@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
-import { GenericPageLayout } from "~/components/GenericPageLayout";
+import { GenericPageLayoutWithBackButton } from "~/components/GenericPageLayout";
 
 function NoEthereumProvider() {
   return (
-    <GenericPageLayout>
+    <GenericPageLayoutWithBackButton>
       <Typography variant="pageTitle">
         MetaMask is required to run this app
       </Typography>
@@ -17,7 +17,7 @@ function NoEthereumProvider() {
         </Typography>
         <Typography variant="body1">Then, try refreshing the page.</Typography>
       </Box>
-    </GenericPageLayout>
+    </GenericPageLayoutWithBackButton>
   );
 }
 

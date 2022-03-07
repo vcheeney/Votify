@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
-import { GenericPageLayout } from "~/components/GenericPageLayout";
+import { GenericPageLayoutWithBackButton } from "~/components/GenericPageLayout";
 
 function NoEthereumProvider() {
   return (
-    <GenericPageLayout>
+    <GenericPageLayoutWithBackButton>
       <Typography variant="pageTitle">
         The contract is not deployed on the selected network.
       </Typography>
@@ -16,7 +16,7 @@ function NoEthereumProvider() {
           the page.
         </Typography>
       </Box>
-    </GenericPageLayout>
+    </GenericPageLayoutWithBackButton>
   );
 }
 

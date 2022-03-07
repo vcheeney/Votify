@@ -28,6 +28,12 @@ import { useVoterStatus } from "~/hooks/useVoterStatus";
 import { giveRightToVote } from "~/lib/ballot";
 import { CustomError } from "~/lib/error";
 import { registerUser } from "~/lib/users.server";
+import { usePageReady } from "~/hooks/usePageReady";
+import {
+  generalTransition,
+  generalTransitionDelay,
+  generalButtonTransition,
+} from "~/lib/transitions";
 
 // TODO: add fancy error messages
 // https://remix.run/docs/en/v1/guides/data-writes#animating-in-the-validation-errors
@@ -69,6 +75,7 @@ export default function GetStartedRegister() {
   const { verifyWallet } = useVoter();
   const [submitDisabled, setSubmitDisabled] = useState(true);
   const navigate = useNavigate();
+  const ready = usePageReady(!loading && status === "unregistered");
 
   useEffect(() => {
     if (loading) {
@@ -124,7 +131,14 @@ export default function GetStartedRegister() {
         open={!!registered}
         message="We are currently waiting for the operation to be saved on the public ledger. You will have access to the voting page as soon as the process is complete. It should only take a few seconds."
       />
-      <Typography variant="pageTitle">Register your account</Typography>
+      <Typography
+        variant="pageTitle"
+        sx={{
+          ...generalTransition(ready),
+        }}
+      >
+        Register your account
+      </Typography>
       <Grid
         container
         direction="column"
@@ -132,6 +146,8 @@ export default function GetStartedRegister() {
         justifyContent="center"
         sx={{
           mt: 4,
+          ...generalTransition(ready),
+          ...generalTransitionDelay(1),
         }}
       >
         <Form
@@ -172,7 +188,12 @@ export default function GetStartedRegister() {
               <FormHelperText>To verify your identity</FormHelperText>
             </FormControl>
             <input name="account" type="hidden" value={account as string} />
-            <Button variant="contained" type="submit" disabled={submitDisabled}>
+            <Button
+              variant="contained"
+              type="submit"
+              disabled={submitDisabled}
+              disableRipple={true}
+            >
               {transition.state === "submitting"
                 ? "Registering..."
                 : "Register"}

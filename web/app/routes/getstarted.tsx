@@ -1,6 +1,4 @@
-// TODO: add fancy error messages
-
-import { Box, Stepper, Step, StepLabel } from "@mui/material";
+import { Box, Stepper, Step, StepLabel, StepConnector } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useLocation, Outlet } from "remix";
 
@@ -29,6 +27,18 @@ export default function GetStarted() {
     >
       <Stepper
         activeStep={step}
+        connector={
+          <StepConnector
+            sx={{
+              height: 4,
+              backgroundColor: "grey.300",
+              "& > span": {
+                border: "none",
+              },
+              borderRadius: 4,
+            }}
+          />
+        }
         sx={{
           paddingY: 4,
         }}

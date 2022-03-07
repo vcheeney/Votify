@@ -2,7 +2,7 @@ import { Box, Container, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { Link } from "remix/client";
 import { useEthereum } from "~/context/EthereumContext";
-import { useVoter } from "../context/VoterContext";
+import { useVoter } from "../app/context/VoterContext";
 
 export const Navbar: FC = () => {
   const { account, network } = useEthereum();
@@ -13,7 +13,6 @@ export const Navbar: FC = () => {
       <Box
         sx={{
           height: "72px",
-          bgcolor: "primary.main",
           display: "flex",
           alignItems: "center",
         }}
@@ -56,7 +55,6 @@ export const Navbar: FC = () => {
           </Box>
           <Box>
             <Typography
-              color="white"
               sx={{
                 fontSize: "0.5rem",
               }}
@@ -65,7 +63,6 @@ export const Navbar: FC = () => {
             </Typography>
             {network && (
               <Typography
-                color="white"
                 sx={{
                   fontSize: "0.5rem",
                 }}
@@ -75,7 +72,6 @@ export const Navbar: FC = () => {
               </Typography>
             )}
             <Typography
-              color="white"
               sx={{
                 fontSize: "0.5rem",
               }}

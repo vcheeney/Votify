@@ -10,6 +10,7 @@ const RefreshThePageButton = () => (
     onClick={() => {
       window.location.reload();
     }}
+    disableRipple={true}
   >
     Refresh the page
   </Button>
@@ -34,6 +35,7 @@ export class CustomError extends Error {
         sx={{
           mt: 4,
         }}
+        disableRipple={true}
       >
         Back to home
       </Button>
