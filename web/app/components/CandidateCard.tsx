@@ -8,14 +8,13 @@ type Props = {
 };
 
 export const CandidateCard: FC<Props> = ({ proposal, display }) => {
-  console.log("proposal", proposal);
   return (
     <Stack
       spacing={2}
       sx={{
         px: 4,
         py: 2,
-        backgroundColor: "grey.100",
+        bgcolor: "grey.200",
         alignItems: "center",
         display: "flex",
         borderRadius: 1,
@@ -36,7 +35,7 @@ export const CandidateCard: FC<Props> = ({ proposal, display }) => {
         }}
         borderRadius={4}
         component="img"
-        src={proposal.name.includes("Alice") ? "woman.png" : "man.png"} // 🤫
+        src={proposal.name.includes("Alice") ? "woman.svg" : "man.svg"} // 🤫
         alt={proposal.name}
       />
       {display}
