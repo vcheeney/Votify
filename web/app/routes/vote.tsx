@@ -71,7 +71,7 @@ export default function Vote() {
           display: "flex",
           justifyContent: "center",
           mb: 8,
-          mt: 4,
+          mt: 12,
           ...generalTransition(ready),
           ...generalTransitionDelay(2),
         }}

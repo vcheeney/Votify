@@ -26,7 +26,7 @@ module.exports = {
   plugins: ["react", "@typescript-eslint", "prettier", "unused-imports"],
   rules: {
     "prettier/prettier": ["error"],
-    "unused-imports/no-unused-imports-ts": "warning",
+    "unused-imports/no-unused-imports-ts": 1,
     "react/react-in-jsx-scope": "off",
     "react/no-unescaped-entities": "off",
     "@typescript-eslint/no-empty-function": "off",
