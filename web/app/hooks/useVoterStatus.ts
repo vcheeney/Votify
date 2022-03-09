@@ -7,12 +7,16 @@ export type VoterStatus = "loading" | "unregistered" | "registered" | "voted";
 
 export function useVoterStatus() {
   const { account } = useEthereum();
-  const { getVoterInformation, voteRightReceived, currentVoterVoteStatus } =
-    useBallot();
+  const {
+    getVoterInformation,
+    voteRightReceived,
+    currentVoterVoteStatus,
+    ballotExists,
+  } = useBallot();
   const [status, setStatus] = useState<VoterStatus>("loading");
 
   useEffect(() => {
-    if (account) {
+    if (account && ballotExists) {
       getVoterInformation(account).then((voter) => {
         invariant(voter, "Voter should be defined");
         if (!voter.allowed) {
@@ -24,7 +28,7 @@ export function useVoterStatus() {
         }
       });
     }
-  }, [account, voteRightReceived, currentVoterVoteStatus]);
+  }, [account, ballotExists, voteRightReceived, currentVoterVoteStatus]);
 
   return status;
 }

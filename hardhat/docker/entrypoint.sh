@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "🔗📜 Launching the local blockchain and deploying the smart contract...";
+echo "Launching the local blockchain and deploying the smart contract...";
 
 # Change to the correct directory
 cd /usr/src/blockchain;

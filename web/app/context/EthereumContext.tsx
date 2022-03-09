@@ -10,7 +10,6 @@ import {
 } from "react";
 import { useNavigate } from "remix";
 import invariant from "tiny-invariant";
-import { FullPageSpinner } from "~/components/FullPageSpinner";
 
 type Network = ethers.providers.Network & {
   connected: boolean;
@@ -25,11 +24,10 @@ interface EthereumContextInterface {
   connectWithMetamask: () => void;
 }
 
-const HARDHAT_CHAIN_ID = 31337;
+export const HARDHAT_CHAIN_ID = 31337;
 
 const UNPROTECTED_ROUTES = [
   "/",
-  "/connect",
   "/errors/ballot-not-found",
   "/errors/no-ethereum-provider",
   "/errors/nonce-too-high",
@@ -44,7 +42,7 @@ const EthereumContext = createContext<EthereumContextInterface>({
   connectWithMetamask: () => {},
 });
 
-export const EthereumProvider: FC<{}> = ({ children }) => {
+export const EthereumProvider: FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [ethereumExists, setEthereumExists] = useState(false);
   const [network, setNetwork] = useState<Network | null>(null);
@@ -89,7 +87,7 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
     if (!ethereumExists && isProtected(window.location.pathname)) {
       navigate("/errors/no-ethereum-provider");
     }
-  }, [ethereumExists]);
+  }, [ethereumExists, loading]);
 
   function handleNetworkChange(network: ethers.providers.Network) {
     const provider = providerRef.current;
@@ -100,7 +98,7 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
       connected: false,
     };
     setNetwork(newNetwork);
-    provider.getBlockNumber().then((blockNumber: number) => {
+    provider.getBlockNumber().then(() => {
       setNetwork((prev) => {
         invariant(prev, "Network should be defined");
         return {
@@ -140,10 +138,6 @@ export const EthereumProvider: FC<{}> = ({ children }) => {
     signer,
     connectWithMetamask,
   };
-
-  if (loading) {
-    return <FullPageSpinner />;
-  }
 
   return (
     <EthereumContext.Provider value={value}>

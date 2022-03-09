@@ -1,4 +1,4 @@
-import utils from "ethereumjs-util";
+import * as utils from "ethereumjs-util";
 import { createSignatureMessage } from "./auth";
 
 export async function getAddressFromSignatureChallenge(

@@ -11,7 +11,6 @@ import { useNavigate } from "remix";
 import invariant from "tiny-invariant";
 import { VoteEvent, VoterAllowedEvent } from "types/ethers-contracts/Ballot";
 import { TypedListener } from "types/ethers-contracts/common";
-import { FullPageSpinner } from "~/components/FullPageSpinner";
 import { Ballot, Ballot__factory } from "../../types/ethers-contracts";
 import { useEthereum } from "./EthereumContext";
 
@@ -25,6 +24,7 @@ type VoterVoteStatus = "unknown" | "sent" | "confirmed";
 
 interface BallotContextInterface {
   loading: boolean;
+  ballotExists: boolean;
   proposals: Proposal[];
   voteRightReceived: boolean;
   currentVoterVoteStatus: VoterVoteStatus;
@@ -38,7 +38,7 @@ const NONCE_TOO_HIGH_CORE = -32603;
 
 const UNPROTECTED_ROUTES = [
   "/",
-  "/connect",
+  "/getstarted",
   "/errors/ballot-not-found",
   "/errors/no-ethereum-provider",
   "/errors/nonce-too-high",
@@ -47,6 +47,7 @@ const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
 
 const BallotContext = createContext<BallotContextInterface>({
   loading: true,
+  ballotExists: false,
   proposals: [],
   voteRightReceived: false,
   currentVoterVoteStatus: "unknown",
@@ -176,16 +177,13 @@ export const BallotProvider: FC = ({ children }) => {
 
   const value = {
     loading,
+    ballotExists: ballotRef.current !== null,
     proposals,
     voteRightReceived,
     currentVoterVoteStatus,
     submitVote,
     getVoterInformation,
   };
-
-  if (loading) {
-    return <FullPageSpinner />;
-  }
 
   return (
     <BallotContext.Provider value={value}>{children}</BallotContext.Provider>

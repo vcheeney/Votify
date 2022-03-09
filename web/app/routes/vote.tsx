@@ -1,11 +1,14 @@
-import { ArrowBack } from "@mui/icons-material";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { useEffect } from "react";
-import { Link, useNavigate } from "remix";
+import { useNavigate } from "remix";
+import { CandidateCard } from "~/components/CandidateCard";
 import { FullPageSpinner } from "~/components/FullPageSpinner";
+import { GenericPageLayout } from "~/components/GenericPageLayout";
 import { WaitingDialog } from "~/components/WaitingDialog";
 import { useEthereum } from "~/context/EthereumContext";
+import { usePageReady } from "~/hooks/usePageReady";
 import { useVoterStatus } from "~/hooks/useVoterStatus";
+import { generalTransition, generalTransitionDelay } from "~/lib/transitions";
 import { useBallot } from "../context/BallotContext";
 
 export default function Vote() {
@@ -13,15 +16,16 @@ export default function Vote() {
   const { proposals, submitVote, currentVoterVoteStatus } = useBallot();
   const status = useVoterStatus();
   const navigate = useNavigate();
+  const ready = usePageReady(status !== "loading");
 
   useEffect(() => {
     if (!loading && !account) {
-      navigate("/connect");
+      navigate("/getstarted");
       return;
     }
 
     if (status === "unregistered") {
-      navigate("/register");
+      navigate("/getstarted/register");
       return;
     }
 
@@ -36,15 +40,30 @@ export default function Vote() {
   }
 
   return (
-    <Box>
+    <GenericPageLayout>
       <WaitingDialog
-        ready={false}
         title="Your vote has been sent"
-        route="/vote"
         open={currentVoterVoteStatus === "sent"}
         message="We are currently waiting for the operation to be saved on the public ledger. You will be redirected to the results page once the process is complete. It should only take a few seconds."
       />
-      <Typography variant="h1">Vote</Typography>
+      <Typography
+        variant="pageTitle"
+        sx={{
+          ...generalTransition(ready),
+        }}
+      >
+        Vote
+      </Typography>
+      <Typography
+        variant="body1"
+        sx={{
+          ...generalTransition(ready),
+          ...generalTransitionDelay(1),
+        }}
+      >
+        Now is your big moment! Click on the "Vote" button under the candidate
+        for which you would like to vote.
+      </Typography>
       <Stack
         direction="row"
         spacing={4}
@@ -52,53 +71,27 @@ export default function Vote() {
           display: "flex",
           justifyContent: "center",
           mb: 8,
+          mt: 12,
+          ...generalTransition(ready),
+          ...generalTransitionDelay(2),
         }}
       >
         {proposals.map((proposal) => (
-          <Stack
-            spacing={2}
+          <CandidateCard
             key={proposal.id}
-            sx={{
-              px: 4,
-              py: 2,
-              backgroundColor: "primary.lighter",
-              alignItems: "center",
-              display: "flex",
-            }}
-          >
-            <Typography
-              sx={{
-                fontWeight: "bold",
-                fontSize: "1.5rem",
-              }}
-            >
-              {proposal.name}
-            </Typography>
-            <Box
-              sx={{
-                w: "125px",
-                h: "125px",
-              }}
-              component="img"
-              src="./politician.png"
-              alt={proposal.name}
-            />
-            <Button variant="contained" onClick={() => submitVote(proposal.id)}>
-              Vote
-            </Button>
-          </Stack>
+            proposal={proposal}
+            display={
+              <Button
+                variant="contained"
+                onClick={() => submitVote(proposal.id)}
+                disableRipple={true}
+              >
+                Vote
+              </Button>
+            }
+          />
         ))}
       </Stack>
-      <Button
-        component={Link}
-        to="/"
-        startIcon={<ArrowBack />}
-        sx={{
-          mt: 4,
-        }}
-      >
-        Go Back
-      </Button>
-    </Box>
+    </GenericPageLayout>
   );
 }

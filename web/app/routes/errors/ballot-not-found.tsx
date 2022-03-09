@@ -1,10 +1,10 @@
-import { Box, Button, Typography } from "@mui/material";
-import { Link } from "remix";
+import { Box, Typography } from "@mui/material";
+import { GenericPageLayoutWithBackButton } from "~/components/GenericPageLayout";
 
 function NoEthereumProvider() {
   return (
-    <Box>
-      <Typography variant="h1">
+    <GenericPageLayoutWithBackButton>
+      <Typography variant="pageTitle">
         The contract is not deployed on the selected network.
       </Typography>
       <Box>
@@ -16,18 +16,7 @@ function NoEthereumProvider() {
           the page.
         </Typography>
       </Box>
-      <Button
-        variant="contained"
-        component={Link}
-        to="/"
-        replace={true}
-        sx={{
-          mt: 4,
-        }}
-      >
-        Back to home
-      </Button>
-    </Box>
+    </GenericPageLayoutWithBackButton>
   );
 }
 

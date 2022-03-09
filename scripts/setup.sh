@@ -1,6 +1,6 @@
 set -e # stop the script if any command returns an error
 
-echo "🚦 Starting automatted installation of the project..."
+echo "🚦 Starting automated installation of the project..."
 
 echo "⌨  $ cd hardhat"
 cd hardhat
@@ -10,12 +10,6 @@ npm install
 
 echo "⌨  $ npx hardhat compile"
 npx hardhat compile
-
-echo "⌨  $ cd ../database"
-cd ../database
-
-echo "⌨  $ cp database.env.template database.env"
-cp database.env.template database.env
 
 echo "⌨  $ cd ../web"
 cd ../web
@@ -31,6 +25,5 @@ npm run syncContract
 
 echo "⌨  $ npm run build"
 npm run build
-
 
 echo "🏁 Finished installation of the project!"

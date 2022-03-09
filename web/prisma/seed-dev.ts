@@ -1,4 +1,4 @@
-import { PrismaClient, User } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { createHash } from "crypto";
 import { v4 as uuidv4 } from "uuid";
 import faker from "@faker-js/faker";
@@ -8,6 +8,8 @@ import { createSpinner } from "nanospinner";
 import { writeFileSync } from "fs";
 
 const prisma = new PrismaClient();
+
+const SEEDS_PATH = "./prisma/seed-users.json";
 
 type CodeLogs = [{ name: string; dateOfBirth: string; code: string }?];
 
@@ -78,6 +80,14 @@ async function isUserTableEmpty() {
 }
 
 async function main() {
+  if (process.argv.includes("--non-interactive")) {
+    createDefaultUsers();
+    createRandomUsers(5);
+    writeFileSync(SEEDS_PATH, JSON.stringify(codes, null, 2));
+    writeUsersSecretsToFile();
+    return;
+  }
+
   printBanner();
 
   if (!(await promptContinue())) {
@@ -110,14 +120,7 @@ async function main() {
 
   spinner.stop().success();
 
-  const path = "./prisma/seed-users.json";
-
-  const writeSpinner = createSpinner("Writting users code to file...").start();
-  writeFileSync(path, JSON.stringify(codes, null, 2));
-  writeSpinner.stop().success();
-
-  console.log(chalk.green(`User codes have been written to ${path}`));
-  console.log(chalk.green("Seeding done, go vote!"));
+  writeUsersSecretsToFile();
 }
 
 async function createDefaultUsers() {
@@ -156,6 +159,15 @@ async function createRandomUsers(count: number) {
   }
 
   return prisma.user.createMany({ data: users });
+}
+
+function writeUsersSecretsToFile() {
+  const writeSpinner = createSpinner("Writing users code to file...").start();
+  writeFileSync(SEEDS_PATH, JSON.stringify(codes, null, 2));
+  writeSpinner.stop().success();
+
+  console.log(chalk.green(`User codes have been written to ${SEEDS_PATH}`));
+  console.log(chalk.green("Seeding done, go vote!"));
 }
 
 main()

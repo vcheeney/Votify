@@ -1,8 +1,10 @@
 import { Box, Container } from "@mui/material";
 import { FC } from "react";
-import { Navbar } from "./Navbar";
+import { useLocation } from "remix";
+import { Navbar } from "../../public/Navbar";
 
 export const Layout: FC = ({ children }) => {
+  const location = useLocation();
   return (
     <Box
       sx={{
@@ -11,9 +13,16 @@ export const Layout: FC = ({ children }) => {
         flexDirection: "column",
       }}
     >
-      <Navbar />
-      <Container maxWidth="lg">
-        <Box sx={{ py: 8 }}>{children}</Box>
+      {location.pathname !== "/" && <Navbar />}
+      <Container
+        maxWidth="lg"
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {children}
       </Container>
     </Box>
   );

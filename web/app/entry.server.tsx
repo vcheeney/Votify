@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import * as React from "react";
 import { renderToString } from "react-dom/server";
 import { RemixServer } from "remix";
@@ -9,7 +10,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { CacheProvider } from "@emotion/react";
 import createEmotionServer from "@emotion/server/create-instance";
-import theme from "./mui/theme/theme";
+import theme from "./mui/theme";
 require("dotenv").config();
 
 export default function handleRequest(

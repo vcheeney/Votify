@@ -4,7 +4,6 @@ import {
   Typography,
   unstable_useEnhancedEffect as useEnhancedEffect,
 } from "@mui/material";
-import DateAdapter from "@mui/lab/AdapterMoment";
 import * as React from "react";
 import {
   Links,
@@ -22,9 +21,10 @@ import { BallotProvider } from "./context/BallotContext";
 import { EthereumProvider } from "./context/EthereumContext";
 import { CustomError } from "./lib/error";
 import ClientStyleContext from "./mui/ClientStyleContext";
-import theme from "./mui/theme/theme";
+import theme from "./mui/theme";
 import { LocalizationProvider } from "./mui/LocalizationProvider";
 import { VoterProvider } from "./context/VoterContext";
+import { GenericPageLayoutWithBackButton } from "./components/GenericPageLayout";
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -48,7 +48,6 @@ const Document = withEmotionCache(
       });
       // reset cache to reapply global styles
       clientStyleData.reset();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -62,7 +61,7 @@ const Document = withEmotionCache(
           <Links />
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
           />
           <meta
             name="emotion-insertion-point"
@@ -138,10 +137,10 @@ export function ErrorBoundary({ error }: { error: Error }) {
     return (
       <Document title="Error!">
         <Layout>
-          <Box>
-            <Typography variant="h1">An error occurred</Typography>
+          <GenericPageLayoutWithBackButton>
+            <Typography variant="pageTitle">An error occurred</Typography>
             <Typography variant="body1">{error.message}</Typography>
-          </Box>
+          </GenericPageLayoutWithBackButton>
         </Layout>
       </Document>
     );

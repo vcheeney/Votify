@@ -21,16 +21,15 @@ const VoterContext = createContext<VoterContextInterface>({
 
 const UNPROTECTED_ROUTES = [
   "/",
-  "/verify",
-  "/register",
-  "/connect",
+  "/getstarted/register",
+  "/getstarted/verify",
   "/errors/ballot-not-found",
   "/errors/no-ethereum-provider",
   "/errors/nonce-too-high",
 ];
 const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
 
-export const VoterProvider: FC<{}> = ({ children }) => {
+export const VoterProvider: FC = ({ children }) => {
   const [voter, setVoter] = useState<Voter>();
   const { account, signer, loading: ethereumLoading } = useEthereum();
   const voterStatus = useVoterStatus();
@@ -80,16 +79,20 @@ export const VoterProvider: FC<{}> = ({ children }) => {
     return !!json.success;
   }
 
-  const isCurrentRouteProtected = isProtected(window.location.pathname);
-
   useEffect(() => {
+    const isCurrentRouteProtected = isProtected(window.location.pathname);
+
     async function refreshContext() {
-      if (account == null) {
+      if (ethereumLoading) {
         return;
       }
 
+      if (isCurrentRouteProtected && !account) {
+        navigate("/getstarted");
+      }
+
       if (isCurrentRouteProtected && voterStatus === "unregistered") {
-        navigate("/register");
+        navigate("/getstarted/register");
         return;
       }
 
@@ -105,7 +108,7 @@ export const VoterProvider: FC<{}> = ({ children }) => {
       const me = await fetchMe();
 
       if (isCurrentRouteProtected && me == null) {
-        navigate(`/verify?redirect=${location.pathname}`);
+        navigate(`/getstarted/verify?redirect=${location.pathname}`);
         return;
       }
 
@@ -115,7 +118,7 @@ export const VoterProvider: FC<{}> = ({ children }) => {
     }
 
     refreshContext();
-  }, [account, voterStatus]);
+  }, [ethereumLoading, account, voterStatus]);
 
   return (
     <VoterContext.Provider

@@ -1,5 +1,4 @@
 import { json } from "remix";
-import url, { URLSearchParams } from "url";
 import type { LoaderFunction } from "remix";
 import { getSession } from "../../../sessions";
 import { getUserFromAddress } from "../../../lib/users.server";
