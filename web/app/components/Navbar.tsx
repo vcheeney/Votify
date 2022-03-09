@@ -1,8 +1,10 @@
+import { Language } from "@mui/icons-material";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { Link } from "remix";
 import { useEthereum } from "~/context/EthereumContext";
-import { useVoter } from "../app/context/VoterContext";
+import { useVoter } from "../context/VoterContext";
+import { AccountMenu } from "./AccountMenu";
 
 export const Navbar: FC = () => {
   const { account, network } = useEthereum();
@@ -54,31 +56,25 @@ export const Navbar: FC = () => {
             </Stack>
           </Box>
           <Box>
-            <Typography
+            <Stack
+              direction="row"
+              spacing={2}
               sx={{
-                fontSize: "0.5rem",
+                alignItems: "center",
               }}
             >
-              Account: {account || "(not connected)"}
-            </Typography>
-            {network && (
-              <Typography
+              <AccountMenu />
+              <Stack
+                direction="row"
+                spacing={1}
                 sx={{
-                  fontSize: "0.5rem",
+                  minWidth: 120,
                 }}
               >
-                Chain: {network.name} {network.chainId}{" "}
-                {network.connected ? "🟢" : "🔴"}
-              </Typography>
-            )}
-            <Typography
-              sx={{
-                fontSize: "0.5rem",
-              }}
-            >
-              Voter:{" "}
-              {voter ? `${voter.firstName} ${voter.lastName}` : "unverified"}
-            </Typography>
+                <Language />
+                {network && <Typography>{network.name}</Typography>}
+              </Stack>
+            </Stack>
           </Box>
         </Container>
       </Box>

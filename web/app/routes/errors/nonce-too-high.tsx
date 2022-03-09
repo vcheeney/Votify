@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { YoutubeEmbed } from "~/components/YoutubeEmbed";
 import { GenericPageLayoutWithBackButton } from "~/components/GenericPageLayout";
 
-function NoEthereumProvider() {
+function NonceTooHigh() {
   return (
     <GenericPageLayoutWithBackButton>
       <Typography variant="pageTitle">
@@ -29,4 +29,4 @@ function NoEthereumProvider() {
   );
 }
 
-export default NoEthereumProvider;
+export default NonceTooHigh;

@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { GenericPageLayoutWithBackButton } from "~/components/GenericPageLayout";
 
-function NoEthereumProvider() {
+function BallotNotFound() {
   return (
     <GenericPageLayoutWithBackButton>
       <Typography variant="pageTitle">
@@ -20,4 +20,4 @@ function NoEthereumProvider() {
   );
 }
 
-export default NoEthereumProvider;
+export default BallotNotFound;

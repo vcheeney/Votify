@@ -21,6 +21,7 @@ const VoterContext = createContext<VoterContextInterface>({
 
 const UNPROTECTED_ROUTES = [
   "/",
+  "/results",
   "/getstarted/register",
   "/getstarted/verify",
   "/errors/ballot-not-found",
