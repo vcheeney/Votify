@@ -131,16 +131,19 @@ export const BallotProvider: FC = ({ children }) => {
   }, [ethereumLoading, ethereumExists, network]);
 
   useEffect(() => {
-    if (ballotExists) {
-      if (location.pathname === "/errors/ballot-not-found") {
-        navigate("/getstarted");
-      }
-    } else {
-      if (routeRequiresBallot(location.pathname)) {
-        navigate("/errors/ballot-not-found");
+    if (!loading) {
+      if (ballotExists) {
+        if (location.pathname === "/errors/ballot-not-found") {
+          navigate("/getstarted");
+        }
+      } else {
+        // alert(`ballotExists: ${ballotExists}, loading: ${loading}`);
+        if (routeRequiresBallot(location.pathname)) {
+          navigate("/errors/ballot-not-found");
+        }
       }
     }
-  }, [location.pathname, ballotExists]);
+  }, [loading, location.pathname, ballotExists]);
 
   function fetchProposals() {
     const ballot = ballotRef.current;
