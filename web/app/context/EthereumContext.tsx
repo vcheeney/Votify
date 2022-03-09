@@ -116,7 +116,7 @@ export const EthereumProvider: FC = ({ children }) => {
       logoutEthereumAccount();
     } else {
       setAccount(accounts[0]);
-      // TODO: Destroy session
+      // TODO: Destroy session / login the other account and setup new session?
     }
   }
 

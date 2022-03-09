@@ -57,7 +57,7 @@ const BallotContext = createContext<BallotContextInterface>({
 });
 
 export const BallotProvider: FC = ({ children }) => {
-  const [ballotExists, setBallotExists] = useState<boolean | null>(null);
+  const [ballotExists, setBallotExists] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [voteRightReceived, setVoteRightReceived] = useState(false);
