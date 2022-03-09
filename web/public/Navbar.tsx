@@ -1,6 +1,6 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { FC } from "react";
-import { Link } from "remix/client";
+import { Link } from "remix";
 import { useEthereum } from "~/context/EthereumContext";
 import { useVoter } from "../app/context/VoterContext";
 
