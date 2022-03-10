@@ -40,7 +40,7 @@ export const AccountMenu: FC = () => {
       >
         <Stack direction="row" spacing={1}>
           <Typography>
-            {voter && account ? `${voter.firstName} ${voter.lastName}` :  null}
+            {voter && account ? `${voter.firstName} ${voter.lastName}` : null}
           </Typography>
           <Box
             component="img"
