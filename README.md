@@ -82,10 +82,16 @@ First, clone the repository with the following command:
 git clone git@github.com:vcheeney/voting-platform.git
 ```
 
-Run everything with docker-compose:
+Then, setup the environment variables (tip: copy/paste our `.env.example` file, the default values work just fine):
 
-```sH
-docker-compose -f docker-compose.yml -f docker-compose.web.yml up
+```sh
+cp .env.example .env
+```
+
+Finally, run everything with docker-compose:
+
+```sh
+docker-compose -f docker-compose.yml -f production.yml up
 ```
 
 For development purposes, follow the more thorough [manual setup steps](SETUP.md).
