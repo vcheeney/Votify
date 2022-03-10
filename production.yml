@@ -1,17 +1,20 @@
 version: "3.4"
 
-networks:
-  default:
-    name: "votify-network"
-
 services:
+  database:
+    restart: always
+
   votify-web:
     container_name: votify-web
     image: vcheeney/votify-web
     build: ./web
-    env_file: "./web/.env.docker"
+    environment:
+      - DATABASE_URL
+      - BALLOT_CONTRACT_ADDRESS
+      - CHAIRPERSON_ACCOUNT
+      - ETHEREUM_NODE_RPC_URL
+      - COOKIE_SECRET
     ports:
       - "3000:3000"
     volumes:
       - ./web/prisma:/usr/server/app/prisma
-

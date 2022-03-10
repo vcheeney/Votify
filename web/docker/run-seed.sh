@@ -6,7 +6,7 @@ until [ "$n" -ge $MAX_ATTEMPTS ]
 do
    echo "Trying to run the seed... (Attempt $n/$MAX_ATTEMPTS)";
    exec 2> /dev/null
-   npx dotenv -e .env.docker -- npx ts-node prisma/seed-dev.ts --non-interactive &&
+   npx ts-node prisma/seed-dev.ts --non-interactive &&
       echo "Seed succeeded! 🎉" &&
       break;
    exec 2>&1

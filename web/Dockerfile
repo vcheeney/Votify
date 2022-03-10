@@ -12,7 +12,7 @@ RUN npm ci
 COPY ./ .
 
 # Generate the Prisma client
-RUN npx dotenv -e .env.docker -- npx prisma generate
+RUN npx prisma generate
 
 # Build the app
 RUN npm run build
