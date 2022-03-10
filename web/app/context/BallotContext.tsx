@@ -132,15 +132,17 @@ export const BallotProvider: FC = ({ children }) => {
 
   useEffect(() => {
     if (!loading) {
-      if (ballotExists) {
-        if (location.pathname === "/errors/ballot-not-found") {
-          navigate("/getstarted");
-        }
-      } else {
-        // alert(`ballotExists: ${ballotExists}, loading: ${loading}`);
-        if (routeRequiresBallot(location.pathname)) {
-          navigate("/errors/ballot-not-found");
-        }
+      return;
+    }
+
+    if (ballotExists) {
+      if (location.pathname === "/errors/ballot-not-found") {
+        navigate("/getstarted");
+      }
+    } else {
+      // alert(`ballotExists: ${ballotExists}, loading: ${loading}`);
+      if (routeRequiresBallot(location.pathname)) {
+        navigate("/errors/ballot-not-found");
       }
     }
   }, [loading, location.pathname, ballotExists]);
