@@ -29,11 +29,7 @@ import { giveRightToVote } from "~/lib/ballot";
 import { CustomError } from "~/lib/error";
 import { registerUser } from "~/lib/users.server";
 import { usePageReady } from "~/hooks/usePageReady";
-import {
-  generalTransition,
-  generalTransitionDelay,
-  generalButtonTransition,
-} from "~/lib/transitions";
+import { generalTransition, generalTransitionDelay } from "~/lib/transitions";
 
 // TODO: add fancy error messages
 // https://remix.run/docs/en/v1/guides/data-writes#animating-in-the-validation-errors
@@ -187,7 +183,11 @@ export default function GetStartedRegister() {
               />
               <FormHelperText>To verify your identity</FormHelperText>
             </FormControl>
-            <input name="account" type="hidden" value={account as string} />
+            <input
+              name="account"
+              type="hidden"
+              defaultValue={account as string}
+            />
             <Button
               variant="contained"
               type="submit"

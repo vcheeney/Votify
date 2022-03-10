@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/material";
 import { FC } from "react";
 import { useLocation } from "remix";
-import { Navbar } from "../../public/Navbar";
+import { Navbar } from "./Navbar";
 
 export const Layout: FC = ({ children }) => {
   const location = useLocation();

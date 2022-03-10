@@ -22,6 +22,7 @@ interface EthereumContextInterface {
   account: string | null;
   signer?: JsonRpcSigner;
   connectWithMetamask: () => void;
+  logoutEthereumAccount: () => void;
 }
 
 export const HARDHAT_CHAIN_ID = 31337;
@@ -40,6 +41,7 @@ const EthereumContext = createContext<EthereumContextInterface>({
   network: null,
   account: null,
   connectWithMetamask: () => {},
+  logoutEthereumAccount: () => {},
 });
 
 export const EthereumProvider: FC = ({ children }) => {
@@ -68,11 +70,11 @@ export const EthereumProvider: FC = ({ children }) => {
       });
 
       provider.on("network", handleNetworkChange);
-
-      // TODO: Detect les account changes
+      ethereum.on("accountsChanged", handleAccountsChanged);
 
       return () => {
         provider.off("network", handleNetworkChange);
+        ethereum.removeListener("accountsChanged", handleAccountsChanged);
       };
     } else {
       setLoading(false);
@@ -109,6 +111,20 @@ export const EthereumProvider: FC = ({ children }) => {
     });
   }
 
+  function handleAccountsChanged(accounts: string[]) {
+    if (!accounts.length) {
+      logoutEthereumAccount();
+    } else {
+      setAccount(accounts[0]);
+      // TODO: Destroy session / login the other account and setup new session?
+    }
+  }
+
+  function logoutEthereumAccount() {
+    setAccount(null);
+    // TODO: Destroy session
+  }
+
   async function connectWithMetamask() {
     const provider = providerRef.current;
     invariant(provider, "Provider should be defined");
@@ -130,13 +146,14 @@ export const EthereumProvider: FC = ({ children }) => {
     }
   }
 
-  const value = {
+  const value: EthereumContextInterface = {
     loading,
     ethereumExists,
     network,
     account,
     signer,
     connectWithMetamask,
+    logoutEthereumAccount,
   };
 
   return (

@@ -10,12 +10,31 @@ declare module "@mui/material/Typography" {
   }
 }
 
+declare module "@mui/material/styles" {
+  interface Palette {
+    neutral: Palette["primary"];
+  }
+  interface PaletteOptions {
+    neutral: PaletteOptions["primary"];
+  }
+}
+
+// Update the Button's color prop options
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    neutral: true;
+  }
+}
+
 // Create a theme instance.
 const theme = createTheme({
   palette: {
     grey: grey,
     primary: {
       main: blue[800],
+    },
+    neutral: {
+      main: grey[800],
     },
     secondary: {
       main: grey[800],

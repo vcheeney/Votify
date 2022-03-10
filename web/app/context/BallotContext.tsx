@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useNavigate } from "remix";
+import { useLocation, useNavigate } from "remix";
 import invariant from "tiny-invariant";
 import { VoteEvent, VoterAllowedEvent } from "types/ethers-contracts/Ballot";
 import { TypedListener } from "types/ethers-contracts/common";
@@ -43,7 +43,8 @@ const UNPROTECTED_ROUTES = [
   "/errors/no-ethereum-provider",
   "/errors/nonce-too-high",
 ];
-const isProtected = (route: string) => !UNPROTECTED_ROUTES.includes(route);
+const routeRequiresBallot = (route: string) =>
+  !UNPROTECTED_ROUTES.includes(route);
 
 const BallotContext = createContext<BallotContextInterface>({
   loading: true,
@@ -56,6 +57,7 @@ const BallotContext = createContext<BallotContextInterface>({
 });
 
 export const BallotProvider: FC = ({ children }) => {
+  const [ballotExists, setBallotExists] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [voteRightReceived, setVoteRightReceived] = useState(false);
@@ -63,8 +65,14 @@ export const BallotProvider: FC = ({ children }) => {
     useState<VoterVoteStatus>("unknown");
   const ballotRef = useRef<Ballot | null>(null);
   const providerRef = useRef<ethers.providers.Web3Provider | null>(null);
-  const { ethereumExists, loading: ethereumLoading, account } = useEthereum();
+  const {
+    ethereumExists,
+    loading: ethereumLoading,
+    account,
+    network,
+  } = useEthereum();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const voteEventsListener: TypedListener<VoteEvent> = (voterAccount) => {
     fetchProposals();
@@ -103,12 +111,11 @@ export const BallotProvider: FC = ({ children }) => {
       try {
         await ballot.chairperson();
         console.log("[BallotContext] Contract is accessible 👍");
+        setBallotExists(true);
         fetchProposals();
       } catch (error) {
-        console.error(error);
-        if (isProtected(window.location.pathname)) {
-          navigate("/errors/ballot-not-found");
-        }
+        console.log("[BallotContext] Contract is NOT accessible 👎");
+        setBallotExists(false);
       } finally {
         setLoading(false);
       }
@@ -121,7 +128,24 @@ export const BallotProvider: FC = ({ children }) => {
       ballot.off("Vote", voteEventsListener);
       ballot.off("VoterAllowed", voterAllowedEventsListener);
     };
-  }, [ethereumLoading, ethereumExists]);
+  }, [ethereumLoading, ethereumExists, network]);
+
+  useEffect(() => {
+    if (!loading) {
+      return;
+    }
+
+    if (ballotExists) {
+      if (location.pathname === "/errors/ballot-not-found") {
+        navigate("/getstarted");
+      }
+    } else {
+      // alert(`ballotExists: ${ballotExists}, loading: ${loading}`);
+      if (routeRequiresBallot(location.pathname)) {
+        navigate("/errors/ballot-not-found");
+      }
+    }
+  }, [loading, location.pathname, ballotExists]);
 
   function fetchProposals() {
     const ballot = ballotRef.current;
@@ -175,9 +199,9 @@ export const BallotProvider: FC = ({ children }) => {
     };
   }
 
-  const value = {
+  const value: BallotContextInterface = {
     loading,
-    ballotExists: ballotRef.current !== null,
+    ballotExists,
     proposals,
     voteRightReceived,
     currentVoterVoteStatus,
