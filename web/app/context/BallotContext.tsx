@@ -131,7 +131,7 @@ export const BallotProvider: FC = ({ children }) => {
   }, [ethereumLoading, ethereumExists, network]);
 
   useEffect(() => {
-    if (!loading) {
+    if (loading) {
       return;
     }
 
