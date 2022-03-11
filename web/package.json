@@ -11,7 +11,8 @@
     "syncContract": "sh ./contracts/sync-contract.sh",
     "seed": "ts-node prisma/seed-dev.ts",
     "lint": "npx eslint . --ext .ts,.tsx,.js,.jsx",
-    "lintFix": "npx eslint . --ext .ts,.tsx,.js,.jsx --fix"
+    "lintFix": "npx eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "initDb": "npx prisma migrate dev && ts-node prisma/seed-dev.ts --non-interactive"
   },
   "prisma": {},
   "dependencies": {
