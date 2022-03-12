@@ -3,12 +3,10 @@ import { Box, Container, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { Link } from "remix";
 import { useEthereum } from "~/context/EthereumContext";
-import { useVoter } from "../context/VoterContext";
 import { AccountMenu } from "./AccountMenu";
 
 export const Navbar: FC = () => {
-  const { account, network } = useEthereum();
-  const { voter } = useVoter();
+  const { network } = useEthereum();
 
   return (
     <>
