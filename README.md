@@ -61,7 +61,7 @@ I used MUI in some old projects that never saw the light of day, but I was not a
 
 ## 📷 Preview
 
-https://user-images.githubusercontent.com/23345182/157134172-05b52d74-818a-4666-86fb-d9b5eab504b5.mp4
+https://user-images.githubusercontent.com/23345182/158018954-4e8ca714-eb61-4311-9e74-ab6c880a7e1a.mp4
 
 ## 💿 Setup
 
