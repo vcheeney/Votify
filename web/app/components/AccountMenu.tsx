@@ -9,6 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import React, { FC, useState } from "react";
 import { useEthereum } from "~/context/EthereumContext";
 import { useVoter } from "~/context/VoterContext";
@@ -30,39 +31,48 @@ export const AccountMenu: FC = () => {
 
   return (
     <>
-      <Button
-        id="account-menu"
-        aria-controls={open ? "account-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-        color="neutral"
+      <Tooltip
+        title={
+          account ||
+          "Your ethereum address will be displayed here once you login"
+        }
+        placement="bottom"
+        arrow
       >
-        <Stack direction="row" spacing={1}>
-          <Typography>
-            {voter && account ? `${voter.firstName} ${voter.lastName}` : null}
-          </Typography>
-          <Box
-            component="img"
-            src="/metamask-fox.svg"
-            sx={{
-              width: 22,
-            }}
-          />
-          <Typography
-            sx={{
-              fontWeight: "bold",
-              minWidth: 120,
-              display: "inline-block",
-              textAlign: "left",
-            }}
-          >
-            {loading
-              ? "loading..."
-              : (account && formatAccountString(account)) || "not connected"}
-          </Typography>
-        </Stack>
-      </Button>
+        <Button
+          id="account-menu"
+          aria-controls={open ? "account-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+          color="neutral"
+        >
+          <Stack direction="row" spacing={1}>
+            <Typography>
+              {voter && account ? `${voter.firstName} ${voter.lastName}` : null}
+            </Typography>
+            <Box
+              component="img"
+              src="/metamask-fox.svg"
+              sx={{
+                width: 22,
+              }}
+            />
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                minWidth: 120,
+                display: "inline-block",
+                textAlign: "left",
+              }}
+            >
+              {loading
+                ? "loading..."
+                : (account && formatAccountString(account)) || "not connected"}
+            </Typography>
+          </Stack>
+        </Button>
+      </Tooltip>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}

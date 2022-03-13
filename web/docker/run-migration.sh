@@ -6,7 +6,7 @@ until [ "$n" -ge $MAX_ATTEMPTS ]
 do
    echo "Trying to run the migration... (Attempt $n/$MAX_ATTEMPTS)";
    exec 2> /dev/null
-   npx dotenv -e .env.docker -- npx prisma migrate dev &&
+   npx prisma migrate dev &&
       echo "Migration succeeded! 🎉" &&
       break;
    exec 2>&1

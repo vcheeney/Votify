@@ -7,12 +7,14 @@ import {
   generalTransitionDelay,
   generalButtonTransition,
 } from "~/lib/transitions";
+import { GoVoteConfetti } from "~/components/GoVoteConfetti";
 
 export default function GetStartedVote() {
   const ready = usePageReady();
 
   return (
     <Box>
+      <GoVoteConfetti />
       <Typography
         variant="pageTitle"
         sx={{
