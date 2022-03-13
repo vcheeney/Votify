@@ -37,20 +37,6 @@ npx hardhat compile
 # You can now close this terminal
 ```
 
-#### Database
-
-Open a terminal at the root of the project and run the following commands:
-
-```sh
-# Move into the database subdirectory
-cd database
-
-# Create the .env file from the template
-cp database.env.template database.env
-
-# You can now close this terminal
-```
-
 #### Web application
 
 Open a terminal at the root of the project and run the following commands:
@@ -67,9 +53,6 @@ cp .env.example .env
 
 # Get the compiled contract from the hardhat project
 npm run syncContract
-
-# Build the project
-npm run build
 
 # You can now close this terminal
 ```
@@ -90,9 +73,15 @@ docker-compose up
 
 > 🚨 If changes are made to the smart contract's code, shutdown the docker environment with **docker-compose down** before rebuilding the containers with **docker-compose build** and relaunching with **docker-compose up**.
 
+and follow the instructions from the script.
+
+#### Web application
+
+> 🚨 If changes are made to the **`.env`** file at the root of the repository, make sure that these changes are reflected properly in the **`web/.env`** file.
+
 ##### Running the initial Prisma migration
 
-Before executing the next command, wait for the following message in your terminal:
+Before executing the next command, wait for the following message in the terminal that you used to run _docker-compose up_:
 `"LOG: database system is ready to accept connections"`
 
 In another terminal:
@@ -108,24 +97,7 @@ y
 
 ```
 
-#### Web application
-
-In another terminal, run the following commands:
-
-```sh
-# Move into the web project subdirectory
-cd web
-
-# Start the production application
-npm run start
-
-# If you would rather run the development server, run:
-npm run dev
-
-# Keep this terminal open for as long as you want the app alive
-```
-
-#### Seeding
+##### Seeding the database with default users
 
 You can insert randomly generated users for testing using the seeding script.
 
@@ -137,4 +109,16 @@ cd web
 npm run seed
 ```
 
-and follow the instructions from the script.
+##### Running the web app
+
+In another terminal, run the following commands:
+
+```sh
+# Move into the web project subdirectory
+cd web
+
+# Run the app in development
+npm run dev
+
+# Keep this terminal open for as long as you want the app alive
+```

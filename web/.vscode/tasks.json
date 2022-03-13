@@ -21,6 +21,13 @@
       "problemMatcher": [],
       "label": "npm: syncContract",
       "detail": "sh ./contracts/sync-contract.sh"
+    },
+    {
+      "type": "npm",
+      "script": "initDb",
+      "problemMatcher": [],
+      "label": "npm: initDb",
+      "detail": "npx prisma migrate dev && ts-node prisma/seed-dev.ts --non-interactive"
     }
   ]
 }

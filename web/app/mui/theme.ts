@@ -119,6 +119,16 @@ const theme = createTheme({
         },
       ],
     },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontSize: "0.8rem",
+          textAlign: "center",
+          width: "auto",
+          maxWidth: "none",
+        },
+      },
+    },
   },
 });
 

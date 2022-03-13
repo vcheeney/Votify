@@ -14,4 +14,4 @@ sh docker/run-migration.sh
 sh docker/run-seed.sh
 
 # Run the web app
-npx dotenv -e .env.docker -- npm start
+npm start
