@@ -4,6 +4,7 @@ import { useBallot } from "~/context/BallotContext";
 import { GenericPageLayout } from "~/components/GenericPageLayout";
 import { generalTransition, generalTransitionDelay } from "~/lib/transitions";
 import { usePageReady } from "~/hooks/usePageReady";
+import { formatVotesString } from "~/lib/utils";
 
 export default function Results() {
   const { proposals } = useBallot();
@@ -50,7 +51,7 @@ export default function Results() {
                   fontSize: "1rem",
                 }}
               >
-                {proposal.voteCount} votes
+                {formatVotesString(proposal.voteCount)}
               </Typography>
             }
           />
