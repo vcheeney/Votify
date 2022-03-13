@@ -1,17 +1,6 @@
-import { CreateTypes, Options } from "canvas-confetti";
+import { CreateTypes } from "canvas-confetti";
 import React, { FC, useCallback, useEffect, useRef } from "react";
 import ReactCanvasConfetti from "react-canvas-confetti";
-
-function getAnimationSettings(): Options {
-  return {
-    particleCount: 150,
-    spread: 180,
-    startVelocity: 90,
-    angle: 90,
-    origin: { x: 0.5, y: 1 },
-    colors: ["#2196f3", "#1e88e5", "#1976d2"],
-  };
-}
 
 export const GoVoteConfetti: FC = () => {
   const refAnimationInstance = useRef<CreateTypes | null>(null);
@@ -23,7 +12,14 @@ export const GoVoteConfetti: FC = () => {
   useEffect(() => {
     if (refAnimationInstance.current) {
       const instance = refAnimationInstance.current as CreateTypes;
-      instance(getAnimationSettings());
+      instance({
+        particleCount: 150,
+        spread: 180,
+        startVelocity: 90,
+        angle: 90,
+        origin: { x: 0.5, y: 1 },
+        colors: ["#2196f3", "#1e88e5", "#1976d2"],
+      });
     }
   }, [refAnimationInstance.current]);
 
