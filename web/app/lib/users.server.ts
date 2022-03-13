@@ -1,6 +1,5 @@
 import prisma from "./prisma";
 import { createHash } from "crypto";
-import invariant from "tiny-invariant";
 import moment from "moment";
 
 function hashCode(code: string) {
@@ -28,14 +27,23 @@ export async function registerUser(
 ) {
   const user = await getUserFromCode(secretCode);
 
-  invariant(user, "Invalid code");
-  invariant(!user.address, "User already registered");
+  if (user == null || user.address != null) {
+    console.error(
+      "Failed to register user, code is either invalid or user is already registred"
+    );
+    throw new Error("Unable to register user");
+  }
 
   const userBirthDate = moment(user.dateOfBirth);
   const claimedBirthDate = moment(dateOfBirth);
 
   // Not giving any precise info for security
-  invariant(userBirthDate.isSame(claimedBirthDate, "day"), "Invalid code");
+  if (!userBirthDate.isSame(claimedBirthDate, "day")) {
+    console.error(
+      "Failed to register user, claimed birth date does not match actual"
+    );
+    throw new Error("Unable to register user");
+  }
 
   const updatedUser = await prisma.user.update({
     where: { id: user.id },

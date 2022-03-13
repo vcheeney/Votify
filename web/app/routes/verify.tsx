@@ -1,8 +1,8 @@
 import { Alert, Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "remix";
-import { useEthereum } from "../../context/EthereumContext";
-import { useVoter } from "../../context/VoterContext";
-import { useVoterStatus } from "../../hooks/useVoterStatus";
+import { useEthereum } from "../context/EthereumContext";
+import { useVoter } from "../context/VoterContext";
+import { useVoterStatus } from "../hooks/useVoterStatus";
 import { useEffect, useState } from "react";
 import { usePageReady } from "~/hooks/usePageReady";
 import {

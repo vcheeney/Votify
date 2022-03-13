@@ -77,47 +77,53 @@ export const VoterProvider: FC = ({ children }) => {
 
     const json = await res.json();
 
+    await refreshContext();
+
     return !!json.success;
   }
 
-  useEffect(() => {
+  async function refreshContext() {
     const isCurrentRouteProtected = isProtected(window.location.pathname);
-
-    async function refreshContext() {
-      if (ethereumLoading) {
-        return;
-      }
-
-      if (isCurrentRouteProtected && !account) {
-        navigate("/getstarted");
-      }
-
-      if (isCurrentRouteProtected && voterStatus === "unregistered") {
-        navigate("/getstarted/register");
-        return;
-      }
-
-      if (voter != null) {
-        return;
-      }
-
-      console.log(
-        "[VoterContext] Fetching voter information for wallet",
-        account
-      );
-
-      const me = await fetchMe();
-
-      if (isCurrentRouteProtected && me == null) {
-        navigate(`/getstarted/verify?redirect=${location.pathname}`);
-        return;
-      }
-
-      if (me != null) {
-        setVoter({ firstName: me.firstName, lastName: me.lastName });
-      }
+    if (ethereumLoading) {
+      return;
     }
 
+    // User is already registred but needs to verify to "sign in"
+    if (needsVerify) {
+      navigate(`/verify?redirect=${location.pathname}`);
+    }
+
+    if (isCurrentRouteProtected && !account) {
+      navigate("/getstarted");
+    }
+
+    if (isCurrentRouteProtected && voterStatus === "unregistered") {
+      navigate("/getstarted/register");
+      return;
+    }
+
+    if (voter != null) {
+      return;
+    }
+
+    console.log(
+      "[VoterContext] Fetching voter information for wallet",
+      account
+    );
+
+    const me = await fetchMe();
+
+    if (isCurrentRouteProtected && me == null) {
+      navigate(`/verify?redirect=${location.pathname}`);
+      return;
+    }
+
+    if (me != null) {
+      setVoter({ firstName: me.firstName, lastName: me.lastName });
+    }
+  }
+
+  useEffect(() => {
     refreshContext();
   }, [ethereumLoading, account, voterStatus]);
 

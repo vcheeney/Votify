@@ -18,6 +18,7 @@ import {
   useNavigate,
   SubmitFunction,
   Form,
+  json,
 } from "remix";
 import invariant from "tiny-invariant";
 import { FullPageSpinner } from "~/components/FullPageSpinner";
@@ -30,43 +31,69 @@ import { CustomError } from "~/lib/error";
 import { registerUser } from "~/lib/users.server";
 import { usePageReady } from "~/hooks/usePageReady";
 import { generalTransition, generalTransitionDelay } from "~/lib/transitions";
+import { isFormDataStringValid, isStringValidUUID } from "../../lib/utils";
 
-// TODO: add fancy error messages
-// https://remix.run/docs/en/v1/guides/data-writes#animating-in-the-validation-errors
+type FormErrors = { [field: string]: string };
+
+function getAndValidateFormData(formData: FormData) {
+  const errors: FormErrors = {};
+  const account = formData.get("account");
+  const secretCode = formData.get("secretCode");
+  const dateOfBirth = formData.get("dateOfBirth");
+
+  if (!isFormDataStringValid(account)) {
+    errors["account"] = "Account is required";
+  }
+
+  if (!isFormDataStringValid(secretCode)) {
+    errors["secretCode"] = "Secret code is required";
+  } else {
+    if (!isStringValidUUID(secretCode)) {
+      errors["secretCode"] = "Invalid secret code format";
+    }
+  }
+
+  if (!isFormDataStringValid(dateOfBirth)) {
+    errors["dateOfBirth"] = "Date of birth is required";
+  }
+
+  return {
+    account: account as string,
+    secretCode: secretCode as string,
+    dateOfBirth: dateOfBirth as string,
+    errors,
+  };
+}
+
 export const action: ActionFunction = async ({ request }) => {
   const body = await request.formData();
 
-  const account = body.get("account");
-  const secretCode = body.get("secretCode");
-  const dateOfBirth = body.get("dateOfBirth");
+  const { account, secretCode, dateOfBirth, errors } =
+    getAndValidateFormData(body);
 
-  invariant(account, "Account is required");
-  invariant(typeof account === "string", "Account must be a string");
-
-  invariant(secretCode, "Secret code is required");
-  invariant(typeof secretCode === "string", "Secret code must be a string");
-
-  invariant(dateOfBirth, "Date of birth is required");
-  invariant(typeof dateOfBirth === "string", "Date of birth must be a string");
-
-  const user = await registerUser(secretCode, new Date(dateOfBirth), account);
-
-  const success = await giveRightToVote(account);
-
-  if (success) {
-    return true;
-  } else {
-    throw new CustomError(
-      "Could not give right to vote (See error in the server console)"
-    );
+  try {
+    await registerUser(secretCode, new Date(dateOfBirth), account);
+  } catch (e) {
+    return json({
+      registerSuccess: false,
+      errors,
+    });
   }
+
+  const rightToVoteSuccess = await giveRightToVote(account);
+
+  return json({
+    registerSuccess: true,
+    rightToVoteSuccess: true,
+    errors: errors,
+  });
 };
 
 export default function GetStartedRegister() {
   const status = useVoterStatus();
   const { loading, account } = useEthereum();
   const transition = useTransition();
-  const registered = useActionData();
+  const actionData = useActionData();
   const submit = useSubmit();
   const { verifyWallet } = useVoter();
   const [submitDisabled, setSubmitDisabled] = useState(true);
@@ -124,7 +151,7 @@ export default function GetStartedRegister() {
     <Box>
       <WaitingDialog
         title="Your registration has been accepted"
-        open={!!registered}
+        open={actionData?.registerSuccess && actionData?.rightToVoteSuccess}
         message="We are currently waiting for the operation to be saved on the public ledger. You will have access to the voting page as soon as the process is complete. It should only take a few seconds."
       />
       <Typography
@@ -155,13 +182,26 @@ export default function GetStartedRegister() {
           onChange={handleChange}
         >
           <Stack spacing={3}>
-            <Alert severity="warning">
-              Make sure you are linking the right account. Your secret codes can
-              only be used once
-            </Alert>
+            {actionData?.registerSuccess === false && (
+              <Alert severity="error">
+                Failed to register your account.
+                <br />
+                Verify that you entered your secret code and date of birth.
+                correctly
+              </Alert>
+            )}
+            {actionData?.rightToVoteSuccess === false && (
+              <Alert severity="error">
+                {/* // TODO: come up with a better message for this  */}
+                Failed to give you the right to vote
+              </Alert>
+            )}
             <Typography align="center">
               Linking account: <b>{account}</b>
             </Typography>
+            {actionData?.errors?.secretCode != null && (
+              <Alert severity="error">{actionData?.errors?.secretCode}</Alert>
+            )}
             <FormControl>
               <TextField
                 id="secretCode"
@@ -188,6 +228,10 @@ export default function GetStartedRegister() {
               type="hidden"
               defaultValue={account as string}
             />
+            <Alert severity="warning">
+              Make sure you are linking the right account. Your secret codes can
+              only be used once
+            </Alert>
             <Button
               variant="contained"
               type="submit"
