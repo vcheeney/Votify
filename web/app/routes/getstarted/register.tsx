@@ -186,7 +186,7 @@ export default function GetStartedRegister() {
               <Alert severity="error">
                 Failed to register your account.
                 <br />
-                Verify that you entered your secret code and date of birth.
+                Verify that you entered your secret code and date of birth
                 correctly
               </Alert>
             )}
