@@ -37,9 +37,6 @@ export const VoterProvider: FC = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const needsVerify =
-    (voterStatus === "registered" || voterStatus === "voted") && voter == null;
-
   async function fetchMe() {
     const currentUserRes = await fetch(`/api/user/me`);
     const currentUserJson = await currentUserRes.json();
@@ -88,11 +85,6 @@ export const VoterProvider: FC = ({ children }) => {
       return;
     }
 
-    // User is already registred but needs to verify to "sign in"
-    if (needsVerify) {
-      navigate(`/verify?redirect=${location.pathname}`);
-    }
-
     if (isCurrentRouteProtected && !account) {
       navigate("/getstarted");
     }
@@ -120,6 +112,9 @@ export const VoterProvider: FC = ({ children }) => {
 
     if (me != null) {
       setVoter({ firstName: me.firstName, lastName: me.lastName });
+    } else if (voterStatus === "registered" || voterStatus === "voted") {
+      // User is already registred but needs to verify to "sign in"
+      navigate(`/verify?redirect=${location.pathname}`);
     }
   }
 
