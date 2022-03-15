@@ -95,10 +95,14 @@ export default function GetStartedRegister() {
   const transition = useTransition();
   const actionData = useActionData();
   const submit = useSubmit();
-  const { verifyWallet } = useVoter();
+  const { verifyWallet, refreshVoter } = useVoter();
   const [submitDisabled, setSubmitDisabled] = useState(true);
   const navigate = useNavigate();
   const ready = usePageReady(!loading && status === "unregistered");
+
+  useEffect(() => {
+    refreshVoter();
+  });
 
   useEffect(() => {
     if (loading) {

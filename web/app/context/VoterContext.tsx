@@ -11,11 +11,13 @@ export interface Voter {
 
 interface VoterContextInterface {
   voter?: Voter;
+  refreshVoter: () => Promise<void>;
   verifyWallet: () => Promise<boolean>;
 }
 
 const VoterContext = createContext<VoterContextInterface>({
   voter: undefined,
+  refreshVoter: async () => undefined,
   verifyWallet: async () => false,
 });
 
@@ -74,8 +76,6 @@ export const VoterProvider: FC = ({ children }) => {
 
     const json = await res.json();
 
-    await refreshContext();
-
     return !!json.success;
   }
 
@@ -105,16 +105,17 @@ export const VoterProvider: FC = ({ children }) => {
 
     const me = await fetchMe();
 
-    if (isCurrentRouteProtected && me == null) {
+    if (
+      isCurrentRouteProtected &&
+      me == null &&
+      (voterStatus === "registered" || voterStatus === "voted")
+    ) {
       navigate(`/verify?redirect=${location.pathname}`);
       return;
     }
 
     if (me != null) {
       setVoter({ firstName: me.firstName, lastName: me.lastName });
-    } else if (voterStatus === "registered" || voterStatus === "voted") {
-      // User is already registred but needs to verify to "sign in"
-      navigate(`/verify?redirect=${location.pathname}`);
     }
   }
 
@@ -126,6 +127,7 @@ export const VoterProvider: FC = ({ children }) => {
     <VoterContext.Provider
       value={{
         voter,
+        refreshVoter: refreshContext,
         verifyWallet,
       }}
     >
