@@ -203,9 +203,6 @@ export default function GetStartedRegister() {
             <Typography align="center">
               Linking account: <b>{account}</b>
             </Typography>
-            {actionData?.errors?.secretCode != null && (
-              <Alert severity="error">{actionData?.errors?.secretCode}</Alert>
-            )}
             <FormControl>
               <TextField
                 id="secretCode"
@@ -214,6 +211,9 @@ export default function GetStartedRegister() {
                 label="Secret Code"
               />
             </FormControl>
+            {actionData?.errors?.secretCode != null && (
+              <Alert severity="error">{actionData?.errors?.secretCode}</Alert>
+            )}
             <FormControl>
               <TextField
                 id="dateOfBirth"
