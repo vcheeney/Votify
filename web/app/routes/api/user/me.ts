@@ -11,6 +11,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const user = await getUserFromAddress(session.get("address"));
 
+  if (!user) {
+    // User has verified their address but have not registred yet
+    return json({ success: false, error: "Not logged in." }, 200);
+  }
+
   return json(
     {
       success: true,

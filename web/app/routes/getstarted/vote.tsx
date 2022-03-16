@@ -8,9 +8,16 @@ import {
   generalButtonTransition,
 } from "~/lib/transitions";
 import { GoVoteConfetti } from "~/components/GoVoteConfetti";
+import { useEffect } from "react";
+import { useVoter } from "../../context/VoterContext";
 
 export default function GetStartedVote() {
   const ready = usePageReady();
+  const { refreshVoter } = useVoter();
+
+  useEffect(() => {
+    refreshVoter();
+  });
 
   return (
     <Box>

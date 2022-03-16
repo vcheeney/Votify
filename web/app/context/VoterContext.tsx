@@ -11,11 +11,13 @@ export interface Voter {
 
 interface VoterContextInterface {
   voter?: Voter;
+  refreshVoter: () => Promise<void>;
   verifyWallet: () => Promise<boolean>;
 }
 
 const VoterContext = createContext<VoterContextInterface>({
   voter: undefined,
+  refreshVoter: async () => undefined,
   verifyWallet: async () => false,
 });
 
@@ -36,9 +38,6 @@ export const VoterProvider: FC = ({ children }) => {
   const voterStatus = useVoterStatus();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const needsVerify =
-    (voterStatus === "registered" || voterStatus === "voted") && voter == null;
 
   async function fetchMe() {
     const currentUserRes = await fetch(`/api/user/me`);
@@ -80,44 +79,47 @@ export const VoterProvider: FC = ({ children }) => {
     return !!json.success;
   }
 
-  useEffect(() => {
+  async function refreshContext() {
     const isCurrentRouteProtected = isProtected(window.location.pathname);
-
-    async function refreshContext() {
-      if (ethereumLoading) {
-        return;
-      }
-
-      if (isCurrentRouteProtected && !account) {
-        navigate("/getstarted");
-      }
-
-      if (isCurrentRouteProtected && voterStatus === "unregistered") {
-        navigate("/getstarted/register");
-        return;
-      }
-
-      if (voter != null) {
-        return;
-      }
-
-      console.log(
-        "[VoterContext] Fetching voter information for wallet",
-        account
-      );
-
-      const me = await fetchMe();
-
-      if (isCurrentRouteProtected && me == null) {
-        navigate(`/getstarted/verify?redirect=${location.pathname}`);
-        return;
-      }
-
-      if (me != null) {
-        setVoter({ firstName: me.firstName, lastName: me.lastName });
-      }
+    if (ethereumLoading) {
+      return;
     }
 
+    if (isCurrentRouteProtected && !account) {
+      navigate("/getstarted");
+    }
+
+    if (isCurrentRouteProtected && voterStatus === "unregistered") {
+      navigate("/getstarted/register");
+      return;
+    }
+
+    if (voter != null) {
+      return;
+    }
+
+    console.log(
+      "[VoterContext] Fetching voter information for wallet",
+      account
+    );
+
+    const me = await fetchMe();
+
+    if (
+      isCurrentRouteProtected &&
+      me == null &&
+      (voterStatus === "registered" || voterStatus === "voted")
+    ) {
+      navigate(`/verify?redirect=${location.pathname}`);
+      return;
+    }
+
+    if (me != null) {
+      setVoter({ firstName: me.firstName, lastName: me.lastName });
+    }
+  }
+
+  useEffect(() => {
     refreshContext();
   }, [ethereumLoading, account, voterStatus]);
 
@@ -125,6 +127,7 @@ export const VoterProvider: FC = ({ children }) => {
     <VoterContext.Provider
       value={{
         voter,
+        refreshVoter: refreshContext,
         verifyWallet,
       }}
     >

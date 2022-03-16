@@ -12,10 +12,8 @@ export default function GetStarted() {
       setStep(0);
     } else if (location.pathname === "/getstarted/register") {
       setStep(1);
-    } else if (location.pathname === "/getstarted/verify") {
-      setStep(2);
     } else if (location.pathname === "/getstarted/vote") {
-      setStep(3);
+      setStep(2);
     }
   }, [location]);
 
@@ -48,9 +46,6 @@ export default function GetStarted() {
         </Step>
         <Step key="register">
           <StepLabel>Register</StepLabel>
-        </Step>
-        <Step key="verify">
-          <StepLabel>Verify</StepLabel>
         </Step>
         <Step key="vote">
           <StepLabel>Vote</StepLabel>
