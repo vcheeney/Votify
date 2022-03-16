@@ -1,5 +1,5 @@
 import { Alert, Box, Button, Typography } from "@mui/material";
-import { useNavigate } from "remix";
+import { useNavigate, useSearchParams } from "remix";
 import { useEthereum } from "../context/EthereumContext";
 import { useVoter } from "../context/VoterContext";
 import { useVoterStatus } from "../hooks/useVoterStatus";
@@ -18,6 +18,7 @@ export default function GetStartedVerify() {
   const status = useVoterStatus();
   const [error, setError] = useState<string | null>(null);
   const ready = usePageReady(!loading && status === "registered");
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     if (status === "unregistered") {
@@ -60,7 +61,12 @@ export default function GetStartedVerify() {
           if (!verified) {
             setError("Failed to verify signature, please try again.");
           } else {
-            navigate("/getstarted/vote");
+            const redirectParam = searchParams.get("redirect");
+            if (redirectParam && redirectParam != "/verify") {
+              navigate(redirectParam);
+            } else {
+              navigate("/getstarted/vote");
+            }
           }
         }}
         disableRipple={true}

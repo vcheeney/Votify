@@ -17,7 +17,7 @@ export default function GetStartedVote() {
 
   useEffect(() => {
     refreshVoter();
-  });
+  }, []);
 
   return (
     <Box>

@@ -102,7 +102,7 @@ export default function GetStartedRegister() {
 
   useEffect(() => {
     refreshVoter();
-  });
+  }, []);
 
   useEffect(() => {
     if (loading) {
