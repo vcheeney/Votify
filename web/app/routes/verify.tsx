@@ -61,12 +61,12 @@ export default function GetStartedVerify() {
           if (!verified) {
             setError("Failed to verify signature, please try again.");
           } else {
-            // const redirectParam = searchParams.get("redirect");
-            // if (redirectParam && redirectParam != "/verify") {
-            //   navigate(redirectParam);
-            // } else {
-            navigate("/getstarted/vote");
-            // }
+            const redirectParam = searchParams.get("redirect");
+            if (redirectParam && redirectParam != "/verify") {
+              navigate(redirectParam);
+            } else {
+              navigate("/getstarted/vote");
+            }
           }
         }}
         disableRipple={true}
