@@ -91,7 +91,7 @@ cp .env.example .env
 Finally, run everything with docker-compose:
 
 ```sh
-docker-compose -f docker-compose.yml -f production.yml up
+docker-compose -f dc.local-blockchain.yml -f dc.database.yml -f dc.database.prod.yml -f dc.web.yml up
 ```
 
 For development purposes, follow the more thorough [manual setup steps](SETUP.md).

@@ -14,10 +14,3 @@ services:
       retries: 6
     ports:
       - "5432:5432"
-
-  local-blockchain:
-    container_name: votify-blockchain
-    image: vcheeney/votify-blockchain
-    build: ./hardhat
-    ports:
-      - "8545:8545"
