@@ -8,6 +8,7 @@ This document aims to answer that question.
 - [Retrieving the chairperson's private key](#retrieving-the-chairpersons-private-key)
 - [Setting the environment variables](#setting-the-environment-variables)
 - [Configuring hardhat](#configuring-hardhat)
+- [Defining the candidates](#defining-the-candidates)
 - [Running the deployment script](#running-the-deployment-script)
 - [Setting the environment variables](#setting-the-environment-variables-1)
 - [Launching the web app](#launching-the-web-app)
@@ -94,6 +95,20 @@ const config: HardhatUserConfig = {
 
 It is not necessary but it would make the whole process more understandable.
 
+## Defining the candidates
+
+Open up the `hardhat/scripts/deploy.ts` file and define the candidates:
+
+```ts
+async function main() {
+  ...
+  const names = ["Dave", "Eve", "Frank"]; // <-- Here!
+  const formattedNames = names.map(ethers.utils.formatBytes32String);
+  ...
+  console.log("Ballot deployed to:", ballot.address);
+}
+```
+
 ## Running the deployment script
 
 The last step is to run the deployment script targeting the test network:
@@ -132,6 +147,10 @@ Run the web app without the local blockchain using:
 ```sh
 docker-compose -f dc.database.yml -f dc.database.prod.yml -f dc.web.yml --env-file .env.prod up
 ```
+
+If you navigate to the results page, you should see the candidates you previously defined in the [deployment script](#defining-the-candidates).
+
+![Web app on other network](/misc/deployment-instructions/deployed.png)
 
 # Possible improvements
 

@@ -17,7 +17,7 @@ A decentralized voting platform prototype.
     - [Software](#software)
   - [Installation & Usage](#installation--usage)
       - [Accessing the app](#accessing-the-app)
-      - [Configuring MetaMask to access the local blockchain](#configuring-metamask-to-access-the-local-blockchain)
+      - [Configuring MetaMask to access the local blockchain (Hardhat network)](#configuring-metamask-to-access-the-local-blockchain-hardhat-network)
       - [Using seed profiles to register as a voter](#using-seed-profiles-to-register-as-a-voter)
 - [🛠 Technologies Used](#-technologies-used)
 - [🧪 Tests](#-tests)
@@ -96,11 +96,13 @@ docker-compose -f dc.local-blockchain.yml -f dc.database.yml -f dc.database.prod
 
 For development purposes, follow the more thorough [manual setup steps](SETUP.md).
 
+In order to deploy the smart contract to a different network, follow the [instructions here](NETWORKS.md).
+
 ##### Accessing the app
 
 Once everything is loaded properly, the web app will be accessible at http://localhost:3000/.
 
-##### Configuring MetaMask to access the local blockchain
+##### Configuring MetaMask to access the local blockchain (Hardhat network)
 
 In your web browser:
 
