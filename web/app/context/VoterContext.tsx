@@ -1,5 +1,5 @@
 import { createContext, FC, useContext, useEffect, useState } from "react";
-import { createSignatureMessage } from "../lib/auth";
+import { createSignatureMessage, startChallenge } from "../lib/auth";
 import { useVoterStatus } from "../hooks/useVoterStatus";
 import { useEthereum } from "./EthereumContext";
 import { useLocation, useNavigate } from "remix";
@@ -55,9 +55,13 @@ export const VoterProvider: FC = ({ children }) => {
       return false;
     }
 
+    const nonce = await startChallenge();
+
     let signature: string;
     try {
-      signature = await signer.signMessage(createSignatureMessage(account));
+      signature = await signer.signMessage(
+        createSignatureMessage(account, nonce)
+      );
     } catch (e) {
       console.log("[VoterContext] Failed to sign");
       return false;
@@ -71,6 +75,7 @@ export const VoterProvider: FC = ({ children }) => {
       body: JSON.stringify({
         address: account,
         sig: signature,
+        nonce: nonce,
       }),
     });
 

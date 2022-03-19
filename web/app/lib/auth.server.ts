@@ -3,9 +3,10 @@ import { createSignatureMessage } from "./auth";
 
 export async function getAddressFromSignatureChallenge(
   address: string,
-  rcpSig: string
+  rcpSig: string,
+  nonce: string
 ) {
-  const challenge = createSignatureMessage(address);
+  const challenge = createSignatureMessage(address, nonce);
 
   const sig = utils.fromRpcSig(rcpSig);
   const hash = utils.hashPersonalMessage(Buffer.from(challenge));
