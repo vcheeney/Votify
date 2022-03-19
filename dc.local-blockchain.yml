@@ -1,0 +1,9 @@
+version: "3.4"
+
+services:
+  local-blockchain:
+    container_name: votify-blockchain
+    image: vcheeney/votify-blockchain
+    build: ./hardhat
+    ports:
+      - "8545:8545"
