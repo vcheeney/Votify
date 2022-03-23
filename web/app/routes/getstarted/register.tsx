@@ -1,36 +1,34 @@
 import {
+  Alert,
   Box,
-  Typography,
+  Button,
+  FormControl,
+  FormHelperText,
   Grid,
   Stack,
-  Alert,
-  FormControl,
   TextField,
-  FormHelperText,
-  Button,
+  Typography,
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   ActionFunction,
-  useTransition,
-  useActionData,
-  useSubmit,
-  useNavigate,
-  SubmitFunction,
   Form,
   json,
+  SubmitFunction,
+  useActionData,
+  useNavigate,
+  useSubmit,
+  useTransition,
 } from "remix";
-import invariant from "tiny-invariant";
 import { FullPageSpinner } from "~/components/FullPageSpinner";
 import { WaitingDialog } from "~/components/WaitingDialog";
 import { useEthereum } from "~/context/EthereumContext";
 import { useVoter } from "~/context/VoterContext";
+import { usePageReady } from "~/hooks/usePageReady";
 import { useVoterStatus } from "~/hooks/useVoterStatus";
 import { giveRightToVote } from "~/lib/ballot";
-import { CustomError } from "~/lib/error";
-import { registerUser } from "~/lib/users.server";
-import { usePageReady } from "~/hooks/usePageReady";
 import { generalTransition, generalTransitionDelay } from "~/lib/transitions";
+import { registerUser } from "~/lib/users.server";
 import { isFormDataStringValid, isStringValidUUID } from "../../lib/utils";
 
 type FormErrors = { [field: string]: string };
@@ -155,7 +153,7 @@ export default function GetStartedRegister() {
     <Box>
       <WaitingDialog
         title="Your registration has been accepted"
-        open={actionData?.registerSuccess && actionData?.rightToVoteSuccess}
+        open={!!actionData?.registerSuccess && !!actionData?.rightToVoteSuccess}
         message="We are currently waiting for the operation to be saved on the public ledger. You will have access to the voting page as soon as the process is complete. It should only take a few seconds."
       />
       <Typography
