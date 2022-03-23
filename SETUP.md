@@ -66,14 +66,12 @@ npm run syncContract
 Open a terminal at the root of the project and run the following command:
 
 ```sh
-docker-compose up
+docker-compose -f dc.local-blockchain.yml -f dc.database.yml up
 
 # Keep this terminal open for the duration of your working session
 ```
 
-> 🚨 If changes are made to the smart contract's code, shutdown the docker environment with **docker-compose down** before rebuilding the containers with **docker-compose build** and relaunching with **docker-compose up**.
-
-and follow the instructions from the script.
+> 🚨 If changes are made to the smart contract's code, shutdown the blockchain container with **`docker-compose -f dc.local-blockchain.yml down`** before rebuilding it with **`docker-compose -f dc.local-blockchain.yml build`** and relaunching with the command listed above. Also, make sure to sync the contract to the frontend to have the latest types. To do so, run **`npm run syncContract`** from the **`web`** directory.
 
 #### Web application
 

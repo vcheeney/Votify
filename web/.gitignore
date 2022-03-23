@@ -4,6 +4,8 @@ node_modules
 /build
 /public/build
 .env
+.env.*
+!.env.example
 
 # compiled contracts
 contracts/*.json
