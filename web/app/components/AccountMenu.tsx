@@ -19,7 +19,7 @@ export const AccountMenu: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { account, logoutEthereumAccount, loading } = useEthereum();
-  const { voter } = useVoter();
+  const { voter, logOutVoter } = useVoter();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -96,6 +96,7 @@ export const AccountMenu: FC = () => {
         <MenuItem
           onClick={() => {
             logoutEthereumAccount();
+            logOutVoter();
             handleClose();
           }}
         >

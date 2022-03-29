@@ -122,7 +122,6 @@ export const EthereumProvider: FC = ({ children }) => {
 
   function logoutEthereumAccount() {
     setAccount(null);
-    // TODO: Destroy session
   }
 
   async function connectWithMetamask() {

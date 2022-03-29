@@ -12,12 +12,14 @@ export interface Voter {
 interface VoterContextInterface {
   voter?: Voter;
   refreshVoter: () => Promise<void>;
+  logOutVoter: () => Promise<void>;
   verifyWallet: () => Promise<boolean>;
 }
 
 const VoterContext = createContext<VoterContextInterface>({
   voter: undefined,
   refreshVoter: async () => undefined,
+  logOutVoter: async () => undefined,
   verifyWallet: async () => false,
 });
 
@@ -84,6 +86,12 @@ export const VoterProvider: FC = ({ children }) => {
     return !!json.success;
   }
 
+  async function logOutVoter() {
+    const res = await fetch("/api/auth/logout", { method: "POST" });
+
+    return res.ok;
+  }
+
   async function refreshContext() {
     const isCurrentRouteProtected = isProtected(window.location.pathname);
     if (ethereumLoading) {
@@ -133,6 +141,7 @@ export const VoterProvider: FC = ({ children }) => {
       value={{
         voter,
         refreshVoter: refreshContext,
+        logOutVoter,
         verifyWallet,
       }}
     >
